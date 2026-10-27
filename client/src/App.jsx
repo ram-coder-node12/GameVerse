@@ -7,6 +7,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/Navbar';
 import MatchmakingModal from './components/MatchmakingModal';
 import ChallengeModal from './components/ChallengeModal';
+import RenderCornerThemeToggle from './components/RenderCornerThemeToggle';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -96,6 +97,7 @@ export default function App() {
             <Navbar />
             <MatchmakingModal />
             <ChallengeModal />
+            <RenderCornerThemeToggle />
 
             <main className="main-content">
               <Routes>

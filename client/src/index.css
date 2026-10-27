@@ -1,26 +1,31 @@
-/* client/src/index.css */
+/* client/src/index.css — Render.com Precision Developer Theme */
 :root {
-  /* Dark Theme: Sleek Graphite & Cobalt Tournament Palette (Linear/GitHub/Discord Standard) */
-  --bg-primary: #0b0e14;
-  --bg-secondary: #121620;
-  --bg-card: #151a26;
-  --bg-card-hover: #1c2232;
-  --bg-header: rgba(11, 14, 20, 0.88);
-  --border-subtle: #232a3b;
-  --border-active: #3b82f6;
+  /* Dark Theme — Render Dark Canvas */
+  --bg-primary: #09090b;
+  --bg-secondary: #121215;
+  --bg-card: #13141a;
+  --bg-card-hover: #191a23;
+  --bg-header: rgba(9, 9, 11, 0.85);
+  --border-subtle: #242630;
+  --border-active: #9333ea;
+  --border-strong: #3f4254;
 
-  --text-main: #f1f5f9;
-  --text-muted: #94a3b8;
-  --text-dim: #64748b;
+  --text-main: #f4f4f5;
+  --text-muted: #a1a1aa;
+  --text-dim: #71717a;
 
-  /* Brand Accents — Professional, purposeful colors (no blinding neon) */
-  --brand-primary: #3b82f6;      /* Electric Cobalt */
-  --brand-secondary: #8b5cf6;    /* Modern Indigo-Purple */
+  /* Render Signature Accents */
+  --render-purple: #9333ea;
+  --render-purple-light: #c084fc;
+  --render-orange: #f97316;
+  --brand-primary: #9333ea;
+  --brand-secondary: #3b82f6;
 
-  /* Theme tokens for compatibility with game badges */
+  --grid-line: rgba(255, 255, 255, 0.045);
+
   --neon-cyan: #38bdf8;
-  --neon-blue: #3b82f6;
-  --neon-purple: #8b5cf6;
+  --neon-blue: #6366f1;
+  --neon-purple: #9333ea;
   --neon-pink: #f43f5e;
   --neon-gold: #f59e0b;
   --neon-green: #10b981;
@@ -29,38 +34,44 @@
   --player-x: #38bdf8;
   --player-o: #f43f5e;
 
-  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
   --radius-full: 9999px;
 
-  /* Professional elevation shadows (clean depth, no neon halos) */
-  --shadow-card: 0 4px 16px -2px rgba(0, 0, 0, 0.45), 0 0 0 1px var(--border-subtle);
-  --shadow-card-hover: 0 10px 28px -4px rgba(0, 0, 0, 0.6), 0 0 0 1px #334155;
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--border-subtle);
+  --shadow-card-hover: 0 10px 30px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--border-active);
   --shadow-glow-cyan: 0 2px 10px rgba(56, 189, 248, 0.2);
-  --shadow-glow-purple: 0 2px 10px rgba(139, 92, 246, 0.2);
+  --shadow-glow-purple: 0 2px 10px rgba(147, 51, 234, 0.25);
 }
 
-/* Light Theme: Clean Studio Slate (Crisp, High-Contrast, Professional) */
+/* Light Theme — Exact Render.com Aesthetic (Pure White, Crisp Black, Subtle Blueprint Grid) */
 [data-theme="light"] {
-  --bg-primary: #f8fafc;
-  --bg-secondary: #ffffff;
+  --bg-primary: #ffffff;
+  --bg-secondary: #fbfbfb;
   --bg-card: #ffffff;
-  --bg-card-hover: #f1f5f9;
-  --bg-header: rgba(255, 255, 255, 0.92);
-  --border-subtle: #e2e8f0;
-  --border-active: #2563eb;
+  --bg-card-hover: #f9fafb;
+  --bg-header: rgba(255, 255, 255, 0.9);
+  --border-subtle: #e5e7eb;
+  --border-active: #7c3aed;
+  --border-strong: #000000;
 
-  --text-main: #0f172a;
-  --text-muted: #475569;
-  --text-dim: #94a3b8;
+  --text-main: #000000;
+  --text-muted: #52525b;
+  --text-dim: #71717a;
 
-  --brand-primary: #2563eb;      /* Rich Royal Blue */
-  --brand-secondary: #7c3aed;
+  --render-purple: #7c3aed;
+  --render-purple-light: #9333ea;
+  --render-orange: #ea580c;
+  --brand-primary: #7c3aed;
+  --brand-secondary: #2563eb;
+
+  --grid-line: rgba(0, 0, 0, 0.05);
 
   --neon-cyan: #0284c7;
   --neon-blue: #2563eb;
@@ -73,8 +84,8 @@
   --player-x: #0284c7;
   --player-o: #e11d48;
 
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.05), 0 6px 20px -4px rgba(0, 0, 0, 0.04), 0 0 0 1px #e2e8f0;
-  --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.08), 0 12px 28px -6px rgba(0, 0, 0, 0.06), 0 0 0 1px #cbd5e1;
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px #e5e7eb;
+  --shadow-card-hover: 0 12px 24px -10px rgba(0, 0, 0, 0.1), 0 0 0 1px #000000;
   --shadow-glow-cyan: 0 2px 8px rgba(37, 99, 235, 0.15);
   --shadow-glow-purple: 0 2px 8px rgba(124, 58, 237, 0.15);
 }
@@ -87,6 +98,10 @@
 
 body {
   background-color: var(--bg-primary);
+  background-image: 
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 56px 56px;
   color: var(--text-main);
   font-family: var(--font-body);
   line-height: 1.5;
@@ -126,7 +141,7 @@ body {
 /* Typography Utility */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   font-weight: 700;
   color: var(--text-main);
 }
@@ -151,74 +166,49 @@ a {
   padding: 24px 20px;
 }
 
-/* Authentic Tournament Cards */
+/* Render Blueprint Cards */
 .glass-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   padding: 24px;
   box-shadow: var(--shadow-card);
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .glass-card:hover {
-  border-color: rgba(59, 130, 246, 0.4);
+  border-color: var(--border-active);
   transform: translateY(-2px);
   box-shadow: var(--shadow-card-hover);
 }
 
-/* Solid Brand Text Utility (immune to gradient rectangle glitches) */
-.brand-accent-text {
-  color: var(--brand-primary);
-  font-weight: 800;
+/* Render Terminal Pill */
+.terminal-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: #1e2029;
+  color: #f4f4f5;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid #2d313f;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Brand Logo Vector Styling */
-.logo-emblem-bg {
-  fill: #161b26;
-  stroke: #2a3449;
-  stroke-width: 1.5;
-  transition: all 0.2s ease;
-}
-.logo-glyph-body {
-  fill: var(--brand-primary);
-  transition: all 0.2s ease;
-}
-.logo-glyph-accent {
-  fill: #38bdf8;
-  transition: all 0.2s ease;
-}
-.logo-glyph-dot {
-  fill: #ffffff;
-}
-.logo-badge {
-  background: rgba(59, 130, 246, 0.12);
-  color: var(--brand-primary);
-  border: 1px solid rgba(59, 130, 246, 0.25);
-  transition: all 0.2s ease;
-}
-
-[data-theme="light"] .logo-emblem-bg {
-  fill: #f1f5f9;
-  stroke: #cbd5e1;
-}
-[data-theme="light"] .logo-badge {
-  background: #e0f2fe;
-  color: #0369a1;
-  border-color: #bae6fd;
-}
-
-/* Button Component Styles — Solid, Tactile, High-Contrast */
+/* Render-Style Button System */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   padding: 10px 20px;
-  font-family: var(--font-heading);
+  font-family: var(--font-body);
   font-weight: 600;
   font-size: 0.92rem;
-  border-radius: var(--radius-sm);
+  border-radius: 4px;
   border: 1px solid transparent;
   cursor: pointer;
   transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
@@ -233,45 +223,55 @@ a {
   box-shadow: none !important;
 }
 
+/* Render Signature Solid Black/White CTA */
 .btn-primary {
-  background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+  background: #000000;
   color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border: 1px solid #000000;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 .btn-primary:hover:not(:disabled) {
-  background: linear-gradient(180deg, #4f91ff 0%, #306df4 100%);
+  background: #27272a;
+  border-color: #27272a;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+}
+
+[data-theme="dark"] .btn-primary {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #ffffff;
+}
+[data-theme="dark"] .btn-primary:hover:not(:disabled) {
+  background: #e4e4e7;
+  border-color: #e4e4e7;
 }
 
 .btn-purple {
-  background: linear-gradient(180deg, #8b5cf6 0%, #7c3aed 100%);
+  background: var(--render-purple);
   color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--render-purple);
+  box-shadow: 0 1px 3px rgba(124, 58, 237, 0.3);
 }
 .btn-purple:hover:not(:disabled) {
-  background: linear-gradient(180deg, #9b70ff 0%, #8749f7 100%);
+  background: #6d28d9;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.35);
 }
 
 .btn-secondary {
   background: var(--bg-card);
   color: var(--text-main);
   border: 1px solid var(--border-subtle);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 .btn-secondary:hover:not(:disabled) {
   background: var(--bg-card-hover);
-  border-color: var(--border-active);
+  border-color: var(--text-main);
   transform: translateY(-1px);
 }
 
 .btn-danger {
   background: rgba(239, 68, 68, 0.12);
-  color: #f87171;
+  color: #ef4444;
   border: 1px solid rgba(239, 68, 68, 0.25);
 }
 .btn-danger:hover:not(:disabled) {
@@ -283,13 +283,13 @@ a {
 .btn-sm {
   padding: 6px 12px;
   font-size: 0.82rem;
-  border-radius: 6px;
+  border-radius: 4px;
 }
 
 .btn-lg {
-  padding: 14px 26px;
-  font-size: 1.05rem;
-  border-radius: var(--radius-md);
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 4px;
 }
 
 /* Form Controls */
@@ -311,7 +311,7 @@ a {
   padding: 12px 16px;
   background: var(--bg-secondary);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
+  border-radius: 4px;
   color: var(--text-main);
   font-family: var(--font-body);
   font-size: 0.95rem;
@@ -320,8 +320,8 @@ a {
 
 .form-input:focus {
   outline: none;
-  border-color: var(--brand-primary);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  border-color: var(--render-purple);
+  box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.15);
 }
 
 /* Badge / Tags */
@@ -329,10 +329,10 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 4px 10px;
-  font-size: 0.75rem;
+  padding: 3px 8px;
+  font-size: 0.72rem;
   font-weight: 600;
-  border-radius: var(--radius-full);
+  border-radius: 4px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -353,9 +353,9 @@ a {
   border: 1px solid rgba(16, 185, 129, 0.25);
 }
 .badge-purple {
-  background: rgba(139, 92, 246, 0.12);
-  color: var(--neon-purple);
-  border: 1px solid rgba(139, 92, 246, 0.25);
+  background: rgba(147, 51, 234, 0.12);
+  color: var(--render-purple);
+  border: 1px solid rgba(147, 51, 234, 0.25);
 }
 .badge-danger {
   background: rgba(239, 68, 68, 0.12);
@@ -363,13 +363,33 @@ a {
   border: 1px solid rgba(239, 68, 68, 0.25);
 }
 
+/* Render Connecting Wire Animation */
+@keyframes traceFlow {
+  to {
+    stroke-dashoffset: -32;
+  }
+}
+.render-wire-animated {
+  stroke-dasharray: 6 4;
+  animation: traceFlow 1.6s linear infinite;
+}
+
+/* Telemetry Sparkline Animation */
+@keyframes sparkPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+.telemetry-spark {
+  animation: sparkPulse 2s ease-in-out infinite;
+}
+
 /* Modal System */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.72);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -381,11 +401,11 @@ a {
 .modal-content {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   padding: 32px;
   max-width: 500px;
   width: 100%;
-  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.4);
   animation: scaleIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -395,7 +415,7 @@ a {
 }
 
 @keyframes scaleIn {
-  from { transform: scale(0.95); opacity: 0; }
+  from { transform: scale(0.96); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
 
@@ -454,6 +474,30 @@ a {
   justify-content: space-between;
   padding: 16px 24px;
   margin-bottom: 24px;
+}
+
+/* Floating Corner Theme Toggle (Render style in bottom-right) */
+.render-corner-theme-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 38px;
+  height: 38px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-main);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  z-index: 99;
+  transition: all 0.2s ease;
+}
+.render-corner-theme-btn:hover {
+  border-color: var(--border-active);
+  transform: translateY(-2px);
 }
 
 /* Breakpoint: Tablets & Small Desktops (<= 960px) */
@@ -540,3 +584,95 @@ a {
     width: 95% !important;
   }
 }
+
+/* ============================================================
+   Render.com Hero & Blueprint Telemetry Layout
+   ============================================================ */
+.render-hero-container {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 48px;
+  align-items: center;
+  padding: 48px 0 64px;
+}
+
+@media (max-width: 960px) {
+  .render-hero-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 24px 0 40px;
+  }
+}
+
+/* Blinking Cursor for Typewriter */
+@keyframes blinkCursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.render-cursor {
+  display: inline-block;
+  font-weight: 300;
+  color: var(--render-orange);
+  margin-left: 2px;
+  animation: blinkCursor 0.9s infinite;
+}
+
+/* Blueprint Circuit Wire SVG Container */
+.render-wire-box {
+  width: 100%;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Floating Corner Theme Switcher (Render bottom-right button) */
+.render-corner-theme-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 4px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 999;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.render-corner-theme-btn:hover {
+  border-color: var(--render-purple);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.25);
+  color: var(--render-purple);
+}
+
+/* Telemetry Microservice Card */
+.telemetry-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: 14px;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.telemetry-card:hover {
+  border-color: var(--render-purple);
+  background: var(--bg-card-hover);
+}
+
+/* Micro-sparkline SVG */
+.sparkline-svg {
+  width: 100%;
+  height: 38px;
+  overflow: visible;
+}
+
