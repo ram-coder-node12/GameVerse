@@ -1,0 +1,29 @@
+{
+  "name": "gameverse",
+  "version": "1.0.0",
+  "description": "Real-Time Multiplayer Browser Gaming Platform",
+  "main": "server/server.js",
+  "scripts": {
+    "install:server": "npm --prefix server install",
+    "install:client": "npm --prefix client install",
+    "install:all": "npm install && npm run install:server && npm run install:client",
+    "server": "npm --prefix server run dev",
+    "client": "npm --prefix client run dev",
+    "dev": "node -e \"console.log('Use separate terminals or concurrent scripts to run server and client: npm run server, npm run client')\"",
+    "test:server": "npm --prefix server test",
+    "test": "npm run test:server",
+    "build:client": "npm --prefix client run build"
+  },
+  "keywords": [
+    "multiplayer",
+    "game-platform",
+    "socket.io",
+    "react",
+    "express",
+    "mongodb",
+    "tic-tac-toe",
+    "connect-four"
+  ],
+  "author": "GameVerse Team",
+  "license": "MIT"
+}
