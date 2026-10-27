@@ -30,6 +30,25 @@ export default function HomePage() {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [fadeState, setFadeState] = useState('fade-in');
 
+  // Helper to check 3-in-a-row or draw
+  const checkWinner = (squares) => {
+    const lines = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8],
+      [0, 3, 6], [1, 4, 7], [2, 5, 8],
+      [0, 4, 8], [2, 4, 6]
+    ];
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
+      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+        return { winner: squares[a], line: [a, b, c] };
+      }
+    }
+    if (squares.every((s) => s !== null)) {
+      return { winner: 'DRAW', line: [] };
+    }
+    return null;
+  };
+
   // Interactive Match Simulator State
   const [miniBoard, setMiniBoard] = useState([
     'X', null, null,
@@ -41,6 +60,8 @@ export default function HomePage() {
   const [lastActionLog, setLastActionLog] = useState('TURN #2: (1,1) O • VALIDATED ON SERVER');
   const [botThinking, setBotThinking] = useState(false);
   const [isPulseActive, setIsPulseActive] = useState(false);
+  const [gameResult, setGameResult] = useState(null); // 'won' | 'lost' | 'draw' | null
+  const [winningCells, setWinningCells] = useState([]);
 
   // Word rotation cycle
   useEffect(() => {
@@ -56,51 +77,125 @@ export default function HomePage() {
 
   // Handle player click on interactive mini-board
   const handleMiniCellClick = (index) => {
-    if (miniBoard[index] || botThinking) return;
+    if (miniBoard[index] || botThinking || gameResult) return;
 
     // 1. Human Move 'X'
     const newBoard = [...miniBoard];
     newBoard[index] = 'X';
     setMiniBoard(newBoard);
     setIsPulseActive(true);
-    setSimulatedMoves((prev) => prev + 1);
+    const newMoves = simulatedMoves + 1;
+    setSimulatedMoves(newMoves);
     const row = Math.floor(index / 3);
     const col = index % 3;
     setSimulatedLatency(Math.floor(Math.random() * 5) + 9);
-    setLastActionLog(`MOVE PLACED: (${row},${col}) X • SERVER-VERIFIED`);
-
     setTimeout(() => setIsPulseActive(false), 800);
 
-    // 2. Check remaining empty cells
-    const emptyIndices = newBoard
-      .map((val, idx) => (val === null ? idx : null))
-      .filter((val) => val !== null);
-
-    if (emptyIndices.length === 0) {
-      setLastActionLog('MATCH CONCLUDED: DRAW • +5 RATING POINTS');
-      return;
+    // Check if player won
+    const playerCheck = checkWinner(newBoard);
+    if (playerCheck) {
+      if (playerCheck.winner === 'X') {
+        setWinningCells(playerCheck.line);
+        setGameResult('won');
+        setLastActionLog(`VICTORY! (${row},${col}) X • 3-IN-A-ROW (+25 ELO)`);
+        return;
+      }
+      if (playerCheck.winner === 'DRAW') {
+        setGameResult('draw');
+        setLastActionLog('MATCH CONCLUDED: DRAW • +5 ELO');
+        return;
+      }
     }
 
-    // 3. Automated Opponent Response
+    setLastActionLog(`TURN #${newMoves}: (${row},${col}) X • VALIDATED ON SERVER`);
+
+    // 2. Automated Opponent Response
     setBotThinking(true);
     setTimeout(() => {
-      const botPick = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
-      newBoard[botPick] = 'O';
+      const emptyIndices = newBoard
+        .map((val, idx) => (val === null ? idx : null))
+        .filter((val) => val !== null);
+
+      if (emptyIndices.length === 0) {
+        setGameResult('draw');
+        setLastActionLog('MATCH CONCLUDED: DRAW • +5 ELO');
+        setBotThinking(false);
+        return;
+      }
+
+      // Smart Bot AI:
+      // A. Win if possible
+      let chosenMove = null;
+      for (const idx of emptyIndices) {
+        const testBoard = [...newBoard];
+        testBoard[idx] = 'O';
+        const win = checkWinner(testBoard);
+        if (win && win.winner === 'O') {
+          chosenMove = idx;
+          break;
+        }
+      }
+
+      // B. Block player win
+      if (chosenMove === null) {
+        for (const idx of emptyIndices) {
+          const testBoard = [...newBoard];
+          testBoard[idx] = 'X';
+          const win = checkWinner(testBoard);
+          if (win && win.winner === 'X') {
+            chosenMove = idx;
+            break;
+          }
+        }
+      }
+
+      // C. Take center or random empty spot
+      if (chosenMove === null) {
+        if (emptyIndices.includes(4) && Math.random() > 0.4) {
+          chosenMove = 4;
+        } else {
+          chosenMove = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+        }
+      }
+
+      newBoard[chosenMove] = 'O';
       setMiniBoard([...newBoard]);
-      setSimulatedMoves((prev) => prev + 1);
-      const bRow = Math.floor(botPick / 3);
-      const bCol = botPick % 3;
+      const botMoves = newMoves + 1;
+      setSimulatedMoves(botMoves);
+      const bRow = Math.floor(chosenMove / 3);
+      const bCol = chosenMove % 3;
       setSimulatedLatency(Math.floor(Math.random() * 4) + 10);
-      setLastActionLog(`OPPONENT MOVED: (${bRow},${bCol}) O • SYNCED`);
+
+      // Check if bot won or draw
+      const botCheck = checkWinner(newBoard);
+      if (botCheck) {
+        if (botCheck.winner === 'O') {
+          setWinningCells(botCheck.line);
+          setGameResult('lost');
+          setLastActionLog(`MATCH ENDED: (${bRow},${bCol}) O WON (-15 ELO)`);
+        } else if (botCheck.winner === 'DRAW') {
+          setGameResult('draw');
+          setLastActionLog('MATCH CONCLUDED: DRAW • +5 ELO');
+        }
+      } else {
+        setLastActionLog(`TURN #${botMoves}: (${bRow},${bCol}) O • VALIDATED ON SERVER`);
+      }
       setBotThinking(false);
-    }, 650);
+    }, 450);
   };
 
   const handleResetMiniDuel = (e) => {
-    e.stopPropagation();
-    setMiniBoard([null, null, null, null, null, null, null, null, null]);
-    setSimulatedMoves(0);
-    setLastActionLog('ARENA RESET: READY FOR FIRST MOVE');
+    e?.stopPropagation();
+    setMiniBoard([
+      'X', null, null,
+      null, 'O', null,
+      null, null, null
+    ]);
+    setWinningCells([]);
+    setGameResult(null);
+    setBotThinking(false);
+    setSimulatedMoves(2);
+    setLastActionLog('TURN #2: (1,1) O • VALIDATED ON SERVER');
     setIsPulseActive(true);
     setTimeout(() => setIsPulseActive(false), 500);
   };
@@ -326,7 +421,7 @@ export default function HomePage() {
                   <div
                     key={idx}
                     onClick={() => handleMiniCellClick(idx)}
-                    className={`hero-duel-cell ${cell ? (cell === 'X' ? 'cell-x occupied' : 'cell-o occupied') : ''}`}
+                    className={`hero-duel-cell ${cell ? (cell === 'X' ? 'cell-x occupied' : 'cell-o occupied') : ''} ${winningCells.includes(idx) ? 'winning-cell' : ''}`}
                   >
                     {cell}
                   </div>
@@ -336,9 +431,42 @@ export default function HomePage() {
               {/* Right: Live Game Engine Feed */}
               <div style={{ flex: 1, minWidth: 220, display: 'flex', flexDirection: 'column', gap: 12 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <Zap size={14} color="#f59e0b" />
-                  <span style={{ fontSize: '0.85rem', fontFamily: 'var(--font-mono)', color: 'var(--neon-cyan)', fontWeight: 600 }}>
-                    {botThinking ? '● Opponent thinking...' : '⚡ Click any square to play'}
+                  <Zap
+                    size={14}
+                    color={
+                      gameResult === 'won'
+                        ? '#10b981'
+                        : gameResult === 'lost'
+                        ? '#ef4444'
+                        : gameResult === 'draw'
+                        ? '#f59e0b'
+                        : '#f59e0b'
+                    }
+                  />
+                  <span
+                    style={{
+                      fontSize: '0.85rem',
+                      fontFamily: 'var(--font-mono)',
+                      color:
+                        gameResult === 'won'
+                          ? '#10b981'
+                          : gameResult === 'lost'
+                          ? '#ef4444'
+                          : gameResult === 'draw'
+                          ? '#f59e0b'
+                          : 'var(--neon-cyan)',
+                      fontWeight: 600
+                    }}
+                  >
+                    {botThinking
+                      ? '● Opponent thinking...'
+                      : gameResult === 'won'
+                      ? '🏆 Victory! You won (+25 ELO)'
+                      : gameResult === 'lost'
+                      ? '💥 Opponent won (-15 ELO)'
+                      : gameResult === 'draw'
+                      ? '🤝 Match Draw (+5 ELO)'
+                      : '⚡ Click any square to play'}
                   </span>
                 </div>
 
@@ -357,7 +485,19 @@ export default function HomePage() {
                     gap: 6
                   }}
                 >
-                  <div style={{ color: botThinking ? 'var(--render-purple)' : 'var(--text-main)', fontWeight: 600 }}>
+                  <div
+                    style={{
+                      color:
+                        gameResult === 'won'
+                          ? '#10b981'
+                          : gameResult === 'lost'
+                          ? '#ef4444'
+                          : botThinking
+                          ? 'var(--render-purple)'
+                          : 'var(--text-main)',
+                      fontWeight: 600
+                    }}
+                  >
                     {botThinking ? '● Validating board move...' : '✓ ' + lastActionLog}
                   </div>
                   <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>
@@ -418,7 +558,26 @@ export default function HomePage() {
               </div>
               <div>
                 <span>STATUS: </span>
-                <strong style={{ color: 'var(--text-main)' }}>Active</strong>
+                <strong
+                  style={{
+                    color:
+                      gameResult === 'won'
+                        ? '#10b981'
+                        : gameResult === 'lost'
+                        ? '#ef4444'
+                        : gameResult === 'draw'
+                        ? '#f59e0b'
+                        : 'var(--text-main)'
+                  }}
+                >
+                  {gameResult === 'won'
+                    ? 'Victory'
+                    : gameResult === 'lost'
+                    ? 'Defeat'
+                    : gameResult === 'draw'
+                    ? 'Draw'
+                    : 'Active'}
+                </strong>
               </div>
             </div>
           </div>
