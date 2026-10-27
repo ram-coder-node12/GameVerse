@@ -13,8 +13,9 @@
     "dev": "node -e \"console.log('Use separate terminals or concurrent scripts to run server and client: npm run server, npm run client')\"",
     "test:server": "npm --prefix server test",
     "test": "npm run test:server",
+    "postinstall": "npm --prefix server install",
     "build:client": "npm --prefix client run build",
-    "build": "npm --prefix client run build",
+    "build": "npm --prefix server install && echo 'Build complete'",
     "start": "node server/server.js"
   },
   "keywords": [
