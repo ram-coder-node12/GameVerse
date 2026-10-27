@@ -55,9 +55,39 @@ function AdminRoute({ children }) {
   return children;
 }
 
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error, errorInfo) {
+    console.error('UI Error Caught:', error, errorInfo);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ maxWidth: 500, margin: '80px auto', padding: 32, textAlign: 'center', color: '#fff' }} className="glass-card">
+          <h2 style={{ fontSize: '1.4rem', marginBottom: 12 }}>Unable to Load View</h2>
+          <p style={{ color: '#fca5a5', fontSize: '0.9rem', marginBottom: 20 }}>
+            {this.state.error?.message || 'An unexpected rendering error occurred.'}
+          </p>
+          <button className="btn btn-primary" onClick={() => window.location.reload()}>
+            Reload GameVerse
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 export default function App() {
   return (
-    <BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
       <AuthProvider>
         <SocketProvider>
           <div className="app-container">
@@ -143,5 +173,6 @@ export default function App() {
         </SocketProvider>
       </AuthProvider>
     </BrowserRouter>
-  );
+  </ErrorBoundary>
+);
 }
