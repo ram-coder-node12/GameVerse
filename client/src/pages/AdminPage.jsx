@@ -91,7 +91,7 @@ export default function AdminPage() {
           <Shield size={26} color="#c084fc" />
         </div>
         <div>
-          <h1 style={{ fontSize: '2rem', color: '#fff', marginBottom: 2 }}>
+          <h1 style={{ fontSize: '2rem', color: 'var(--text-main)', marginBottom: 2 }}>
             Admin Management Console
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem' }}>
@@ -126,7 +126,7 @@ export default function AdminPage() {
               </span>
               <Users size={18} color="#00f2fe" />
             </div>
-            <div style={{ fontSize: '2rem', fontWeight: 800, color: '#fff' }}>
+            <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-main)' }}>
               {stats.totalUsers}
             </div>
             <div style={{ fontSize: '0.78rem', color: 'var(--neon-green)', marginTop: 4 }}>
@@ -141,7 +141,7 @@ export default function AdminPage() {
               </span>
               <Gamepad2 size={18} color="#c084fc" />
             </div>
-            <div style={{ fontSize: '2rem', fontWeight: 800, color: '#fff' }}>
+            <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-main)' }}>
               {stats.totalGames}
             </div>
             <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: 4 }}>
@@ -156,7 +156,7 @@ export default function AdminPage() {
               </span>
               <TrendingUp size={18} color="#f59e0b" />
             </div>
-            <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#fff', textTransform: 'capitalize' }}>
+            <div style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-main)', textTransform: 'capitalize' }}>
               {stats.mostPopularGame ? stats.mostPopularGame.replace('_', ' ').toLowerCase() : 'None'}
             </div>
             <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)', marginTop: 4 }}>
@@ -171,7 +171,7 @@ export default function AdminPage() {
               </span>
               <Clock size={18} color="#00e676" />
             </div>
-            <div style={{ fontSize: '2rem', fontWeight: 800, color: '#fff' }}>
+            <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-main)' }}>
               {stats.averageGameDuration}s
             </div>
             <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: 4 }}>
@@ -195,7 +195,7 @@ export default function AdminPage() {
           }}
         >
           <div>
-            <h3 style={{ fontSize: '1.2rem', color: '#fff' }}>Registered Users</h3>
+            <h3 style={{ fontSize: '1.2rem', color: 'var(--text-main)' }}>Registered Users</h3>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
               Manage player accounts, inspect ratings, and toggle access permissions
             </p>
@@ -224,7 +224,7 @@ export default function AdminPage() {
                 background: 'transparent',
                 border: 'none',
                 outline: 'none',
-                color: '#fff',
+                color: 'var(--text-main)',
                 fontSize: '0.88rem',
                 width: '100%'
               }}
@@ -270,7 +270,7 @@ export default function AdminPage() {
                           alt=""
                           style={{ width: 32, height: 32, borderRadius: '50%', background: '#1c2239' }}
                         />
-                        <span style={{ fontWeight: 600, color: '#fff' }}>{u.username}</span>
+                        <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>{u.username}</span>
                       </div>
                     </td>
 

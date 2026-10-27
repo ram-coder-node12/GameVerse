@@ -47,12 +47,12 @@ export default function ChallengeModal() {
           <Swords size={30} color="#b388ff" />
         </div>
 
-        <h3 style={{ fontSize: '1.4rem', color: '#fff', marginBottom: 4 }}>
+        <h3 style={{ fontSize: '1.4rem', color: 'var(--text-main)', marginBottom: 4 }}>
           Friend Challenge!
         </h3>
 
         <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: 20 }}>
-          <strong style={{ color: '#fff' }}>{challenger.username}</strong> has challenged you to a game of{' '}
+          <strong style={{ color: 'var(--text-main)' }}>{challenger.username}</strong> has challenged you to a game of{' '}
           <span style={{ color: 'var(--neon-cyan)', fontWeight: 600 }}>{gameTitle}</span>!
         </p>
 
@@ -75,7 +75,7 @@ export default function ChallengeModal() {
             style={{ width: 44, height: 44, borderRadius: '50%', background: '#1c2136' }}
           />
           <div style={{ textAlign: 'left' }}>
-            <div style={{ fontWeight: 700, color: '#fff' }}>{challenger.username}</div>
+            <div style={{ fontWeight: 700, color: 'var(--text-main)' }}>{challenger.username}</div>
             <div style={{ fontSize: '0.8rem', color: 'var(--neon-gold)' }}>
               Rating: {challenger.rating}
             </div>

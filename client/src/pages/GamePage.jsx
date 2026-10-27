@@ -145,7 +145,7 @@ export default function GamePage() {
     return (
       <div style={{ textAlign: 'center', padding: '80px 20px' }}>
         <div className="radar-circle" style={{ width: 80, height: 80, margin: '0 auto 20px' }} />
-        <h3 style={{ color: '#fff', fontSize: '1.4rem' }}>Connecting to Game Arena...</h3>
+        <h3 style={{ color: 'var(--text-main)', fontSize: '1.4rem' }}>Connecting to Game Arena...</h3>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginTop: 8 }}>
           Setting up authoritative match state
         </p>
@@ -284,7 +284,7 @@ export default function GamePage() {
             )}
           </div>
           <div>
-            <div style={{ fontWeight: 700, color: '#fff', fontSize: '1.05rem' }}>
+            <div style={{ fontWeight: 700, color: 'var(--text-main)', fontSize: '1.05rem' }}>
               {myPlayerMeta?.username || 'You'} <span style={{ fontSize: '0.75rem', color: 'var(--neon-cyan)' }}>(You)</span>
             </div>
             <div style={{ fontSize: '0.8rem', color: 'var(--neon-gold)', fontWeight: 600 }}>
@@ -382,7 +382,7 @@ export default function GamePage() {
             )}
           </div>
           <div>
-            <div style={{ fontWeight: 700, color: '#fff', fontSize: '1.05rem' }}>
+            <div style={{ fontWeight: 700, color: 'var(--text-main)', fontSize: '1.05rem' }}>
               {opponentMeta?.username || 'Opponent'}
             </div>
             <div style={{ fontSize: '0.8rem', color: 'var(--neon-gold)', fontWeight: 600 }}>
@@ -442,7 +442,7 @@ export default function GamePage() {
             <Trophy size={28} color="#00f2fe" />
           </div>
 
-          <h2 style={{ fontSize: '1.6rem', color: '#fff', marginBottom: 4 }}>
+          <h2 style={{ fontSize: '1.6rem', color: 'var(--text-main)', marginBottom: 4 }}>
             {gameState.isDraw
               ? "It's a Draw!"
               : gameState.winner?.id === currentUserId
@@ -473,7 +473,7 @@ export default function GamePage() {
               }}
             >
               <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Rating:</span>
-              <strong style={{ color: '#fff' }}>
+              <strong style={{ color: 'var(--text-main)' }}>
                 {gameOverData.ratings[currentUserId].ratingAfter}
               </strong>
               <span

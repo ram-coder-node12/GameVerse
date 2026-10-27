@@ -123,7 +123,7 @@ export default function DashboardPage() {
 
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
-              <h1 style={{ fontSize: '1.8rem', color: '#fff', letterSpacing: '-0.02em' }}>
+              <h1 style={{ fontSize: '1.8rem', color: 'var(--text-main)', letterSpacing: '-0.02em' }}>
                 {user.username}
               </h1>
               <span className={`badge ${user.role === 'ADMIN' ? 'badge-purple' : 'badge-cyan'}`}>
@@ -169,7 +169,7 @@ export default function DashboardPage() {
             </span>
             <Trophy size={20} color="#f59e0b" />
           </div>
-          <div style={{ fontSize: '2.1rem', fontWeight: 800, color: '#fff', fontFamily: 'var(--font-heading)' }}>
+          <div style={{ fontSize: '2.1rem', fontWeight: 800, color: 'var(--text-main)', fontFamily: 'var(--font-heading)' }}>
             {user.rating}
           </div>
           <div style={{ fontSize: '0.78rem', color: 'var(--neon-gold)', marginTop: 4 }}>
@@ -185,7 +185,7 @@ export default function DashboardPage() {
             </span>
             <TrendingUp size={20} color="#00f2fe" />
           </div>
-          <div style={{ fontSize: '2.1rem', fontWeight: 800, color: '#fff', fontFamily: 'var(--font-heading)' }}>
+          <div style={{ fontSize: '2.1rem', fontWeight: 800, color: 'var(--text-main)', fontFamily: 'var(--font-heading)' }}>
             {user.wins}W / {user.losses}L
           </div>
           <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: 4 }}>
@@ -237,7 +237,7 @@ export default function DashboardPage() {
           }}
         >
           <div>
-            <h3 style={{ fontSize: '1.25rem', color: '#fff' }}>Recent Battle History</h3>
+            <h3 style={{ fontSize: '1.25rem', color: 'var(--text-main)' }}>Recent Battle History</h3>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
               Your latest multiplayer matches and rating adjustments
             </p>
@@ -295,7 +295,7 @@ export default function DashboardPage() {
                         {g.outcome}
                       </span>
                     </td>
-                    <td style={{ padding: '14px', fontWeight: 600, color: '#fff' }}>
+                    <td style={{ padding: '14px', fontWeight: 600, color: 'var(--text-main)' }}>
                       {g.gameType === 'CONNECT_FOUR' ? 'Connect Four' : 'Tic-Tac-Toe'}
                     </td>
                     <td style={{ padding: '14px' }}>

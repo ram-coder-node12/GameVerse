@@ -123,7 +123,7 @@ export default function FriendsPage() {
   return (
     <div style={{ maxWidth: 1040, margin: '0 auto' }}>
       <div style={{ marginBottom: 24 }}>
-        <h1 style={{ fontSize: '2rem', color: '#fff', marginBottom: 4 }}>
+        <h1 style={{ fontSize: '2rem', color: 'var(--text-main)', marginBottom: 4 }}>
           Friends & Challenges
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
@@ -157,7 +157,7 @@ export default function FriendsPage() {
           {/* Pending Requests Received */}
           {pendingReceived.length > 0 && (
             <div className="glass-card" style={{ border: '1px solid rgba(0, 242, 254, 0.3)' }}>
-              <h3 style={{ fontSize: '1.15rem', color: '#fff', marginBottom: 14 }}>
+              <h3 style={{ fontSize: '1.15rem', color: 'var(--text-main)', marginBottom: 14 }}>
                 Pending Requests ({pendingReceived.length})
               </h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -180,7 +180,7 @@ export default function FriendsPage() {
                         style={{ width: 34, height: 34, borderRadius: '50%' }}
                       />
                       <div>
-                        <div style={{ fontWeight: 600, color: '#fff', fontSize: '0.9rem' }}>
+                        <div style={{ fontWeight: 600, color: 'var(--text-main)', fontSize: '0.9rem' }}>
                           {req.sender.username}
                         </div>
                         <div style={{ fontSize: '0.75rem', color: 'var(--neon-gold)' }}>
@@ -221,7 +221,7 @@ export default function FriendsPage() {
                 marginBottom: 16
               }}
             >
-              <h3 style={{ fontSize: '1.2rem', color: '#fff' }}>
+              <h3 style={{ fontSize: '1.2rem', color: 'var(--text-main)' }}>
                 Your Friends ({friends.length})
               </h3>
             </div>
@@ -259,7 +259,7 @@ export default function FriendsPage() {
                         style={{ width: 40, height: 40, borderRadius: '50%', background: '#1c2238' }}
                       />
                       <div>
-                        <div style={{ fontWeight: 700, color: '#fff', fontSize: '0.95rem' }}>
+                        <div style={{ fontWeight: 700, color: 'var(--text-main)', fontSize: '0.95rem' }}>
                           {friend.username}
                         </div>
                         <div style={{ fontSize: '0.78rem', color: 'var(--neon-gold)', fontWeight: 600 }}>
@@ -311,7 +311,7 @@ export default function FriendsPage() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           {/* Find Players Card */}
           <div className="glass-card">
-            <h3 style={{ fontSize: '1.2rem', color: '#fff', marginBottom: 6 }}>
+            <h3 style={{ fontSize: '1.2rem', color: 'var(--text-main)', marginBottom: 6 }}>
               Find Players
             </h3>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: 16 }}>
@@ -340,7 +340,7 @@ export default function FriendsPage() {
                   background: 'transparent',
                   border: 'none',
                   outline: 'none',
-                  color: '#fff',
+                  color: 'var(--text-main)',
                   width: '100%',
                   fontSize: '0.92rem'
                 }}
@@ -376,7 +376,7 @@ export default function FriendsPage() {
                           style={{ width: 32, height: 32, borderRadius: '50%' }}
                         />
                         <div>
-                          <div style={{ fontWeight: 600, color: '#fff', fontSize: '0.88rem' }}>
+                          <div style={{ fontWeight: 600, color: 'var(--text-main)', fontSize: '0.88rem' }}>
                             {u.username}
                           </div>
                           <div style={{ fontSize: '0.75rem', color: 'var(--neon-gold)' }}>
@@ -416,7 +416,7 @@ export default function FriendsPage() {
           {/* Pending Sent Requests */}
           {pendingSent.length > 0 && (
             <div className="glass-card">
-              <h4 style={{ fontSize: '1rem', color: '#fff', marginBottom: 12 }}>
+              <h4 style={{ fontSize: '1rem', color: 'var(--text-main)', marginBottom: 12 }}>
                 Sent Requests ({pendingSent.length})
               </h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>

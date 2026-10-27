@@ -75,7 +75,7 @@ export default function MatchmakingModal() {
             <h3
               style={{
                 fontSize: '1.6rem',
-                color: '#fff',
+                color: 'var(--text-main)',
                 marginBottom: 6,
                 letterSpacing: '-0.02em'
               }}
@@ -105,7 +105,7 @@ export default function MatchmakingModal() {
                 style={{ width: 44, height: 44, borderRadius: '50%', background: '#1e243a' }}
               />
               <div style={{ textAlign: 'left' }}>
-                <div style={{ fontWeight: 700, color: '#fff', fontSize: '1rem' }}>
+                <div style={{ fontWeight: 700, color: 'var(--text-main)', fontSize: '1rem' }}>
                   {matchData.opponent.username}
                 </div>
                 <div style={{ fontSize: '0.8rem', color: 'var(--neon-gold)', fontWeight: 600 }}>
@@ -164,7 +164,7 @@ export default function MatchmakingModal() {
               </div>
             </div>
 
-            <h3 style={{ fontSize: '1.4rem', color: '#fff', marginBottom: 4 }}>
+            <h3 style={{ fontSize: '1.4rem', color: 'var(--text-main)', marginBottom: 4 }}>
               Searching for Opponent...
             </h3>
 

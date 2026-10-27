@@ -55,7 +55,7 @@ export default function LoginPage() {
           >
             <Gamepad2 size={28} color="#050b14" />
           </div>
-          <h2 style={{ fontSize: '1.6rem', color: '#fff', marginBottom: 4 }}>
+          <h2 style={{ fontSize: '1.6rem', color: 'var(--text-main)', marginBottom: 4 }}>
             Welcome Back
           </h2>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>

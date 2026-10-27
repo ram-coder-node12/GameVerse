@@ -88,7 +88,7 @@ export default function HomePage() {
       {/* Game Selection Arena Cards */}
       <section style={{ marginBottom: 60 }}>
         <div style={{ textAlign: 'center', marginBottom: 30 }}>
-          <h2 style={{ fontSize: '1.8rem', color: '#fff', marginBottom: 6 }}>
+          <h2 style={{ fontSize: '1.8rem', color: 'var(--text-main)', marginBottom: 6 }}>
             Featured Arenas
           </h2>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
@@ -134,7 +134,7 @@ export default function HomePage() {
                 <span className="badge badge-cyan">2 Players • Fast</span>
               </div>
 
-              <h3 style={{ fontSize: '1.45rem', color: '#fff', marginBottom: 8 }}>
+              <h3 style={{ fontSize: '1.45rem', color: 'var(--text-main)', marginBottom: 8 }}>
                 Tic-Tac-Toe Arena
               </h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', marginBottom: 20 }}>
@@ -215,7 +215,7 @@ export default function HomePage() {
                 <span className="badge badge-purple">7×6 Grid • Tactical</span>
               </div>
 
-              <h3 style={{ fontSize: '1.45rem', color: '#fff', marginBottom: 8 }}>
+              <h3 style={{ fontSize: '1.45rem', color: 'var(--text-main)', marginBottom: 8 }}>
                 Connect Four Arena
               </h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', marginBottom: 20 }}>
@@ -268,7 +268,7 @@ export default function HomePage() {
             <div style={{ color: '#00f2fe', marginBottom: 12 }}>
               <ShieldCheck size={28} />
             </div>
-            <h4 style={{ color: '#fff', fontSize: '1.15rem', marginBottom: 8 }}>
+            <h4 style={{ color: 'var(--text-main)', fontSize: '1.15rem', marginBottom: 8 }}>
               Server-Authoritative Engine
             </h4>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem' }}>
@@ -280,7 +280,7 @@ export default function HomePage() {
             <div style={{ color: '#a855f7', marginBottom: 12 }}>
               <Zap size={28} />
             </div>
-            <h4 style={{ color: '#fff', fontSize: '1.15rem', marginBottom: 8 }}>
+            <h4 style={{ color: 'var(--text-main)', fontSize: '1.15rem', marginBottom: 8 }}>
               Zero-Polling Socket.IO
             </h4>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem' }}>
@@ -292,7 +292,7 @@ export default function HomePage() {
             <div style={{ color: '#f59e0b', marginBottom: 12 }}>
               <Trophy size={28} />
             </div>
-            <h4 style={{ color: '#fff', fontSize: '1.15rem', marginBottom: 8 }}>
+            <h4 style={{ color: 'var(--text-main)', fontSize: '1.15rem', marginBottom: 8 }}>
               Competitive Rating System
             </h4>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem' }}>

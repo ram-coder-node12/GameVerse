@@ -22,10 +22,10 @@ export default function TicTacToeBoard({
         maxWidth: 360,
         margin: '0 auto',
         padding: 16,
-        background: 'rgba(15, 18, 30, 0.9)',
+        background: 'var(--bg-card)',
         borderRadius: 'var(--radius-lg)',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
-        boxShadow: '0 20px 50px rgba(0, 0, 0, 0.6)'
+        border: '1px solid var(--border-subtle)',
+        boxShadow: 'var(--shadow-card)'
       }}
     >
       {board.map((cell, index) => {
@@ -45,15 +45,15 @@ export default function TicTacToeBoard({
               background: isWin
                 ? 'rgba(0, 242, 254, 0.25)'
                 : cell
-                ? 'rgba(25, 30, 50, 0.8)'
+                ? 'var(--bg-secondary)'
                 : canClick
-                ? 'rgba(255, 255, 255, 0.04)'
-                : 'rgba(15, 18, 30, 0.5)',
+                ? 'rgba(0, 242, 254, 0.06)'
+                : 'transparent',
               border: isWin
                 ? '2px solid var(--neon-cyan)'
                 : canClick
-                ? '1px dashed rgba(0, 242, 254, 0.35)'
-                : '1px solid rgba(255, 255, 255, 0.06)',
+                ? '1px dashed var(--neon-cyan)'
+                : '1px solid var(--border-subtle)',
               cursor: canClick ? 'pointer' : 'default',
               display: 'flex',
               alignItems: 'center',

@@ -123,7 +123,10 @@ export default function Navbar() {
               fontWeight: 800,
               fontSize: '1.45rem',
               letterSpacing: '-0.02em',
-              background: 'linear-gradient(135deg, #ffffff 40%, #00f2fe 100%)',
+              background:
+                theme === 'light'
+                  ? 'linear-gradient(135deg, #0f172a 30%, #0284c7 100%)'
+                  : 'linear-gradient(135deg, #ffffff 40%, #00f2fe 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
             }}
@@ -373,10 +376,10 @@ export default function Navbar() {
                       right: 0,
                       top: 'calc(100% + 12px)',
                       width: 320,
-                      background: '#151828',
-                      border: '1px solid rgba(255, 255, 255, 0.12)',
+                      background: 'var(--bg-card)',
+                      border: '1px solid var(--border-subtle)',
                       borderRadius: 'var(--radius-md)',
-                      boxShadow: '0 20px 40px rgba(0, 0, 0, 0.6)',
+                      boxShadow: 'var(--shadow-card)',
                       overflow: 'hidden',
                       zIndex: 100
                     }}
@@ -422,7 +425,7 @@ export default function Navbar() {
                               background: n.read ? 'transparent' : 'rgba(0, 242, 254, 0.04)'
                             }}
                           >
-                            <div style={{ fontWeight: 600, fontSize: '0.82rem', color: '#fff', marginBottom: 2 }}>
+                            <div style={{ fontWeight: 600, fontSize: '0.82rem', color: 'var(--text-main)', marginBottom: 2 }}>
                               {n.title}
                             </div>
                             <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>{n.message}</div>

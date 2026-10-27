@@ -47,7 +47,7 @@ export default function HistoryPage() {
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 16 }}>
         <div>
-          <h1 style={{ fontSize: '2rem', color: '#fff', marginBottom: 4 }}>
+          <h1 style={{ fontSize: '2rem', color: 'var(--text-main)', marginBottom: 4 }}>
             Match History
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
@@ -130,7 +130,7 @@ export default function HistoryPage() {
                       </span>
                     </td>
 
-                    <td style={{ padding: '16px 20px', fontWeight: 600, color: '#fff' }}>
+                    <td style={{ padding: '16px 20px', fontWeight: 600, color: 'var(--text-main)' }}>
                       {g.gameType === 'CONNECT_FOUR' ? 'Connect Four' : 'Tic-Tac-Toe'}
                     </td>
 
@@ -143,7 +143,7 @@ export default function HistoryPage() {
                             style={{ width: 28, height: 28, borderRadius: '50%', background: '#1c2136' }}
                           />
                           <div>
-                            <span style={{ fontWeight: 600, color: '#fff' }}>{g.opponent.username}</span>
+                            <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>{g.opponent.username}</span>
                             <span style={{ fontSize: '0.75rem', color: 'var(--neon-gold)', marginLeft: 6 }}>
                               ★ {g.opponent.rating}
                             </span>

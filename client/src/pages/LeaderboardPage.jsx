@@ -60,7 +60,7 @@ export default function LeaderboardPage() {
         >
           <Trophy size={28} color="#f59e0b" />
         </div>
-        <h1 style={{ fontSize: '2.2rem', color: '#fff', marginBottom: 6 }}>
+        <h1 style={{ fontSize: '2.2rem', color: 'var(--text-main)', marginBottom: 6 }}>
           Global Leaderboard
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
@@ -89,7 +89,7 @@ export default function LeaderboardPage() {
             background: 'transparent',
             border: 'none',
             outline: 'none',
-            color: '#fff',
+            color: 'var(--text-main)',
             fontSize: '0.95rem',
             width: '100%',
             fontFamily: 'var(--font-body)'
@@ -183,7 +183,7 @@ export default function LeaderboardPage() {
                               border: isTop1 ? '2px solid #f59e0b' : '1px solid var(--border-subtle)'
                             }}
                           />
-                          <span style={{ fontWeight: 700, color: '#fff' }}>
+                          <span style={{ fontWeight: 700, color: 'var(--text-main)' }}>
                             {player.username}
                           </span>
                         </div>
