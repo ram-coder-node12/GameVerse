@@ -104,41 +104,43 @@ export default function Navbar() {
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div
             style={{
-              width: 38,
-              height: 38,
-              borderRadius: 9,
-              background: 'linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%)',
+              width: 32,
+              height: 32,
+              borderRadius: 4,
+              background: 'var(--text-main)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 2px 8px rgba(37, 99, 235, 0.25)',
               flexShrink: 0
             }}
           >
-            <Gamepad2 size={22} color="#ffffff" />
+            <Gamepad2 size={19} color="var(--bg-primary)" />
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             <span
               style={{
                 fontFamily: 'var(--font-heading)',
                 fontWeight: 800,
-                fontSize: '1.4rem',
-                letterSpacing: '-0.025em',
+                fontSize: '1.35rem',
+                letterSpacing: '-0.03em',
                 color: 'var(--text-main)',
                 lineHeight: 1
               }}
             >
-              Game<span style={{ color: 'var(--brand-primary)' }}>Verse</span>
+              GameVerse
             </span>
             <span
-              className="logo-badge"
               style={{
+                fontFamily: 'var(--font-mono)',
                 fontSize: '0.62rem',
                 fontWeight: 700,
                 letterSpacing: '0.06em',
                 textTransform: 'uppercase',
                 padding: '2px 6px',
-                borderRadius: 4,
+                borderRadius: 3,
+                background: 'var(--bg-secondary)',
+                border: '1px solid var(--border-subtle)',
+                color: 'var(--text-muted)',
                 lineHeight: 1
               }}
             >
@@ -147,24 +149,24 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Center Navigation Links */}
-        <nav style={{ display: 'flex', alignItems: 'center', gap: 6 }} className="desktop-nav">
+        {/* Center Navigation Links (Render Developer Style) */}
+        <nav style={{ display: 'flex', alignItems: 'center', gap: 4 }} className="desktop-nav">
           <Link
             to="/"
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: 6,
-              padding: '8px 14px',
-              borderRadius: 'var(--radius-sm)',
-              fontSize: '0.9rem',
-              fontWeight: 500,
-              color: isActive('/') ? 'var(--neon-cyan)' : 'var(--text-muted)',
-              background: isActive('/') ? 'rgba(56, 189, 248, 0.08)' : 'transparent',
-              transition: 'all 0.2s'
+              padding: '6px 12px',
+              borderRadius: 4,
+              fontSize: '0.88rem',
+              fontWeight: isActive('/') ? 600 : 500,
+              color: isActive('/') ? 'var(--text-main)' : 'var(--text-muted)',
+              background: isActive('/') ? 'var(--bg-secondary)' : 'transparent',
+              border: isActive('/') ? '1px solid var(--border-subtle)' : '1px solid transparent',
+              transition: 'all 0.15s'
             }}
           >
-            <Gamepad2 size={16} />
             Lobby
           </Link>
 
@@ -175,16 +177,16 @@ export default function Navbar() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: 6,
-                padding: '8px 14px',
-                borderRadius: 'var(--radius-sm)',
-                fontSize: '0.9rem',
-                fontWeight: 500,
-                color: isActive('/dashboard') ? 'var(--neon-cyan)' : 'var(--text-muted)',
-                background: isActive('/dashboard') ? 'rgba(56, 189, 248, 0.08)' : 'transparent',
-                transition: 'all 0.2s'
+                padding: '6px 12px',
+                borderRadius: 4,
+                fontSize: '0.88rem',
+                fontWeight: isActive('/dashboard') ? 600 : 500,
+                color: isActive('/dashboard') ? 'var(--text-main)' : 'var(--text-muted)',
+                background: isActive('/dashboard') ? 'var(--bg-secondary)' : 'transparent',
+                border: isActive('/dashboard') ? '1px solid var(--border-subtle)' : '1px solid transparent',
+                transition: 'all 0.15s'
               }}
             >
-              <LayoutDashboard size={16} />
               Dashboard
             </Link>
           )}
@@ -195,16 +197,16 @@ export default function Navbar() {
               display: 'flex',
               alignItems: 'center',
               gap: 6,
-              padding: '8px 14px',
-              borderRadius: 'var(--radius-sm)',
-              fontSize: '0.9rem',
-              fontWeight: 500,
-              color: isActive('/leaderboard') ? 'var(--neon-cyan)' : 'var(--text-muted)',
-              background: isActive('/leaderboard') ? 'rgba(56, 189, 248, 0.08)' : 'transparent',
-              transition: 'all 0.2s'
+              padding: '6px 12px',
+              borderRadius: 4,
+              fontSize: '0.88rem',
+              fontWeight: isActive('/leaderboard') ? 600 : 500,
+              color: isActive('/leaderboard') ? 'var(--text-main)' : 'var(--text-muted)',
+              background: isActive('/leaderboard') ? 'var(--bg-secondary)' : 'transparent',
+              border: isActive('/leaderboard') ? '1px solid var(--border-subtle)' : '1px solid transparent',
+              transition: 'all 0.15s'
             }}
           >
-            <Trophy size={16} />
             Leaderboard
           </Link>
 
@@ -216,16 +218,16 @@ export default function Navbar() {
                   display: 'flex',
                   alignItems: 'center',
                   gap: 6,
-                  padding: '8px 14px',
-                  borderRadius: 'var(--radius-sm)',
-                  fontSize: '0.9rem',
-                  fontWeight: 500,
-                  color: isActive('/history') ? 'var(--neon-cyan)' : 'var(--text-muted)',
-                  background: isActive('/history') ? 'rgba(56, 189, 248, 0.08)' : 'transparent',
-                  transition: 'all 0.2s'
+                  padding: '6px 12px',
+                  borderRadius: 4,
+                  fontSize: '0.88rem',
+                  fontWeight: isActive('/history') ? 600 : 500,
+                  color: isActive('/history') ? 'var(--text-main)' : 'var(--text-muted)',
+                  background: isActive('/history') ? 'var(--bg-secondary)' : 'transparent',
+                  border: isActive('/history') ? '1px solid var(--border-subtle)' : '1px solid transparent',
+                  transition: 'all 0.15s'
                 }}
               >
-                <History size={16} />
                 History
               </Link>
 
@@ -235,16 +237,16 @@ export default function Navbar() {
                   display: 'flex',
                   alignItems: 'center',
                   gap: 6,
-                  padding: '8px 14px',
-                  borderRadius: 'var(--radius-sm)',
-                  fontSize: '0.9rem',
-                  fontWeight: 500,
-                  color: isActive('/friends') ? 'var(--neon-cyan)' : 'var(--text-muted)',
-                  background: isActive('/friends') ? 'rgba(56, 189, 248, 0.08)' : 'transparent',
-                  transition: 'all 0.2s'
+                  padding: '6px 12px',
+                  borderRadius: 4,
+                  fontSize: '0.88rem',
+                  fontWeight: isActive('/friends') ? 600 : 500,
+                  color: isActive('/friends') ? 'var(--text-main)' : 'var(--text-muted)',
+                  background: isActive('/friends') ? 'var(--bg-secondary)' : 'transparent',
+                  border: isActive('/friends') ? '1px solid var(--border-subtle)' : '1px solid transparent',
+                  transition: 'all 0.15s'
                 }}
               >
-                <Users size={16} />
                 Friends
               </Link>
             </>
@@ -257,17 +259,17 @@ export default function Navbar() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: 6,
-                padding: '8px 14px',
-                borderRadius: 'var(--radius-sm)',
-                fontSize: '0.9rem',
+                padding: '6px 12px',
+                borderRadius: 4,
+                fontSize: '0.88rem',
                 fontWeight: 600,
-                color: isActive('/admin') ? '#c084fc' : '#a855f7',
-                background: isActive('/admin') ? 'rgba(168, 85, 247, 0.15)' : 'rgba(168, 85, 247, 0.08)',
-                border: '1px solid rgba(168, 85, 247, 0.25)',
-                transition: 'all 0.2s'
+                color: 'var(--render-purple)',
+                background: 'rgba(124, 58, 237, 0.08)',
+                border: '1px solid rgba(124, 58, 237, 0.2)',
+                transition: 'all 0.15s'
               }}
             >
-              <Shield size={16} />
+              <Shield size={14} />
               Admin
             </Link>
           )}
@@ -483,25 +485,36 @@ export default function Navbar() {
                 </div>
               </div>
 
+              {/* Render-style Solid Black Dashboard Button */}
+              <Link to="/dashboard" className="btn btn-primary btn-sm mobile-hide-sm">
+                Dashboard
+              </Link>
+
               {/* Logout Button */}
               <button
                 onClick={handleLogout}
                 title="Log Out"
                 className="btn btn-secondary btn-sm mobile-hide-sm"
-                style={{ padding: '8px 10px' }}
+                style={{ padding: '7px 9px' }}
               >
-                <LogOut size={16} />
+                <LogOut size={15} />
               </button>
             </>
           ) : (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }} className="mobile-hide-sm">
-              <Link to="/login" className="btn btn-secondary btn-sm">
-                <LogIn size={15} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }} className="mobile-hide-sm">
+              <Link
+                to="/login"
+                style={{
+                  fontSize: '0.88rem',
+                  fontWeight: 600,
+                  color: 'var(--text-muted)',
+                  transition: 'color 0.15s'
+                }}
+              >
                 Log In
               </Link>
               <Link to="/register" className="btn btn-primary btn-sm">
-                <UserPlus size={15} />
-                Sign Up
+                Start for free &gt;
               </Link>
             </div>
           )}

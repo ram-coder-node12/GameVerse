@@ -18,7 +18,8 @@ import {
   CheckCircle2,
   Terminal,
   Radio,
-  Play
+  Play,
+  X
 } from 'lucide-react';
 
 export default function HomePage() {
@@ -26,10 +27,11 @@ export default function HomePage() {
   const { joinQueue, inQueue, onlineCount } = useSocket();
   const navigate = useNavigate();
 
-  // Render-style rotating keywords
-  const words = ['Tic-Tac-Toe', 'Connect Four', 'Ranked Duels', 'Match Engine'];
+  // Render-style rotating keywords (Starts with API to match user's screenshot)
+  const words = ['API', 'Tic-Tac-Toe', 'Connect Four', 'game engine'];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [fadeState, setFadeState] = useState('fade-in');
+  const [showSkipPrompt, setShowSkipPrompt] = useState(true);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -58,42 +60,14 @@ export default function HomePage() {
       <section className="render-hero-container">
         {/* Left Column: Architectural Title & CTAs */}
         <div>
-          {/* Top developer pill */}
-          <div
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 8,
-              padding: '5px 12px',
-              borderRadius: '4px',
-              background: 'var(--bg-secondary)',
-              border: '1px solid var(--border-subtle)',
-              marginBottom: 24,
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.82rem',
-              color: 'var(--text-muted)'
-            }}
-          >
-            <span
-              style={{
-                width: 7,
-                height: 7,
-                borderRadius: '50%',
-                background: '#10b981',
-                boxShadow: '0 0 6px #10b981'
-              }}
-            />
-            <span>$ gameverse init --arena</span>
-          </div>
-
           {/* Render-style Typography Headline */}
           <h1
             style={{
-              fontSize: 'clamp(2.4rem, 4.8vw, 4.1rem)',
-              fontWeight: 800,
+              fontSize: 'clamp(2.5rem, 5.2vw, 4.2rem)',
+              fontWeight: 700,
               lineHeight: 1.08,
               letterSpacing: '-0.035em',
-              marginBottom: 22,
+              marginBottom: 24,
               color: 'var(--text-main)'
             }}
           >
@@ -108,28 +82,28 @@ export default function HomePage() {
                 transform: fadeState === 'fade-in' ? 'translateY(0)' : 'translateY(4px)'
               }}
             >
-              [{words[currentWordIndex]}
+              {words[currentWordIndex]}
             </span>
-            <span style={{ color: 'var(--render-orange)' }}>]</span>
+            <span style={{ color: 'var(--render-orange)', fontWeight: 600 }}>]</span>
             <span className="render-cursor">|</span>
           </h1>
 
           <p
             style={{
               color: 'var(--text-muted)',
-              fontSize: '1.18rem',
+              fontSize: '1.2rem',
               lineHeight: 1.55,
               maxWidth: 520,
               marginBottom: 36
             }}
           >
-            Intuitive infrastructure to play, scale, and duel across server-authoritative multiplayer arenas from your first move to your grandmaster title.
+            Intuitive infrastructure to scale any app or game from your first user to your billionth.
           </p>
 
           {/* Render High-Contrast Action Buttons */}
           <div
             className="mobile-full-btn-group"
-            style={{ display: 'flex', gap: 14, alignItems: 'center', marginBottom: 32 }}
+            style={{ display: 'flex', gap: 14, alignItems: 'center', marginBottom: 36 }}
           >
             {user ? (
               <button
@@ -153,7 +127,7 @@ export default function HomePage() {
               onClick={() => navigate('/leaderboard')}
               className="btn btn-secondary btn-lg mobile-full-btn"
             >
-              Explore Leaderboard
+              Talk to sales
             </button>
           </div>
 
@@ -185,7 +159,48 @@ export default function HomePage() {
 
         {/* Right Column: Render Blueprint Interactive Telemetry Diagram */}
         <div style={{ position: 'relative' }}>
-          {/* Top Floating Badge: $ queue_match --ranked */}
+          {/* Render Floating Skip Prompt (Exact match to screenshot top right) */}
+          {showSkipPrompt && (
+            <div
+              style={{
+                position: 'absolute',
+                top: -65,
+                right: 0,
+                background: 'var(--bg-card)',
+                border: '1px solid var(--border-subtle)',
+                borderTop: '3px solid var(--render-purple)',
+                borderRadius: '4px',
+                padding: '12px 14px',
+                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.08)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 6,
+                zIndex: 10,
+                width: 220
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-main)', fontWeight: 500 }}>
+                <span>Skip this page next time?</span>
+                <button
+                  onClick={() => setShowSkipPrompt(false)}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-dim)', padding: 0 }}
+                  aria-label="Close prompt"
+                >
+                  <X size={13} />
+                </button>
+              </div>
+              <button
+                onClick={() => navigate('/dashboard')}
+                className="btn btn-primary"
+                style={{ padding: '6px 10px', fontSize: '0.74rem', borderRadius: 3, justifyContent: 'space-between', width: '100%' }}
+              >
+                <span>Always open Dashboard</span>
+                <span>&gt;</span>
+              </button>
+            </div>
+          )}
+
+          {/* Top Floating Badge: $ git push */}
           <div
             style={{
               display: 'flex',
@@ -196,7 +211,7 @@ export default function HomePage() {
           >
             <div className="terminal-pill">
               <Terminal size={14} color="#a1a1aa" />
-              <span>$ queue_match --ranked</span>
+              <span>$ git push</span>
             </div>
           </div>
 
@@ -210,7 +225,6 @@ export default function HomePage() {
               xmlns="http://www.w3.org/2000/svg"
               style={{ overflow: 'visible' }}
             >
-              {/* Circuit wire path flowing from terminal pill down to production container */}
               <path
                 d="M 68 0 V 28 H 170 V 56"
                 stroke="var(--render-purple)"
@@ -233,7 +247,7 @@ export default function HomePage() {
               boxShadow: '0 8px 30px rgba(0, 0, 0, 0.08)'
             }}
           >
-            {/* Header: PRODUCTION CLUSTER */}
+            {/* Header: PRODUCTION */}
             <div
               style={{
                 display: 'flex',
@@ -245,18 +259,17 @@ export default function HomePage() {
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <Server size={14} color="var(--render-purple)" />
                 <span
                   style={{
                     fontFamily: 'var(--font-mono)',
                     fontSize: '0.72rem',
                     fontWeight: 700,
-                    letterSpacing: '0.08em',
+                    letterSpacing: '0.1em',
                     textTransform: 'uppercase',
-                    color: 'var(--text-muted)'
+                    color: 'var(--text-dim)'
                   }}
                 >
-                  PRODUCTION CLUSTER • REAL-TIME MESH
+                  PRODUCTION
                 </span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.72rem', color: '#10b981', fontFamily: 'var(--font-mono)' }}>

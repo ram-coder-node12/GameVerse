@@ -2,18 +2,18 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const ThemeContext = createContext({
-  theme: 'dark',
+  theme: 'light',
   toggleTheme: () => {}
 });
 
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('gameverse_theme') || 'dark';
+    return localStorage.getItem('gameverse_render_theme') || 'light';
   });
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('gameverse_theme', theme);
+    localStorage.setItem('gameverse_render_theme', theme);
   }, [theme]);
 
   const toggleTheme = () => {
