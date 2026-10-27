@@ -36,6 +36,24 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// Root API status endpoint
+app.get('/', (req, res) => {
+  res.status(200).json({
+    name: 'GameVerse Real-Time Competitive Arena API',
+    status: 'ONLINE',
+    version: '1.0.0',
+    documentation: 'https://github.com/ram-coder-node12/GameVerse',
+    endpoints: {
+      health: '/health',
+      auth: '/api/auth',
+      games: '/api/games',
+      users: '/api/users',
+      friends: '/api/friends',
+      admin: '/api/admin'
+    }
+  });
+});
+
 // Health check endpoint (Prompt Section 39)
 app.get('/health', (req, res) => {
   res.status(200).json({

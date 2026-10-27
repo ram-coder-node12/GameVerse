@@ -176,9 +176,22 @@ export default function MatchmakingModal() {
               Elapsed: {seconds}s
             </p>
 
-            <button onClick={leaveQueue} className="btn btn-secondary" style={{ width: '100%' }}>
-              Cancel Search
-            </button>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <button
+                onClick={() => {
+                  leaveQueue();
+                  navigate(`/game/practice-${searchingGameType === 'CONNECT_FOUR' ? 'connectfour' : 'tictactoe'}`);
+                }}
+                className="btn btn-purple"
+                style={{ width: '100%', padding: '10px', fontSize: '0.85rem' }}
+              >
+                ⚡ Play vs AI Bot (Instant Practice)
+              </button>
+
+              <button onClick={leaveQueue} className="btn btn-secondary" style={{ width: '100%' }}>
+                Cancel Search
+              </button>
+            </div>
           </div>
         )}
       </div>

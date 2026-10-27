@@ -340,6 +340,29 @@ function initSocket(io) {
           requestedBy: currentUserId
         });
       }
+    // ==========================================
+    // 3.5 IN-GAME LIVE CHAT & QUICK EMOTES
+    // ==========================================
+
+    socket.on('send_game_chat', ({ roomId, message, emote }) => {
+      const room = activeRooms.get(roomId);
+      if (!room) return;
+
+      const currentUserId = socket.user ? socket.user.id : socketUser.get(socket.id);
+      const sender = room.players.find((p) => p.id === currentUserId) || {
+        username: socket.user ? socket.user.username : 'Player'
+      };
+
+      const chatPayload = {
+        id: `chat_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+        senderId: currentUserId,
+        senderUsername: sender.username,
+        message: message ? String(message).trim().substring(0, 150) : null,
+        emote: emote || null,
+        timestamp: new Date().toISOString()
+      };
+
+      io.to(`game_${roomId}`).emit('game_chat_message', chatPayload);
     });
 
     // ==========================================

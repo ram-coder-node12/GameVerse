@@ -693,15 +693,26 @@ export default function HomePage() {
               </div>
             </div>
 
-            <button
-              onClick={() => handlePlayOnline('TIC_TAC_TOE')}
-              disabled={inQueue}
-              className="btn btn-primary"
-              style={{ width: '100%', padding: '12px' }}
-            >
-              <Swords size={17} />
-              {inQueue ? 'Waiting in Queue...' : 'Enter Tic-Tac-Toe Arena'}
-            </button>
+            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+              <button
+                onClick={() => handlePlayOnline('TIC_TAC_TOE')}
+                disabled={inQueue}
+                className="btn btn-primary"
+                style={{ flex: 1, minWidth: 160, padding: '12px' }}
+              >
+                <Swords size={17} />
+                {inQueue ? 'Waiting in Queue...' : 'Multiplayer Arena'}
+              </button>
+              <button
+                onClick={() => navigate('/game/practice-tictactoe')}
+                className="btn btn-secondary"
+                style={{ padding: '12px 16px', gap: 6 }}
+                title="Play immediately against local AI bot"
+              >
+                <Zap size={15} color="#f59e0b" />
+                Practice vs AI
+              </button>
+            </div>
           </div>
 
           {/* Connect Four Arena Card */}
@@ -775,15 +786,26 @@ export default function HomePage() {
               </div>
             </div>
 
-            <button
-              onClick={() => handlePlayOnline('CONNECT_FOUR')}
-              disabled={inQueue}
-              className="btn btn-purple"
-              style={{ width: '100%', padding: '12px' }}
-            >
-              <Swords size={17} />
-              {inQueue ? 'Waiting in Queue...' : 'Enter Connect Four Arena'}
-            </button>
+            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+              <button
+                onClick={() => handlePlayOnline('CONNECT_FOUR')}
+                disabled={inQueue}
+                className="btn btn-purple"
+                style={{ flex: 1, minWidth: 160, padding: '12px' }}
+              >
+                <Swords size={17} />
+                {inQueue ? 'Waiting in Queue...' : 'Multiplayer Arena'}
+              </button>
+              <button
+                onClick={() => navigate('/game/practice-connectfour')}
+                className="btn btn-secondary"
+                style={{ padding: '12px 16px', gap: 6 }}
+                title="Play immediately against local AI bot"
+              >
+                <Zap size={15} color="var(--render-purple)" />
+                Practice vs AI
+              </button>
+            </div>
           </div>
         </div>
       </section>

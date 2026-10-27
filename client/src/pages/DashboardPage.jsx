@@ -286,7 +286,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Play Now Quick Match */}
-        <div className="mobile-full-btn-group" style={{ display: 'flex', gap: 12 }}>
+        <div className="mobile-full-btn-group" style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
           <button
             onClick={() => joinQueue('TIC_TAC_TOE')}
             disabled={inQueue}
@@ -304,6 +304,15 @@ export default function DashboardPage() {
           >
             <CircleDot size={18} />
             {inQueue ? 'In Queue...' : 'Quick Connect Four'}
+          </button>
+          <button
+            onClick={() => navigate('/game/practice-tictactoe')}
+            className="btn btn-secondary mobile-full-btn"
+            style={{ padding: '12px 18px', gap: 6 }}
+            title="Practice offline against AI bot"
+          >
+            <Zap size={16} color="#f59e0b" />
+            Practice vs AI
           </button>
         </div>
       </div>

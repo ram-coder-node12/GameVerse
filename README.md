@@ -46,6 +46,9 @@ GameVerse solves these problems through an enterprise-grade architectural design
 - 🎮 **Two Authoritative Games:**
   - **Tic-Tac-Toe:** 3×3 classic arena, turn management, 8 winning line detections, draw detection.
   - **Connect Four:** 7×6 grid with gravity piece drop physics, horizontal, vertical, and diagonal 4-in-a-row detection.
+- 🤖 **Offline Practice vs AI Engine:** Instant single-player matches against intelligent heuristic AI bots for both Tic-Tac-Toe and Connect Four without waiting for an online peer.
+- 💬 **In-Game Live Reactions & Chat:** Real-time in-match chat feed with quick-reaction emote pills (`👍 Nice move`, `🔥 Well played`, `🤔 Thinking...`, `⚡ Rematch?`, `🎉 GG!`) and reactive AI responses in practice mode.
+- 🎨 **Modern Blueprint Design System:** Render-style sleek canvas, light & dark mode toggle, subtle telemetry waves, and confetti celebration effects.
 - 📡 **Disconnect Resilience:** 30-second reconnection grace period before automated forfeit resolution.
 - 🔄 **Rematch Protocol:** Mutual agreement rematching with automatic turn swapping.
 - 🏆 **Global Leaderboard:** Ranked leaderboard sorted by ELO rating with podium badges, search, and pagination.
