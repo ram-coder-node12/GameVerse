@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LogIn, AlertCircle, Gamepad2, Shield } from 'lucide-react';
+import { LogIn, AlertCircle, Gamepad2 } from 'lucide-react';
 import GoogleSignInButton from '../components/GoogleSignInButton';
 
 export default function LoginPage() {
@@ -34,11 +34,6 @@ export default function LoginPage() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleQuickDemo = (demoUser, demoPass) => {
-    setIdentifier(demoUser);
-    setPassword(demoPass);
   };
 
   return (
@@ -145,47 +140,7 @@ export default function LoginPage() {
           onError={(msg) => setError(msg)}
         />
 
-        {/* Quick Demo Fill Buttons for Examiners */}
-        <div
-          style={{
-            marginTop: 24,
-            paddingTop: 18,
-            borderTop: '1px solid var(--border-subtle)',
-            textAlign: 'center'
-          }}
-        >
-          <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            Quick Demo Accounts
-          </span>
-          <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
-            <button
-              type="button"
-              onClick={() => handleQuickDemo('PlayerAlpha', 'pass123')}
-              className="btn btn-secondary btn-sm"
-              style={{ flex: 1, fontSize: '0.78rem' }}
-            >
-              Player 1
-            </button>
-            <button
-              type="button"
-              onClick={() => handleQuickDemo('PlayerBeta', 'pass123')}
-              className="btn btn-secondary btn-sm"
-              style={{ flex: 1, fontSize: '0.78rem' }}
-            >
-              Player 2
-            </button>
-            <button
-              type="button"
-              onClick={() => handleQuickDemo('AdminBoss', 'admin123')}
-              className="btn btn-secondary btn-sm"
-              style={{ flex: 1, fontSize: '0.78rem', color: '#c084fc' }}
-            >
-              <Shield size={12} /> Admin
-            </button>
-          </div>
-        </div>
-
-        <div style={{ textAlign: 'center', marginTop: 20, fontSize: '0.88rem', color: 'var(--text-muted)' }}>
+        <div style={{ textAlign: 'center', marginTop: 24, fontSize: '0.88rem', color: 'var(--text-muted)' }}>
           Don't have an account?{' '}
           <Link to="/register" style={{ color: '#00f2fe', fontWeight: 600 }}>
             Create one

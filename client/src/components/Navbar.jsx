@@ -14,13 +14,17 @@ import {
   LogIn,
   UserPlus,
   Flame,
-  LayoutDashboard
+  LayoutDashboard,
+  Sun,
+  Moon
 } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 import api from '../services/api';
 
 export default function Navbar() {
   const { user, logout, isAdmin } = useAuth();
   const { status, onlineCount } = useSocket();
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -294,6 +298,27 @@ export default function Navbar() {
             <span style={{ opacity: 0.4 }}>|</span>
             <span style={{ color: '#00f2fe', fontWeight: 600 }}>{onlineCount} Online</span>
           </div>
+
+          {/* Theme Toggle Button (Light / Dark) */}
+          <button
+            onClick={toggleTheme}
+            title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            aria-label="Toggle Theme"
+            style={{
+              background: 'rgba(255, 255, 255, 0.05)',
+              border: '1px solid var(--border-subtle)',
+              borderRadius: 8,
+              padding: 8,
+              color: theme === 'dark' ? '#f59e0b' : '#0284c7',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
 
           {user ? (
             <>

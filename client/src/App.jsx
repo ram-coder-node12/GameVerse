@@ -3,6 +3,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { SocketProvider } from './context/SocketContext';
+import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/Navbar';
 import MatchmakingModal from './components/MatchmakingModal';
 import ChallengeModal from './components/ChallengeModal';
@@ -87,9 +88,10 @@ class ErrorBoundary extends React.Component {
 export default function App() {
   return (
     <ErrorBoundary>
-      <BrowserRouter>
-      <AuthProvider>
-        <SocketProvider>
+      <ThemeProvider>
+        <BrowserRouter>
+          <AuthProvider>
+            <SocketProvider>
           <div className="app-container">
             <Navbar />
             <MatchmakingModal />
@@ -173,6 +175,7 @@ export default function App() {
         </SocketProvider>
       </AuthProvider>
     </BrowserRouter>
+    </ThemeProvider>
   </ErrorBoundary>
 );
 }
