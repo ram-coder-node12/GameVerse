@@ -4,6 +4,10 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
+const gameRoutes = require('./routes/gameRoutes');
+const friendRoutes = require('./routes/friendRoutes');
+const notificationRoutes = require('./routes/notificationRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -45,6 +49,10 @@ app.get('/health', (req, res) => {
 // Mount REST routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/games', gameRoutes);
+app.use('/api/friends', friendRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Centralized Error Handler
 app.use(errorHandler);
