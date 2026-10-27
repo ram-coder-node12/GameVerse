@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { LogIn, AlertCircle, Gamepad2, Shield } from 'lucide-react';
+import GoogleSignInButton from '../components/GoogleSignInButton';
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -122,6 +123,27 @@ export default function LoginPage() {
             {loading ? 'Authenticating...' : 'Sign In to Arena'}
           </button>
         </form>
+
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            margin: '20px 0',
+            gap: 12
+          }}
+        >
+          <div style={{ flex: 1, height: 1, background: 'var(--border-subtle)' }} />
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            OR
+          </span>
+          <div style={{ flex: 1, height: 1, background: 'var(--border-subtle)' }} />
+        </div>
+
+        <GoogleSignInButton
+          textType="signin"
+          onSuccess={() => navigate(from, { replace: true })}
+          onError={(msg) => setError(msg)}
+        />
 
         {/* Quick Demo Fill Buttons for Examiners */}
         <div

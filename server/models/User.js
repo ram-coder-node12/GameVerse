@@ -24,7 +24,14 @@ const userSchema = new mongoose.Schema(
     },
     passwordHash: {
       type: String,
-      required: [true, 'Password is required']
+      required: function () {
+        return !this.googleId;
+      }
+    },
+    googleId: {
+      type: String,
+      sparse: true,
+      index: true
     },
     avatar: {
       type: String,
@@ -101,6 +108,7 @@ userSchema.virtual('winRate').get(function () {
 
 // Compare password method
 userSchema.methods.comparePassword = async function (candidatePassword) {
+  if (!this.passwordHash) return false;
   return bcrypt.compare(candidatePassword, this.passwordHash);
 };
 

@@ -195,9 +195,110 @@ async function getMe(req, res) {
   });
 }
 
+// @desc    Authenticate with Google OAuth ID Token
+// @route   POST /api/auth/google
+// @access  Public
+async function googleAuth(req, res, next) {
+  try {
+    const { credential } = req.body;
+    if (!credential) {
+      return res.status(400).json({
+        success: false,
+        message: 'Google credential token is required.'
+      });
+    }
+
+    // Verify token with Google's official tokeninfo endpoint
+    const response = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(credential)}`);
+    if (!response.ok) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid or expired Google credential token.'
+      });
+    }
+
+    const payload = await response.json();
+    const { sub: googleId, email, name, picture } = payload;
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: 'Google account did not return a valid email address.'
+      });
+    }
+
+    // 1. Try to find user by googleId
+    let user = await User.findOne({ googleId });
+
+    // 2. If not found by googleId, check by email
+    if (!user) {
+      user = await User.findOne({ email: email.toLowerCase() });
+      if (user) {
+        user.googleId = googleId;
+        if (!user.avatar || user.avatar.includes('dicebear')) {
+          user.avatar = picture || user.avatar;
+        }
+        await user.save();
+      }
+    }
+
+    // 3. If still no user, create a new one
+    if (!user) {
+      let baseUsername = (name || email.split('@')[0])
+        .replace(/[^a-zA-Z0-9_]/g, '')
+        .slice(0, 14);
+      if (baseUsername.length < 3) baseUsername = 'Player';
+
+      let uniqueUsername = baseUsername;
+      let attempts = 0;
+      while (await User.findOne({ username: uniqueUsername }) && attempts < 10) {
+        uniqueUsername = `${baseUsername.slice(0, 11)}_${Math.floor(100 + Math.random() * 900)}`;
+        attempts++;
+      }
+
+      if (attempts >= 10) {
+        uniqueUsername = `Player_${Date.now().toString().slice(-6)}`;
+      }
+
+      user = await User.create({
+        username: uniqueUsername,
+        email: email.toLowerCase(),
+        googleId,
+        avatar: picture || undefined,
+        role: 'PLAYER',
+        rating: 1000
+      });
+
+      logger.info(`New user registered via Google: ${user.username} (${user.email})`);
+    } else {
+      logger.info(`User logged in via Google: ${user.username}`);
+    }
+
+    if (!user.isActive) {
+      return res.status(403).json({
+        success: false,
+        message: 'Your account has been deactivated. Please contact support.'
+      });
+    }
+
+    const token = generateToken(user._id, user.role);
+    res.cookie('token', token, getCookieOptions());
+
+    res.status(200).json({
+      success: true,
+      message: 'Signed in with Google successfully.',
+      token,
+      user
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   register,
   login,
+  googleAuth,
   logout,
   getMe
 };

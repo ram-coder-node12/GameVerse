@@ -52,6 +52,18 @@ export function AuthProvider({ children }) {
     throw new Error(res.data.message || 'Registration failed');
   };
 
+  const googleLogin = async (credential) => {
+    const res = await api.post('/auth/google', { credential });
+    if (res.data.success) {
+      if (res.data.token) {
+        localStorage.setItem('token', res.data.token);
+      }
+      setUser(res.data.user);
+      return res.data.user;
+    }
+    throw new Error(res.data.message || 'Google authentication failed');
+  };
+
   const logout = async () => {
     try {
       await api.post('/auth/logout');
@@ -74,6 +86,7 @@ export function AuthProvider({ children }) {
         loading,
         login,
         register,
+        googleLogin,
         logout,
         updateUser,
         refreshUser: fetchMe,
