@@ -317,28 +317,6 @@ export default function Navbar() {
             <span style={{ color: 'var(--neon-cyan)', fontWeight: 600 }}>{onlineCount} Online</span>
           </div>
 
-          {/* Theme Toggle Button (Light / Dark) */}
-          <button
-            onClick={toggleTheme}
-            title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-            aria-label="Toggle Theme"
-            style={{
-              background: 'var(--bg-secondary)',
-              border: '1px solid var(--border-subtle)',
-              borderRadius: 8,
-              padding: '7px 9px',
-              color: theme === 'dark' ? '#fbbf24' : '#2563eb',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
-              transition: 'all 0.2s ease'
-            }}
-          >
-            {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
-          </button>
-
           {user ? (
             <>
               {/* Notifications Bell */}
@@ -514,7 +492,7 @@ export default function Navbar() {
                 Log In
               </Link>
               <Link to="/register" className="btn btn-primary btn-sm">
-                Start for free &gt;
+                Sign up
               </Link>
             </div>
           )}

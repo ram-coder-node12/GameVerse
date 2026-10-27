@@ -213,7 +213,7 @@ export default function HomePage() {
                 onClick={() => navigate('/register')}
                 className="btn btn-primary btn-lg mobile-full-btn"
               >
-                Start playing free &gt;
+                Sign up &gt;
               </button>
             )}
 
