@@ -1,0 +1,52 @@
+// server/app.js
+const express = require('express');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+const errorHandler = require('./middleware/errorHandler');
+
+const app = express();
+
+// Allowed origins
+const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps, curl, postman)
+      if (!origin) return callback(null, true);
+      // In development allow any localhost
+      if (process.env.NODE_ENV !== 'production' && origin.includes('localhost')) {
+        return callback(null, true);
+      }
+      if (origin === clientUrl) {
+        return callback(null, true);
+      }
+      return callback(null, true); // Permissive for preview/custom domains
+    },
+    credentials: true
+  })
+);
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+// Health check endpoint (Prompt Section 39)
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'GameVerse server is healthy',
+    timestamp: new Date().toISOString(),
+    env: process.env.NODE_ENV || 'development'
+  });
+});
+
+// Mount REST routes
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+
+// Centralized Error Handler
+app.use(errorHandler);
+
+module.exports = app;
