@@ -228,18 +228,10 @@ export default function GamePage() {
       )}
 
       {/* Players Header Card */}
-      <div
-        className="glass-card"
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '16px 24px',
-          marginBottom: 24
-        }}
-      >
+      <div className="glass-card players-header-card">
         {/* Current User */}
         <div
+          className="players-header-p1"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -248,7 +240,7 @@ export default function GamePage() {
             transition: 'opacity 0.2s'
           }}
         >
-          <div style={{ position: 'relative' }}>
+          <div style={{ position: 'relative', flexShrink: 0 }}>
             <img
               src={myPlayerMeta?.avatar || user?.avatar}
               alt="You"
@@ -294,7 +286,7 @@ export default function GamePage() {
         </div>
 
         {/* Center Turn / Match Status Indicator */}
-        <div style={{ textAlign: 'center' }}>
+        <div className="players-header-turn" style={{ textAlign: 'center' }}>
           {gameState.status === 'IN_PROGRESS' ? (
             <div
               style={{
@@ -336,6 +328,7 @@ export default function GamePage() {
 
         {/* Opponent */}
         <div
+          className="players-header-p2"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -346,7 +339,7 @@ export default function GamePage() {
             textAlign: 'right'
           }}
         >
-          <div style={{ position: 'relative' }}>
+          <div style={{ position: 'relative', flexShrink: 0 }}>
             <img
               src={opponentMeta?.avatar || 'https://api.dicebear.com/7.x/bottts/svg?seed=opponent'}
               alt="Opponent"
@@ -493,10 +486,10 @@ export default function GamePage() {
           )}
 
           {/* Rematch & Lobby Controls */}
-          <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+          <div className="mobile-full-btn-group" style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
             <button
               onClick={() => navigate('/')}
-              className="btn btn-secondary"
+              className="btn btn-secondary mobile-full-btn"
               style={{ flex: 1 }}
             >
               Return to Lobby
@@ -505,7 +498,7 @@ export default function GamePage() {
             <button
               onClick={handleRematch}
               disabled={rematchStatus === 'REQUESTED'}
-              className="btn btn-primary"
+              className="btn btn-primary mobile-full-btn"
               style={{ flex: 1 }}
             >
               <RotateCcw size={16} />

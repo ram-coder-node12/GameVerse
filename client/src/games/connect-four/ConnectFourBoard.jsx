@@ -28,9 +28,9 @@ export default function ConnectFourBoard({
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(7, 1fr)',
-          gap: 10,
+          gap: 'clamp(4px, 1.5vw, 10px)',
           width: '100%',
-          maxWidth: 480,
+          maxWidth: 'min(480px, 100%)',
           marginBottom: 10
         }}
       >
@@ -75,13 +75,13 @@ export default function ConnectFourBoard({
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(7, 1fr)',
-          gap: 10,
-          padding: 16,
+          gap: 'clamp(4px, 1.5vw, 10px)',
+          padding: 'clamp(8px, 2.5vw, 16px)',
           background: 'linear-gradient(180deg, #182346 0%, #0d152d 100%)',
           borderRadius: 'var(--radius-lg)',
           border: '3px solid #2b396b',
           boxShadow: '0 25px 60px rgba(0, 0, 0, 0.7), inset 0 2px 8px rgba(255, 255, 255, 0.15)',
-          maxWidth: 480,
+          maxWidth: 'min(480px, 100%)',
           width: '100%'
         }}
       >

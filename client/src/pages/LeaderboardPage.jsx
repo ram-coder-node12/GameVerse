@@ -116,8 +116,8 @@ export default function LeaderboardPage() {
             No players found matching your search.
           </div>
         ) : (
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+          <div className="table-responsive">
+            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: 580 }}>
               <thead>
                 <tr style={{ background: 'rgba(255, 255, 255, 0.02)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-dim)', fontSize: '0.78rem', textTransform: 'uppercase' }}>
                   <th style={{ padding: '16px 20px', width: 80 }}>Rank</th>

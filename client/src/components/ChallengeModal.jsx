@@ -82,10 +82,10 @@ export default function ChallengeModal() {
           </div>
         </div>
 
-        <div style={{ display: 'flex', gap: 12 }}>
+        <div className="mobile-full-btn-group" style={{ display: 'flex', gap: 12 }}>
           <button
             onClick={() => respondToChallenge(challengeId, false)}
-            className="btn btn-secondary"
+            className="btn btn-secondary mobile-full-btn"
             style={{ flex: 1 }}
           >
             <X size={18} />
@@ -93,7 +93,7 @@ export default function ChallengeModal() {
           </button>
           <button
             onClick={() => respondToChallenge(challengeId, true)}
-            className="btn btn-primary"
+            className="btn btn-primary mobile-full-btn"
             style={{ flex: 1 }}
           >
             <Check size={18} />

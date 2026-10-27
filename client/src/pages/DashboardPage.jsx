@@ -122,7 +122,7 @@ export default function DashboardPage() {
     <div style={{ maxWidth: 1180, margin: '0 auto' }}>
       {/* Profile Overview Banner Card */}
       <div
-        className="glass-card"
+        className="glass-card mobile-stack"
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -135,8 +135,8 @@ export default function DashboardPage() {
           border: '1px solid rgba(0, 242, 254, 0.15)'
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-          <div style={{ position: 'relative' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
+          <div style={{ position: 'relative', flexShrink: 0 }}>
             <img
               src={user.avatar}
               alt={user.username}
@@ -175,7 +175,7 @@ export default function DashboardPage() {
             </button>
           </div>
 
-          <div>
+          <div style={{ minWidth: 0, flex: 1 }}>
             {isEditingUsername ? (
               <form onSubmit={handleSaveUsername} style={{ marginBottom: 6 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
@@ -200,8 +200,10 @@ export default function DashboardPage() {
                       fontWeight: 700,
                       fontFamily: 'var(--font-heading)',
                       outline: 'none',
-                      minWidth: 180,
-                      maxWidth: 240
+                      minWidth: 140,
+                      maxWidth: '100%',
+                      width: '100%',
+                      flex: 1
                     }}
                   />
                   <button
@@ -286,11 +288,11 @@ export default function DashboardPage() {
         </div>
 
         {/* Play Now Quick Match */}
-        <div style={{ display: 'flex', gap: 12 }}>
+        <div className="mobile-full-btn-group" style={{ display: 'flex', gap: 12 }}>
           <button
             onClick={() => joinQueue('TIC_TAC_TOE')}
             disabled={inQueue}
-            className="btn btn-primary"
+            className="btn btn-primary mobile-full-btn"
             style={{ padding: '12px 18px' }}
           >
             <Grid3X3 size={18} />
@@ -299,7 +301,7 @@ export default function DashboardPage() {
           <button
             onClick={() => joinQueue('CONNECT_FOUR')}
             disabled={inQueue}
-            className="btn btn-purple"
+            className="btn btn-purple mobile-full-btn"
             style={{ padding: '12px 18px' }}
           >
             <CircleDot size={18} />
@@ -410,8 +412,8 @@ export default function DashboardPage() {
             <p>No matches recorded yet. Jump into the matchmaking queue above to begin your journey!</p>
           </div>
         ) : (
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+          <div className="table-responsive">
+            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: 500 }}>
               <thead>
                 <tr style={{ borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-dim)', fontSize: '0.78rem', textTransform: 'uppercase' }}>
                   <th style={{ padding: '12px 14px' }}>Result</th>

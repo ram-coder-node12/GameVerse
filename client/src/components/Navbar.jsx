@@ -16,7 +16,9 @@ import {
   Flame,
   LayoutDashboard,
   Sun,
-  Moon
+  Moon,
+  Menu,
+  X
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import api from '../services/api';
@@ -31,7 +33,13 @@ export default function Navbar() {
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [showNotifs, setShowNotifs] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const notifRef = useRef(null);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
 
   // Fetch notifications if logged in
   useEffect(() => {
@@ -260,9 +268,10 @@ export default function Navbar() {
         </nav>
 
         {/* Right Action Icons / User Info */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           {/* Live Connection & Online Count Pill */}
           <div
+            className="mobile-hide-sm"
             title={`Real-Time Connection: ${status}`}
             style={{
               display: 'flex',
@@ -373,7 +382,8 @@ export default function Navbar() {
                       position: 'absolute',
                       right: 0,
                       top: 'calc(100% + 12px)',
-                      width: 320,
+                      width: 300,
+                      maxWidth: '90vw',
                       background: 'var(--bg-card)',
                       border: '1px solid var(--border-subtle)',
                       borderRadius: 'var(--radius-md)',
@@ -440,6 +450,7 @@ export default function Navbar() {
 
               {/* Player Profile Chip */}
               <div
+                className="mobile-hide-sm"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -469,14 +480,14 @@ export default function Navbar() {
               <button
                 onClick={handleLogout}
                 title="Log Out"
-                className="btn btn-secondary btn-sm"
+                className="btn btn-secondary btn-sm mobile-hide-sm"
                 style={{ padding: '8px 10px' }}
               >
                 <LogOut size={16} />
               </button>
             </>
           ) : (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }} className="mobile-hide-sm">
               <Link to="/login" className="btn btn-secondary btn-sm">
                 <LogIn size={15} />
                 Log In
@@ -487,8 +498,230 @@ export default function Navbar() {
               </Link>
             </div>
           )}
+
+          {/* Mobile Hamburger Toggle Button */}
+          <button
+            className="mobile-menu-btn"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle Navigation Menu"
+            style={{
+              background: 'rgba(255, 255, 255, 0.05)',
+              border: '1px solid var(--border-subtle)',
+              borderRadius: 8,
+              padding: 8,
+              color: 'var(--text-main)',
+              cursor: 'pointer',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
         </div>
       </div>
+
+      {/* Collapsible Mobile Navigation Drawer */}
+      {mobileOpen && (
+        <div
+          style={{
+            background: 'var(--bg-secondary)',
+            borderTop: '1px solid var(--border-subtle)',
+            borderBottom: '1px solid var(--border-subtle)',
+            padding: '16px 20px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 6,
+            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.6)',
+            animation: 'slideDown 0.2s ease-out'
+          }}
+        >
+          {user && (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 12,
+                padding: '10px 14px',
+                borderRadius: 'var(--radius-sm)',
+                background: 'rgba(255, 255, 255, 0.04)',
+                marginBottom: 6
+              }}
+            >
+              <img
+                src={user.avatar}
+                alt={user.username}
+                style={{ width: 38, height: 38, borderRadius: '50%', background: '#1c2237' }}
+              />
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-main)' }}>
+                  {user.username}
+                </div>
+                <div style={{ fontSize: '0.78rem', color: 'var(--neon-gold)', fontWeight: 600 }}>
+                  ★ {user.rating} ELO • {user.role}
+                </div>
+              </div>
+            </div>
+          )}
+
+          <Link
+            to="/"
+            onClick={() => setMobileOpen(false)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 10,
+              padding: '10px 14px',
+              borderRadius: 'var(--radius-sm)',
+              fontSize: '0.95rem',
+              fontWeight: 600,
+              color: isActive('/') ? 'var(--neon-cyan)' : 'var(--text-main)',
+              background: isActive('/') ? 'rgba(56, 189, 248, 0.1)' : 'transparent'
+            }}
+          >
+            <Gamepad2 size={18} />
+            Lobby
+          </Link>
+
+          {user && (
+            <Link
+              to="/dashboard"
+              onClick={() => setMobileOpen(false)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 10,
+                padding: '10px 14px',
+                borderRadius: 'var(--radius-sm)',
+                fontSize: '0.95rem',
+                fontWeight: 600,
+                color: isActive('/dashboard') ? 'var(--neon-cyan)' : 'var(--text-main)',
+                background: isActive('/dashboard') ? 'rgba(56, 189, 248, 0.1)' : 'transparent'
+              }}
+            >
+              <LayoutDashboard size={18} />
+              Dashboard
+            </Link>
+          )}
+
+          <Link
+            to="/leaderboard"
+            onClick={() => setMobileOpen(false)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 10,
+              padding: '10px 14px',
+              borderRadius: 'var(--radius-sm)',
+              fontSize: '0.95rem',
+              fontWeight: 600,
+              color: isActive('/leaderboard') ? 'var(--neon-cyan)' : 'var(--text-main)',
+              background: isActive('/leaderboard') ? 'rgba(56, 189, 248, 0.1)' : 'transparent'
+            }}
+          >
+            <Trophy size={18} />
+            Leaderboard
+          </Link>
+
+          {user && (
+            <>
+              <Link
+                to="/history"
+                onClick={() => setMobileOpen(false)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 10,
+                  padding: '10px 14px',
+                  borderRadius: 'var(--radius-sm)',
+                  fontSize: '0.95rem',
+                  fontWeight: 600,
+                  color: isActive('/history') ? 'var(--neon-cyan)' : 'var(--text-main)',
+                  background: isActive('/history') ? 'rgba(56, 189, 248, 0.1)' : 'transparent'
+                }}
+              >
+                <History size={18} />
+                History
+              </Link>
+
+              <Link
+                to="/friends"
+                onClick={() => setMobileOpen(false)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 10,
+                  padding: '10px 14px',
+                  borderRadius: 'var(--radius-sm)',
+                  fontSize: '0.95rem',
+                  fontWeight: 600,
+                  color: isActive('/friends') ? 'var(--neon-cyan)' : 'var(--text-main)',
+                  background: isActive('/friends') ? 'rgba(56, 189, 248, 0.1)' : 'transparent'
+                }}
+              >
+                <Users size={18} />
+                Friends
+              </Link>
+            </>
+          )}
+
+          {isAdmin && (
+            <Link
+              to="/admin"
+              onClick={() => setMobileOpen(false)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 10,
+                padding: '10px 14px',
+                borderRadius: 'var(--radius-sm)',
+                fontSize: '0.95rem',
+                fontWeight: 600,
+                color: isActive('/admin') ? '#c084fc' : '#a855f7',
+                background: isActive('/admin') ? 'rgba(168, 85, 247, 0.12)' : 'transparent'
+              }}
+            >
+              <Shield size={18} />
+              Admin Panel
+            </Link>
+          )}
+
+          {user ? (
+            <button
+              onClick={() => {
+                setMobileOpen(false);
+                handleLogout();
+              }}
+              className="btn btn-danger btn-sm"
+              style={{ width: '100%', marginTop: 8, padding: '10px 14px', justifyContent: 'center' }}
+            >
+              <LogOut size={16} />
+              Log Out
+            </button>
+          ) : (
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 8 }}>
+              <Link
+                to="/login"
+                onClick={() => setMobileOpen(false)}
+                className="btn btn-secondary btn-sm"
+                style={{ justifyContent: 'center', padding: '10px 14px' }}
+              >
+                <LogIn size={16} />
+                Log In
+              </Link>
+              <Link
+                to="/register"
+                onClick={() => setMobileOpen(false)}
+                className="btn btn-primary btn-sm"
+                style={{ justifyContent: 'center', padding: '10px 14px' }}
+              >
+                <UserPlus size={16} />
+                Sign Up
+              </Link>
+            </div>
+          )}
+        </div>
+      )}
     </header>
   );
 }

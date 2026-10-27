@@ -557,7 +557,64 @@ a {
   gap: 16px;
 }
 
-@media (max-width: 900px) {
+/* Responsive Table Helper */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Animations */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile Responsive Utilities */
+.desktop-nav {
+  display: flex !important;
+}
+
+.mobile-menu-btn {
+  display: none !important;
+}
+
+.mobile-hide-sm {
+  display: flex !important;
+}
+
+.mobile-stack {
+  display: flex;
+}
+
+.mobile-full-btn-group {
+  display: flex;
+  gap: 12px;
+}
+
+/* Game Page Players Header */
+.players-header-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  margin-bottom: 24px;
+}
+
+/* Breakpoint: Tablets & Small Desktops (<= 960px) */
+@media (max-width: 960px) {
+  .desktop-nav {
+    display: none !important;
+  }
+  .mobile-menu-btn {
+    display: inline-flex !important;
+  }
   .grid-4 {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -566,11 +623,75 @@ a {
   }
 }
 
+/* Breakpoint: Tablets & Mobile Landscape (<= 680px) */
 @media (max-width: 680px) {
   .grid-2 {
     grid-template-columns: 1fr;
   }
   .main-content {
-    padding: 16px 12px;
+    padding: 14px 10px;
+  }
+  .glass-card {
+    padding: 18px 16px;
+  }
+  .mobile-hide-sm {
+    display: none !important;
+  }
+  .mobile-stack {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .mobile-full-btn-group {
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+  .mobile-full-btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .table-responsive table th,
+  .table-responsive table td {
+    padding: 10px 12px !important;
+    font-size: 0.82rem !important;
+  }
+  .players-header-card {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "turn turn"
+      "player1 player2";
+    padding: 14px 12px !important;
+    gap: 14px 8px !important;
+  }
+  .players-header-turn {
+    grid-area: turn;
+    text-align: center;
+  }
+  .players-header-p1 {
+    grid-area: player1;
+    justify-self: start;
+  }
+  .players-header-p2 {
+    grid-area: player2;
+    justify-self: end;
+  }
+}
+
+/* Breakpoint: Narrow Mobile Phones (<= 480px) */
+@media (max-width: 480px) {
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .grid-4 .glass-card {
+    padding: 14px 10px !important;
+  }
+  .grid-4 .glass-card div[style*="font-size: 2.1rem"],
+  .grid-4 .glass-card div[style*="fontSize: '2.1rem'"] {
+    font-size: 1.55rem !important;
+  }
+  .modal-content {
+    padding: 24px 16px !important;
+    width: 95% !important;
   }
 }

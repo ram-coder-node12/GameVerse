@@ -74,11 +74,11 @@ export default function HomePage() {
         </p>
 
         {!user && (
-          <div style={{ display: 'flex', gap: 14, justifyContent: 'center' }}>
-            <button onClick={() => navigate('/register')} className="btn btn-primary btn-lg">
+          <div className="mobile-full-btn-group" style={{ display: 'flex', gap: 14, justifyContent: 'center' }}>
+            <button onClick={() => navigate('/register')} className="btn btn-primary btn-lg mobile-full-btn">
               Create Free Account
             </button>
-            <button onClick={() => navigate('/login')} className="btn btn-secondary btn-lg">
+            <button onClick={() => navigate('/login')} className="btn btn-secondary btn-lg mobile-full-btn">
               Sign In
             </button>
           </div>
@@ -144,7 +144,8 @@ export default function HomePage() {
               <div
                 style={{
                   display: 'flex',
-                  gap: 16,
+                  flexWrap: 'wrap',
+                  gap: 12,
                   padding: '12px 16px',
                   borderRadius: 'var(--radius-sm)',
                   background: 'rgba(255, 255, 255, 0.03)',
@@ -225,7 +226,8 @@ export default function HomePage() {
               <div
                 style={{
                   display: 'flex',
-                  gap: 16,
+                  flexWrap: 'wrap',
+                  gap: 12,
                   padding: '12px 16px',
                   borderRadius: 'var(--radius-sm)',
                   background: 'rgba(255, 255, 255, 0.03)',

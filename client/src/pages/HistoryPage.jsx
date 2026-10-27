@@ -56,7 +56,7 @@ export default function HistoryPage() {
         </div>
 
         {/* Filters */}
-        <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
           <select
             className="form-input"
             value={gameTypeFilter}
@@ -94,8 +94,8 @@ export default function HistoryPage() {
             <p>No games found matching your current filter criteria.</p>
           </div>
         ) : (
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+          <div className="table-responsive">
+            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: 620 }}>
               <thead>
                 <tr style={{ background: 'rgba(255, 255, 255, 0.02)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-dim)', fontSize: '0.78rem', textTransform: 'uppercase' }}>
                   <th style={{ padding: '16px 20px' }}>Outcome</th>
