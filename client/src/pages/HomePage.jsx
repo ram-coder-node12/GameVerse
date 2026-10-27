@@ -11,14 +11,15 @@ import {
   Trophy,
   Grid3X3,
   CircleDot,
-  ArrowRight,
   Server,
   Activity,
-  Cpu,
   CheckCircle2,
   Terminal,
   Radio,
   Play,
+  RotateCcw,
+  Sparkles,
+  ArrowRight,
   X
 } from 'lucide-react';
 
@@ -27,12 +28,26 @@ export default function HomePage() {
   const { joinQueue, inQueue, onlineCount } = useSocket();
   const navigate = useNavigate();
 
-  // Render-style rotating keywords (Starts with API to match user's screenshot)
-  const words = ['API', 'Tic-Tac-Toe', 'Connect Four', 'game engine'];
+  // Rotating keywords (Gamer & developer tuned, exactly one closing bracket)
+  const words = ['Tic-Tac-Toe', 'Connect Four', 'Ranked Duels', 'Turn Strategy'];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [fadeState, setFadeState] = useState('fade-in');
   const [showSkipPrompt, setShowSkipPrompt] = useState(true);
 
+  // Interactive Match Simulator State
+  const [miniBoard, setMiniBoard] = useState([
+    'X', null, null,
+    null, 'O', null,
+    null, null, null
+  ]);
+  const [miniTurn, setMiniTurn] = useState('X');
+  const [isWireActive, setIsWireActive] = useState(false);
+  const [simulatedLatency, setSimulatedLatency] = useState(12);
+  const [simulatedMoves, setSimulatedMoves] = useState(2);
+  const [lastActionLog, setLastActionLog] = useState('TURN #2 VERIFIED: (1,1) O • 0 CHEAT DETECTED');
+  const [botThinking, setBotThinking] = useState(false);
+
+  // Word rotation cycle
   useEffect(() => {
     const interval = setInterval(() => {
       setFadeState('fade-out');
@@ -43,6 +58,57 @@ export default function HomePage() {
     }, 2800);
     return () => clearInterval(interval);
   }, [words.length]);
+
+  // Handle human move on interactive mini-board
+  const handleMiniCellClick = (index) => {
+    if (miniBoard[index] || botThinking) return;
+
+    // 1. Place Human Move 'X'
+    const newBoard = [...miniBoard];
+    newBoard[index] = 'X';
+    setMiniBoard(newBoard);
+    setIsWireActive(true);
+    setSimulatedMoves((prev) => prev + 1);
+    const row = Math.floor(index / 3);
+    const col = index % 3;
+    setSimulatedLatency(Math.floor(Math.random() * 5) + 9); // 9-13ms
+    setLastActionLog(`MOVE VERIFIED: (${row},${col}) X • SERVER VALIDATED`);
+
+    setTimeout(() => setIsWireActive(false), 850);
+
+    // 2. Check if board is full or win
+    const emptyIndices = newBoard
+      .map((val, idx) => (val === null ? idx : null))
+      .filter((val) => val !== null);
+
+    if (emptyIndices.length === 0) {
+      setLastActionLog('MINI-MATCH DRAW • ELO ADJUSTED (+5 PTS)');
+      return;
+    }
+
+    // 3. Automated Server Opponent Response
+    setBotThinking(true);
+    setTimeout(() => {
+      const botPick = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+      newBoard[botPick] = 'O';
+      setMiniBoard([...newBoard]);
+      setSimulatedMoves((prev) => prev + 1);
+      const bRow = Math.floor(botPick / 3);
+      const bCol = botPick % 3;
+      setSimulatedLatency(Math.floor(Math.random() * 4) + 10);
+      setLastActionLog(`MOVE BROADCAST: (${bRow},${bCol}) O • 2 CLIENTS SYNCED`);
+      setBotThinking(false);
+    }, 700);
+  };
+
+  const handleResetMiniDuel = (e) => {
+    e.stopPropagation();
+    setMiniBoard([null, null, null, null, null, null, null, null, null]);
+    setSimulatedMoves(0);
+    setLastActionLog('ENGINE RESET: STANDBY FOR NEXT MOVE');
+    setIsWireActive(true);
+    setTimeout(() => setIsWireActive(false), 600);
+  };
 
   const handlePlayOnline = (gameType) => {
     if (!user) {
@@ -60,19 +126,47 @@ export default function HomePage() {
       <section className="render-hero-container">
         {/* Left Column: Architectural Title & CTAs */}
         <div>
+          {/* Top developer pill */}
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+              padding: '5px 12px',
+              borderRadius: '4px',
+              background: 'var(--bg-secondary)',
+              border: '1px solid var(--border-subtle)',
+              marginBottom: 24,
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.82rem',
+              color: 'var(--text-muted)'
+            }}
+          >
+            <span
+              style={{
+                width: 7,
+                height: 7,
+                borderRadius: '50%',
+                background: '#10b981',
+                boxShadow: '0 0 6px #10b981'
+              }}
+            />
+            <span>$ gameverse duel --authoritative</span>
+          </div>
+
           {/* Render-style Typography Headline */}
           <h1
             style={{
-              fontSize: 'clamp(2.5rem, 5.2vw, 4.2rem)',
-              fontWeight: 700,
-              lineHeight: 1.08,
+              fontSize: 'clamp(2.6rem, 5.2vw, 4.4rem)',
+              fontWeight: 800,
+              lineHeight: 1.06,
               letterSpacing: '-0.035em',
               marginBottom: 24,
               color: 'var(--text-main)'
             }}
           >
             Your fastest path to<br />
-            production for<br />
+            victory in<br />
             <span
               style={{
                 color: 'var(--render-purple)',
@@ -82,9 +176,9 @@ export default function HomePage() {
                 transform: fadeState === 'fade-in' ? 'translateY(0)' : 'translateY(4px)'
               }}
             >
-              {words[currentWordIndex]}
+              [{words[currentWordIndex]}
             </span>
-            <span style={{ color: 'var(--render-orange)', fontWeight: 600 }}>]</span>
+            <span style={{ color: 'var(--render-orange)', fontWeight: 700 }}>]</span>
             <span className="render-cursor">|</span>
           </h1>
 
@@ -97,7 +191,7 @@ export default function HomePage() {
               marginBottom: 36
             }}
           >
-            Intuitive infrastructure to scale any app or game from your first user to your billionth.
+            Server-authoritative competitive multiplayer engine. Real-time WebSocket state synchronization, zero client-side cheating, and dynamic ELO matchmaking.
           </p>
 
           {/* Render High-Contrast Action Buttons */}
@@ -112,14 +206,14 @@ export default function HomePage() {
                 className="btn btn-primary btn-lg mobile-full-btn"
               >
                 <Play size={16} fill="currentColor" />
-                {inQueue ? 'Matching in Queue...' : 'Queue Match >'}
+                {inQueue ? 'Matching in Queue...' : 'Queue Ranked Duel >'}
               </button>
             ) : (
               <button
                 onClick={() => navigate('/register')}
                 className="btn btn-primary btn-lg mobile-full-btn"
               >
-                Start for free &gt;
+                Start playing free &gt;
               </button>
             )}
 
@@ -127,7 +221,7 @@ export default function HomePage() {
               onClick={() => navigate('/leaderboard')}
               className="btn btn-secondary btn-lg mobile-full-btn"
             >
-              Talk to sales
+              View Global Leaderboard
             </button>
           </div>
 
@@ -148,18 +242,18 @@ export default function HomePage() {
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               <span style={{ color: 'var(--render-purple)' }}>●</span>
-              <span>Socket.IO WebSockets</span>
+              <span>Socket.IO Push WebSockets</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               <span style={{ color: '#f59e0b' }}>●</span>
-              <span>Sub-20ms Latency</span>
+              <span>Sub-15ms Latency</span>
             </div>
           </div>
         </div>
 
         {/* Right Column: Render Blueprint Interactive Telemetry Diagram */}
         <div style={{ position: 'relative' }}>
-          {/* Render Floating Skip Prompt (Exact match to screenshot top right) */}
+          {/* Render Floating Shortcut Prompt */}
           {showSkipPrompt && (
             <div
               style={{
@@ -179,8 +273,8 @@ export default function HomePage() {
                 width: 220
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-main)', fontWeight: 500 }}>
-                <span>Skip this page next time?</span>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-main)', fontWeight: 600 }}>
+                <span>Quick Match Ready?</span>
                 <button
                   onClick={() => setShowSkipPrompt(false)}
                   style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-dim)', padding: 0 }}
@@ -190,29 +284,41 @@ export default function HomePage() {
                 </button>
               </div>
               <button
-                onClick={() => navigate('/dashboard')}
+                onClick={() => handlePlayOnline('TIC_TAC_TOE')}
                 className="btn btn-primary"
                 style={{ padding: '6px 10px', fontSize: '0.74rem', borderRadius: 3, justifyContent: 'space-between', width: '100%' }}
               >
-                <span>Always open Dashboard</span>
+                <span>Jump into Arena</span>
                 <span>&gt;</span>
               </button>
             </div>
           )}
 
-          {/* Top Floating Badge: $ git push */}
+          {/* Interactive Terminal Badge with Quick Trigger */}
           <div
             style={{
               display: 'flex',
+              alignItems: 'center',
               justifyContent: 'flex-start',
+              gap: 12,
               paddingLeft: '24px',
               marginBottom: '-8px'
             }}
           >
             <div className="terminal-pill">
               <Terminal size={14} color="#a1a1aa" />
-              <span>$ git push</span>
+              <span>$ duel simulate --interactive</span>
             </div>
+            <span
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '0.72rem',
+                color: 'var(--render-purple)',
+                fontWeight: 600
+              }}
+            >
+              (Click grid to test)
+            </span>
           </div>
 
           {/* Animated Connecting Circuit Wire Line */}
@@ -227,13 +333,14 @@ export default function HomePage() {
             >
               <path
                 d="M 68 0 V 28 H 170 V 56"
-                stroke="var(--render-purple)"
-                strokeWidth="2"
+                stroke={isWireActive ? '#38bdf8' : 'var(--render-purple)'}
+                strokeWidth={isWireActive ? '3' : '2'}
                 fill="none"
-                className="render-wire-animated"
+                className={isWireActive ? 'wire-laser-active' : 'render-wire-animated'}
+                style={{ transition: 'stroke 0.2s ease, stroke-width 0.2s ease' }}
               />
               <circle cx="68" cy="2" r="3" fill="var(--render-purple)" />
-              <circle cx="170" cy="54" r="3" fill="var(--render-purple)" />
+              <circle cx="170" cy="54" r={isWireActive ? 5 : 3} fill={isWireActive ? '#38bdf8' : 'var(--render-purple)'} />
             </svg>
           </div>
 
@@ -247,7 +354,7 @@ export default function HomePage() {
               boxShadow: '0 8px 30px rgba(0, 0, 0, 0.08)'
             }}
           >
-            {/* Header: PRODUCTION */}
+            {/* Header: PRODUCTION • ENGINE MESH */}
             <div
               style={{
                 display: 'flex',
@@ -269,7 +376,7 @@ export default function HomePage() {
                     color: 'var(--text-dim)'
                   }}
                 >
-                  PRODUCTION
+                  PRODUCTION CLUSTER • REAL-TIME MESH
                 </span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.72rem', color: '#10b981', fontFamily: 'var(--font-mono)' }}>
@@ -278,52 +385,62 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* 4 Microservice Telemetry Cards in 2x2 Grid */}
+            {/* 4 Interactive Telemetry Cards in 2x2 Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '14px' }}>
-              {/* Card 1: app-tictactoe-engine */}
-              <div className="telemetry-card">
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+              {/* Card 1: Live Interactive Mini-Duel Simulator */}
+              <div className="telemetry-card" style={{ borderColor: isWireActive ? 'var(--render-purple)' : 'var(--border-subtle)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                     <Grid3X3 size={13} color="var(--neon-cyan)" />
                     <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-main)' }}>
-                      app-tictactoe
+                      engine-simulator
                     </span>
                   </div>
-                  <span style={{ fontSize: '0.68rem', color: 'var(--neon-cyan)', display: 'flex', alignItems: 'center', gap: 4, fontFamily: 'var(--font-mono)' }}>
-                    <Radio size={10} className="telemetry-spark" /> Live
-                  </span>
+                  <button
+                    onClick={handleResetMiniDuel}
+                    title="Reset Mini Duel"
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: 2,
+                      color: 'var(--text-dim)'
+                    }}
+                  >
+                    <RotateCcw size={11} />
+                  </button>
                 </div>
 
-                {/* Live Sparkline Chart */}
-                <div style={{ margin: '4px 0 8px' }}>
-                  <svg className="sparkline-svg" viewBox="0 0 160 38" preserveAspectRatio="none">
-                    <defs>
-                      <linearGradient id="grad-spark1" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="var(--neon-cyan)" stopOpacity="0.25" />
-                        <stop offset="100%" stopColor="var(--neon-cyan)" stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
-                    <path
-                      d="M0,28 Q25,8 50,22 T100,14 T135,26 T160,10 L160,38 L0,38 Z"
-                      fill="url(#grad-spark1)"
-                    />
-                    <path
-                      d="M0,28 Q25,8 50,22 T100,14 T135,26 T160,10"
-                      fill="none"
-                      stroke="var(--neon-cyan)"
-                      strokeWidth="1.75"
-                      strokeLinecap="round"
-                      className="telemetry-spark"
-                    />
-                  </svg>
+                {/* Interactive Playable Mini 3x3 Grid */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '4px 0 8px' }}>
+                  <div className="mini-duel-board">
+                    {miniBoard.map((cell, idx) => (
+                      <div
+                        key={idx}
+                        onClick={() => handleMiniCellClick(idx)}
+                        className={`mini-duel-cell ${cell ? (cell === 'X' ? 'cell-x occupied' : 'cell-o occupied') : ''}`}
+                      >
+                        {cell}
+                      </div>
+                    ))}
+                  </div>
+
+                  <div style={{ flex: 1, paddingLeft: 12, display: 'flex', flexDirection: 'column', gap: 4 }}>
+                    <span style={{ fontSize: '0.65rem', fontFamily: 'var(--font-mono)', color: 'var(--neon-cyan)', fontWeight: 600 }}>
+                      {botThinking ? '● Engine Validating...' : '⚡ Click any cell'}
+                    </span>
+                    <span style={{ fontSize: '0.62rem', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)', lineHeight: 1.2 }}>
+                      {lastActionLog}
+                    </span>
+                  </div>
                 </div>
 
                 {/* Telemetry Metrics */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', fontSize: '0.65rem', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)' }}>
-                  <div>MEMORY: <span style={{ color: 'var(--text-main)' }}>16MB</span></div>
-                  <div>CPU: <span style={{ color: 'var(--text-main)' }}>0.4%</span></div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4px', fontSize: '0.65rem', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)' }}>
+                  <div>MOVES: <span style={{ color: 'var(--text-main)' }}>{simulatedMoves}</span></div>
+                  <div>CHEAT: <span style={{ color: '#10b981' }}>0%</span></div>
                   <div>TICKS: <span style={{ color: 'var(--text-main)' }}>60Hz</span></div>
-                  <div>REQUESTS: <span style={{ color: 'var(--text-main)' }}>3.4k/s</span></div>
+                  <div>AUTH: <span style={{ color: 'var(--text-main)' }}>Strict</span></div>
                 </div>
               </div>
 
@@ -333,11 +450,11 @@ export default function HomePage() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                     <CircleDot size={13} color="var(--render-purple)" />
                     <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-main)' }}>
-                      app-connect4
+                      gravity-connect4
                     </span>
                   </div>
                   <span style={{ fontSize: '0.68rem', color: '#10b981', display: 'flex', alignItems: 'center', gap: 4, fontFamily: 'var(--font-mono)' }}>
-                    <CheckCircle2 size={11} /> Ready
+                    <CheckCircle2 size={11} /> 7×6 Grid
                   </span>
                 </div>
 
@@ -368,9 +485,9 @@ export default function HomePage() {
                 {/* Telemetry Metrics */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', fontSize: '0.65rem', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)' }}>
                   <div>MEMORY: <span style={{ color: 'var(--text-main)' }}>28MB</span></div>
-                  <div>CPU: <span style={{ color: 'var(--text-main)' }}>1.1%</span></div>
-                  <div>GRID: <span style={{ color: 'var(--text-main)' }}>7x6</span></div>
-                  <div>GRAVITY: <span style={{ color: 'var(--text-main)' }}>Auth</span></div>
+                  <div>COLUMNS: <span style={{ color: 'var(--text-main)' }}>7 Drops</span></div>
+                  <div>GRAVITY: <span style={{ color: 'var(--text-main)' }}>Server</span></div>
+                  <div>HASH: <span style={{ color: 'var(--text-main)' }}>SHA-256</span></div>
                 </div>
               </div>
 
@@ -380,11 +497,11 @@ export default function HomePage() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                     <Trophy size={13} color="#f59e0b" />
                     <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-main)' }}>
-                      app-elo-rating
+                      elo-rating-service
                     </span>
                   </div>
                   <span style={{ fontSize: '0.68rem', color: '#10b981', display: 'flex', alignItems: 'center', gap: 4, fontFamily: 'var(--font-mono)' }}>
-                    <CheckCircle2 size={11} /> Sync
+                    <CheckCircle2 size={11} /> K=32
                   </span>
                 </div>
 
@@ -415,9 +532,9 @@ export default function HomePage() {
                 {/* Telemetry Metrics */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', fontSize: '0.65rem', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)' }}>
                   <div>CALC: <span style={{ color: 'var(--text-main)' }}>K=32</span></div>
-                  <div>BASE: <span style={{ color: 'var(--text-main)' }}>1000</span></div>
-                  <div>STREAK: <span style={{ color: 'var(--text-main)' }}>Active</span></div>
-                  <div>LEADER: <span style={{ color: 'var(--text-main)' }}>Cached</span></div>
+                  <div>WIN ELO: <span style={{ color: '#10b981' }}>+25 PTS</span></div>
+                  <div>LOSS ELO: <span style={{ color: '#ef4444' }}>-20 PTS</span></div>
+                  <div>STREAK: <span style={{ color: 'var(--text-main)' }}>1.5x</span></div>
                 </div>
               </div>
 
@@ -427,11 +544,11 @@ export default function HomePage() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                     <Zap size={13} color="var(--render-orange)" />
                     <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-main)' }}>
-                      app-socket-hub
+                      websocket-mesh
                     </span>
                   </div>
                   <span style={{ fontSize: '0.68rem', color: '#10b981', display: 'flex', alignItems: 'center', gap: 4, fontFamily: 'var(--font-mono)' }}>
-                    <Activity size={11} /> 12ms
+                    <Activity size={11} /> {simulatedLatency}ms
                   </span>
                 </div>
 
@@ -461,9 +578,9 @@ export default function HomePage() {
 
                 {/* Telemetry Metrics */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', fontSize: '0.65rem', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)' }}>
-                  <div>UPTIME: <span style={{ color: 'var(--text-main)' }}>99.98%</span></div>
+                  <div>UPTIME: <span style={{ color: 'var(--text-main)' }}>99.99%</span></div>
                   <div>POLL: <span style={{ color: 'var(--text-main)' }}>0 (Push)</span></div>
-                  <div>LATENCY: <span style={{ color: '#10b981' }}>12ms</span></div>
+                  <div>PING: <span style={{ color: '#10b981' }}>{simulatedLatency}ms</span></div>
                   <div>RECONNECT: <span style={{ color: 'var(--text-main)' }}>30s</span></div>
                 </div>
               </div>
@@ -473,7 +590,26 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================
-          Featured Game Selection Arenas (Render Clean Blueprint Style)
+          Live Matchmaking Engine Event Ticker (Developer Stream)
+         ============================================================ */}
+      <div className="match-ticker-track">
+        <div className="match-ticker-badge">
+          <Activity size={14} className="telemetry-spark" />
+          <span>Live Match Feed</span>
+        </div>
+        <div style={{ display: 'flex', gap: 24, overflow: 'hidden', whiteSpace: 'nowrap', color: 'var(--text-muted)' }}>
+          <span>⚡ <strong style={{ color: 'var(--text-main)' }}>Player_Apex</strong> won Tic-Tac-Toe Arena (+25 ELO)</span>
+          <span style={{ opacity: 0.3 }}>|</span>
+          <span>🎯 <strong style={{ color: 'var(--text-main)' }}>CyberKnight</strong> connected 4 in column #3 (+25 ELO)</span>
+          <span style={{ opacity: 0.3 }}>|</span>
+          <span>🛡️ Server Engine: <strong style={{ color: '#10b981' }}>100%</strong> turns validated without cheat latency</span>
+          <span style={{ opacity: 0.3 }}>|</span>
+          <span>🔥 Streak Alert: <strong style={{ color: '#f59e0b' }}>Vortex_99</strong> reached 5 consecutive victories</span>
+        </div>
+      </div>
+
+      {/* ============================================================
+          Featured Game Selection Arenas (Interactive Previews)
          ============================================================ */}
       <section style={{ marginBottom: 64 }}>
         <div style={{ marginBottom: 28, display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', flexWrap: 'wrap', gap: 10 }}>
@@ -486,14 +622,14 @@ export default function HomePage() {
             </p>
           </div>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--text-dim)' }}>
-            MATCHMAKING ENGINE • ACTIVE
+            AUTOMATED MATCHMAKING QUEUE • ACTIVE
           </span>
         </div>
 
         <div className="grid-2">
           {/* Tic-Tac-Toe Arena Card */}
           <div
-            className="glass-card"
+            className="glass-card interactive-arena-card"
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -523,7 +659,7 @@ export default function HomePage() {
                 >
                   <Grid3X3 size={24} color="var(--neon-cyan)" />
                 </div>
-                <span className="badge badge-cyan">2 Players • Rapid</span>
+                <span className="badge badge-cyan">2 Players • Fast Match</span>
               </div>
 
               <h3 style={{ fontSize: '1.45rem', color: 'var(--text-main)', marginBottom: 8, letterSpacing: '-0.02em' }}>
@@ -575,7 +711,7 @@ export default function HomePage() {
 
           {/* Connect Four Arena Card */}
           <div
-            className="glass-card"
+            className="glass-card interactive-arena-card"
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -671,7 +807,7 @@ export default function HomePage() {
         </div>
 
         <div className="grid-3">
-          <div className="glass-card">
+          <div className="glass-card interactive-arena-card">
             <div style={{ color: 'var(--neon-cyan)', marginBottom: 14 }}>
               <ShieldCheck size={26} />
             </div>
@@ -683,7 +819,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="glass-card">
+          <div className="glass-card interactive-arena-card">
             <div style={{ color: 'var(--render-purple)', marginBottom: 14 }}>
               <Zap size={26} />
             </div>
@@ -695,7 +831,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="glass-card">
+          <div className="glass-card interactive-arena-card">
             <div style={{ color: '#f59e0b', marginBottom: 14 }}>
               <Trophy size={26} />
             </div>

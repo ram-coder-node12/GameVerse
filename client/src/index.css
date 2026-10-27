@@ -676,3 +676,96 @@ a {
   overflow: visible;
 }
 
+/* Interactive Laser Pulse on Circuit Wire */
+@keyframes wireLaserFlow {
+  0% { stroke-dashoffset: 64; stroke: var(--render-purple); }
+  50% { stroke: #38bdf8; filter: drop-shadow(0 0 6px #38bdf8); }
+  100% { stroke-dashoffset: 0; stroke: var(--render-purple); }
+}
+
+.wire-laser-active {
+  animation: wireLaserFlow 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Live Interactive Mini-Grid */
+.mini-duel-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  width: 84px;
+  height: 84px;
+  background: var(--border-subtle);
+  padding: 4px;
+  border-radius: 4px;
+}
+.mini-duel-cell {
+  background: var(--bg-card);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+.mini-duel-cell:hover:not(.occupied) {
+  background: rgba(124, 58, 237, 0.1);
+  color: var(--render-purple);
+}
+.mini-duel-cell.cell-x {
+  color: #0284c7;
+}
+.mini-duel-cell.cell-o {
+  color: #e11d48;
+}
+
+/* Connect Four Mini Gravity Drop Animation */
+@keyframes chipDropBounce {
+  0% { transform: translateY(-30px); opacity: 0; }
+  60% { transform: translateY(0); opacity: 1; }
+  80% { transform: translateY(-4px); }
+  100% { transform: translateY(0); }
+}
+.chip-animated {
+  animation: chipDropBounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Live Matchmaking Ticker Bar */
+.match-ticker-track {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 10px 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.82rem;
+  font-family: var(--font-mono);
+  margin-bottom: 48px;
+}
+.match-ticker-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--render-purple);
+  flex-shrink: 0;
+}
+
+/* Interactive Card Hover Elevation with Border Flash */
+.interactive-arena-card {
+  position: relative;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.interactive-arena-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--render-purple);
+  box-shadow: 0 14px 34px -10px rgba(124, 58, 237, 0.18);
+}
+
