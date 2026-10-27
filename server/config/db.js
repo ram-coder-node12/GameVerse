@@ -6,7 +6,7 @@ let memoryServer = null;
 
 async function connectDB() {
   try {
-    let mongoUri = process.env.MONGODB_URI;
+    let mongoUri = process.env.MONGODB_URI || process.env.dbURL || process.env.MONGO_URI;
 
     if (!mongoUri || mongoUri.trim() === '' || mongoUri === 'memory') {
       logger.info('No external MONGODB_URI provided. Initializing in-memory MongoDB instance for development/testing...');

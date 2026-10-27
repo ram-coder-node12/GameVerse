@@ -13,7 +13,9 @@
     "dev": "node -e \"console.log('Use separate terminals or concurrent scripts to run server and client: npm run server, npm run client')\"",
     "test:server": "npm --prefix server test",
     "test": "npm run test:server",
-    "build:client": "npm --prefix client run build"
+    "build:client": "npm --prefix client run build",
+    "build": "npm --prefix client run build",
+    "start": "node server/server.js"
   },
   "keywords": [
     "multiplayer",

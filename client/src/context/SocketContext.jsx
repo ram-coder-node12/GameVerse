@@ -5,11 +5,14 @@ import { useAuth } from './AuthContext';
 
 const SocketContext = createContext(null);
 
-const SOCKET_URL =
+const rawSocketUrl =
   import.meta.env.VITE_SOCKET_URL ||
+  import.meta.env.VITE_API_URL ||
   (import.meta.env.PROD
     ? 'https://gameverse-backend-fvyx.onrender.com'
     : 'http://localhost:8084');
+
+const SOCKET_URL = rawSocketUrl.replace(/\/+$/, '').replace(/\/api$/, '');
 
 export function SocketProvider({ children }) {
   const { user } = useAuth();

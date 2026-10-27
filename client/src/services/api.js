@@ -1,14 +1,17 @@
 // client/src/services/api.js
 import axios from 'axios';
 
-const API_URL =
+const rawApiUrl =
   import.meta.env.VITE_API_URL ||
   (import.meta.env.PROD
     ? 'https://gameverse-backend-fvyx.onrender.com'
     : 'http://localhost:8084');
 
+const cleanBaseUrl = rawApiUrl.replace(/\/+$/, '');
+const baseURL = cleanBaseUrl.endsWith('/api') ? cleanBaseUrl : `${cleanBaseUrl}/api`;
+
 const api = axios.create({
-  baseURL: `${API_URL}/api`,
+  baseURL,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json'

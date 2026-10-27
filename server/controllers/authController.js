@@ -18,6 +18,7 @@ function getCookieOptions() {
     httpOnly: true,
     secure: isProduction,
     sameSite: isProduction ? 'none' : 'lax',
+    path: '/',
     maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
   };
 }
@@ -176,7 +177,8 @@ async function logout(req, res) {
   res.clearCookie('token', {
     httpOnly: true,
     secure: isProduction,
-    sameSite: isProduction ? 'none' : 'lax'
+    sameSite: isProduction ? 'none' : 'lax',
+    path: '/'
   });
 
   res.status(200).json({
