@@ -276,7 +276,7 @@ export default function FriendsPage() {
                         className="btn btn-secondary btn-sm"
                         style={{ gap: 4 }}
                       >
-                        <Grid3X3 size={14} color="#00f2fe" />
+                        <Grid3X3 size={14} color="var(--neon-cyan)" />
                         Duel TTT
                       </button>
 

@@ -46,14 +46,14 @@ export default function LoginPage() {
               height: 52,
               borderRadius: 14,
               margin: '0 auto 12px',
-              background: 'linear-gradient(135deg, #00f2fe 0%, #4facfe 100%)',
+              background: 'linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-blue) 100%)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 0 20px rgba(0, 242, 254, 0.4)'
+              boxShadow: 'var(--shadow-glow-cyan)'
             }}
           >
-            <Gamepad2 size={28} color="#050b14" />
+            <Gamepad2 size={28} color="#ffffff" />
           </div>
           <h2 style={{ fontSize: '1.6rem', color: 'var(--text-main)', marginBottom: 4 }}>
             Welcome Back
@@ -142,7 +142,7 @@ export default function LoginPage() {
 
         <div style={{ textAlign: 'center', marginTop: 24, fontSize: '0.88rem', color: 'var(--text-muted)' }}>
           Don't have an account?{' '}
-          <Link to="/register" style={{ color: '#00f2fe', fontWeight: 600 }}>
+          <Link to="/register" style={{ color: 'var(--neon-cyan)', fontWeight: 600 }}>
             Create one
           </Link>
         </div>

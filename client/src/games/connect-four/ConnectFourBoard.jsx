@@ -109,12 +109,12 @@ export default function ConnectFourBoard({
                       ? 'rgba(255, 255, 255, 0.08)'
                       : '#080c18',
                   boxShadow: isWin
-                    ? '0 0 25px #00f2fe, inset 0 0 10px #ffffff'
+                    ? '0 0 0 3px var(--neon-cyan), 0 8px 24px -2px rgba(56, 189, 248, 0.4)'
                     : cell
                     ? 'inset 0 3px 6px rgba(255, 255, 255, 0.4), 0 4px 10px rgba(0, 0, 0, 0.5)'
                     : 'inset 0 4px 8px rgba(0, 0, 0, 0.7)',
                   border: isWin
-                    ? '3px solid #00f2fe'
+                    ? '3px solid var(--neon-cyan)'
                     : cell
                     ? '1px solid rgba(255, 255, 255, 0.2)'
                     : '1px solid rgba(255, 255, 255, 0.04)',

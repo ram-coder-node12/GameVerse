@@ -43,16 +43,16 @@ export default function TicTacToeBoard({
               aspectRatio: '1 / 1',
               borderRadius: 'var(--radius-md)',
               background: isWin
-                ? 'rgba(0, 242, 254, 0.25)'
+                ? 'rgba(56, 189, 248, 0.16)'
                 : cell
                 ? 'var(--bg-secondary)'
                 : canClick
-                ? 'rgba(0, 242, 254, 0.06)'
+                ? 'rgba(255, 255, 255, 0.03)'
                 : 'transparent',
               border: isWin
                 ? '2px solid var(--neon-cyan)'
                 : canClick
-                ? '1px dashed var(--neon-cyan)'
+                ? '1px dashed var(--border-active)'
                 : '1px solid var(--border-subtle)',
               cursor: canClick ? 'pointer' : 'default',
               display: 'flex',
@@ -61,14 +61,10 @@ export default function TicTacToeBoard({
               fontSize: '2.8rem',
               fontWeight: 800,
               fontFamily: 'var(--font-heading)',
-              color: cell === 'X' ? '#00f2fe' : '#ff007f',
-              textShadow:
-                cell === 'X'
-                  ? '0 0 20px rgba(0, 242, 254, 0.8)'
-                  : cell === 'O'
-                  ? '0 0 20px rgba(255, 0, 127, 0.8)'
-                  : 'none',
-              boxShadow: isWin ? '0 0 25px rgba(0, 242, 254, 0.5)' : 'none',
+              color: cell === 'X' ? 'var(--player-x)' : 'var(--player-o)',
+              boxShadow: isWin
+                ? '0 0 0 2px var(--neon-cyan), 0 8px 24px -2px rgba(56, 189, 248, 0.3)'
+                : 'none',
               transform: isWin ? 'scale(1.04)' : 'none',
               transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
             }}

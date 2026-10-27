@@ -266,8 +266,8 @@ export default function GamePage() {
                   position: 'absolute',
                   bottom: -2,
                   right: -2,
-                  background: myPlayerMeta.symbol === 'X' || myPlayerMeta.symbol === 'red' ? '#00f2fe' : '#ff007f',
-                  color: '#050b14',
+                  background: myPlayerMeta.symbol === 'X' || myPlayerMeta.symbol === 'red' ? 'var(--player-x)' : 'var(--player-o)',
+                  color: '#ffffff',
                   fontWeight: 800,
                   fontSize: '0.65rem',
                   borderRadius: '50%',
@@ -303,9 +303,9 @@ export default function GamePage() {
                 gap: 8,
                 padding: '6px 16px',
                 borderRadius: 'var(--radius-full)',
-                background: isMyTurn ? 'rgba(0, 242, 254, 0.12)' : 'rgba(255, 255, 255, 0.05)',
+                background: isMyTurn ? 'rgba(56, 189, 248, 0.1)' : 'rgba(255, 255, 255, 0.05)',
                 border: isMyTurn ? '1px solid var(--neon-cyan)' : '1px solid var(--border-subtle)',
-                boxShadow: isMyTurn ? '0 0 15px rgba(0, 242, 254, 0.3)' : 'none'
+                boxShadow: isMyTurn ? 'var(--shadow-glow-cyan)' : 'none'
               }}
             >
               <span
@@ -313,7 +313,7 @@ export default function GamePage() {
                   width: 8,
                   height: 8,
                   borderRadius: '50%',
-                  background: isMyTurn ? '#00f2fe' : '#9ca3af'
+                  background: isMyTurn ? 'var(--neon-cyan)' : '#9ca3af'
                 }}
               />
               <span
@@ -321,7 +321,7 @@ export default function GamePage() {
                   fontFamily: 'var(--font-heading)',
                   fontWeight: 700,
                   fontSize: '0.9rem',
-                  color: isMyTurn ? '#00f2fe' : 'var(--text-muted)'
+                  color: isMyTurn ? 'var(--neon-cyan)' : 'var(--text-muted)'
                 }}
               >
                 {isMyTurn ? 'YOUR TURN' : "OPPONENT'S TURN"}
@@ -364,8 +364,8 @@ export default function GamePage() {
                   position: 'absolute',
                   bottom: -2,
                   left: -2,
-                  background: opponentMeta.symbol === 'X' || opponentMeta.symbol === 'red' ? '#00f2fe' : '#ff007f',
-                  color: '#050b14',
+                  background: opponentMeta.symbol === 'X' || opponentMeta.symbol === 'red' ? 'var(--player-x)' : 'var(--player-o)',
+                  color: '#ffffff',
                   fontWeight: 800,
                   fontSize: '0.65rem',
                   borderRadius: '50%',
@@ -433,13 +433,13 @@ export default function GamePage() {
               height: 56,
               borderRadius: '50%',
               margin: '0 auto 12px',
-              background: 'rgba(0, 242, 254, 0.15)',
+              background: 'rgba(56, 189, 248, 0.12)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
             }}
           >
-            <Trophy size={28} color="#00f2fe" />
+            <Trophy size={28} color="var(--neon-cyan)" />
           </div>
 
           <h2 style={{ fontSize: '1.6rem', color: 'var(--text-main)', marginBottom: 4 }}>

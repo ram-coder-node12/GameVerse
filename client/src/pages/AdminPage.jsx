@@ -124,7 +124,7 @@ export default function AdminPage() {
               <span style={{ fontSize: '0.8rem', color: 'var(--text-dim)', textTransform: 'uppercase', fontWeight: 600 }}>
                 Total Users
               </span>
-              <Users size={18} color="#00f2fe" />
+              <Users size={18} color="var(--neon-cyan)" />
             </div>
             <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-main)' }}>
               {stats.totalUsers}

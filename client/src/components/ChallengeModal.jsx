@@ -36,15 +36,15 @@ export default function ChallengeModal() {
             height: 60,
             margin: '0 auto 16px',
             borderRadius: '50%',
-            background: 'rgba(138, 43, 226, 0.15)',
+            background: 'rgba(139, 92, 246, 0.12)',
             border: '2px solid var(--neon-purple)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 0 25px rgba(138, 43, 226, 0.4)'
+            boxShadow: 'var(--shadow-glow-purple)'
           }}
         >
-          <Swords size={30} color="#b388ff" />
+          <Swords size={30} color="var(--neon-purple)" />
         </div>
 
         <h3 style={{ fontSize: '1.4rem', color: 'var(--text-main)', marginBottom: 4 }}>

@@ -212,7 +212,7 @@ export default function LeaderboardPage() {
                       </td>
 
                       {/* Current Streak */}
-                      <td style={{ padding: '16px 20px', color: '#f82572', fontWeight: 700 }}>
+                      <td style={{ padding: '16px 20px', color: 'var(--neon-pink)', fontWeight: 700 }}>
                         🔥 {player.currentStreak || 0}
                       </td>
                     </tr>

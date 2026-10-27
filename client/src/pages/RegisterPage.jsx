@@ -55,11 +55,11 @@ export default function RegisterPage() {
               height: 52,
               borderRadius: 14,
               margin: '0 auto 12px',
-              background: 'linear-gradient(135deg, #8a2be2 0%, #d83aff 100%)',
+              background: 'linear-gradient(135deg, var(--neon-purple) 0%, var(--neon-blue) 100%)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 0 20px rgba(138, 43, 226, 0.4)'
+              boxShadow: 'var(--shadow-glow-purple)'
             }}
           >
             <Gamepad2 size={28} color="#fff" />
@@ -191,7 +191,7 @@ export default function RegisterPage() {
 
         <div style={{ textAlign: 'center', marginTop: 20, fontSize: '0.88rem', color: 'var(--text-muted)' }}>
           Already registered?{' '}
-          <Link to="/login" style={{ color: '#00f2fe', fontWeight: 600 }}>
+          <Link to="/login" style={{ color: 'var(--neon-cyan)', fontWeight: 600 }}>
             Sign In
           </Link>
         </div>

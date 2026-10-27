@@ -61,15 +61,15 @@ export default function MatchmakingModal() {
                 height: 72,
                 margin: '0 auto 16px',
                 borderRadius: '50%',
-                background: 'rgba(0, 242, 254, 0.15)',
+                background: 'rgba(56, 189, 248, 0.12)',
                 border: '2px solid var(--neon-cyan)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 0 30px rgba(0, 242, 254, 0.5)'
+                boxShadow: 'var(--shadow-glow-cyan)'
               }}
             >
-              <Zap size={36} color="#00f2fe" />
+              <Zap size={36} color="var(--neon-cyan)" />
             </div>
 
             <h3
@@ -152,15 +152,15 @@ export default function MatchmakingModal() {
                   width: 56,
                   height: 56,
                   borderRadius: '50%',
-                  background: 'linear-gradient(135deg, #00f2fe 0%, #4facfe 100%)',
+                  background: 'linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-blue) 100%)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   zIndex: 2,
-                  boxShadow: '0 0 20px rgba(0, 242, 254, 0.6)'
+                  boxShadow: 'var(--shadow-glow-cyan)'
                 }}
               >
-                <Swords size={28} color="#050b14" />
+                <Swords size={28} color="#ffffff" />
               </div>
             </div>
 

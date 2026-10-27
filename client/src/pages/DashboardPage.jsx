@@ -106,7 +106,7 @@ export default function DashboardPage() {
                 right: -4,
                 background: '#1f293d',
                 border: '1px solid var(--border-subtle)',
-                color: '#00f2fe',
+                color: 'var(--neon-cyan)',
                 borderRadius: '50%',
                 width: 26,
                 height: 26,
@@ -183,7 +183,7 @@ export default function DashboardPage() {
             <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>
               Record
             </span>
-            <TrendingUp size={20} color="#00f2fe" />
+            <TrendingUp size={20} color="var(--neon-cyan)" />
           </div>
           <div style={{ fontSize: '2.1rem', fontWeight: 800, color: 'var(--text-main)', fontFamily: 'var(--font-heading)' }}>
             {user.wins}W / {user.losses}L
@@ -215,9 +215,9 @@ export default function DashboardPage() {
             <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>
               Win Streak
             </span>
-            <Flame size={20} color="#f82572" />
+            <Flame size={20} color="var(--neon-pink)" />
           </div>
-          <div style={{ fontSize: '2.1rem', fontWeight: 800, color: '#f82572', fontFamily: 'var(--font-heading)' }}>
+          <div style={{ fontSize: '2.1rem', fontWeight: 800, color: 'var(--neon-pink)', fontFamily: 'var(--font-heading)' }}>
             {user.currentStreak || 0}
           </div>
           <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: 4 }}>

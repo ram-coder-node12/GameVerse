@@ -108,14 +108,14 @@ export default function Navbar() {
               width: 40,
               height: 40,
               borderRadius: 10,
-              background: 'linear-gradient(135deg, #00f2fe 0%, #4facfe 100%)',
+              background: 'linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-blue) 100%)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 0 15px rgba(0, 242, 254, 0.4)'
+              boxShadow: 'var(--shadow-glow-cyan)'
             }}
           >
-            <Gamepad2 size={24} color="#050b14" />
+            <Gamepad2 size={24} color="#ffffff" />
           </div>
           <span
             style={{
@@ -126,7 +126,7 @@ export default function Navbar() {
               background:
                 theme === 'light'
                   ? 'linear-gradient(135deg, #0f172a 30%, #0284c7 100%)'
-                  : 'linear-gradient(135deg, #ffffff 40%, #00f2fe 100%)',
+                  : 'linear-gradient(135deg, #ffffff 40%, var(--neon-cyan) 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
             }}
@@ -147,8 +147,8 @@ export default function Navbar() {
               borderRadius: 'var(--radius-sm)',
               fontSize: '0.9rem',
               fontWeight: 500,
-              color: isActive('/') ? '#00f2fe' : 'var(--text-muted)',
-              background: isActive('/') ? 'rgba(0, 242, 254, 0.08)' : 'transparent',
+              color: isActive('/') ? 'var(--neon-cyan)' : 'var(--text-muted)',
+              background: isActive('/') ? 'rgba(56, 189, 248, 0.08)' : 'transparent',
               transition: 'all 0.2s'
             }}
           >
@@ -167,8 +167,8 @@ export default function Navbar() {
                 borderRadius: 'var(--radius-sm)',
                 fontSize: '0.9rem',
                 fontWeight: 500,
-                color: isActive('/dashboard') ? '#00f2fe' : 'var(--text-muted)',
-                background: isActive('/dashboard') ? 'rgba(0, 242, 254, 0.08)' : 'transparent',
+                color: isActive('/dashboard') ? 'var(--neon-cyan)' : 'var(--text-muted)',
+                background: isActive('/dashboard') ? 'rgba(56, 189, 248, 0.08)' : 'transparent',
                 transition: 'all 0.2s'
               }}
             >
@@ -187,8 +187,8 @@ export default function Navbar() {
               borderRadius: 'var(--radius-sm)',
               fontSize: '0.9rem',
               fontWeight: 500,
-              color: isActive('/leaderboard') ? '#00f2fe' : 'var(--text-muted)',
-              background: isActive('/leaderboard') ? 'rgba(0, 242, 254, 0.08)' : 'transparent',
+              color: isActive('/leaderboard') ? 'var(--neon-cyan)' : 'var(--text-muted)',
+              background: isActive('/leaderboard') ? 'rgba(56, 189, 248, 0.08)' : 'transparent',
               transition: 'all 0.2s'
             }}
           >
@@ -208,8 +208,8 @@ export default function Navbar() {
                   borderRadius: 'var(--radius-sm)',
                   fontSize: '0.9rem',
                   fontWeight: 500,
-                  color: isActive('/history') ? '#00f2fe' : 'var(--text-muted)',
-                  background: isActive('/history') ? 'rgba(0, 242, 254, 0.08)' : 'transparent',
+                  color: isActive('/history') ? 'var(--neon-cyan)' : 'var(--text-muted)',
+                  background: isActive('/history') ? 'rgba(56, 189, 248, 0.08)' : 'transparent',
                   transition: 'all 0.2s'
                 }}
               >
@@ -227,8 +227,8 @@ export default function Navbar() {
                   borderRadius: 'var(--radius-sm)',
                   fontSize: '0.9rem',
                   fontWeight: 500,
-                  color: isActive('/friends') ? '#00f2fe' : 'var(--text-muted)',
-                  background: isActive('/friends') ? 'rgba(0, 242, 254, 0.08)' : 'transparent',
+                  color: isActive('/friends') ? 'var(--neon-cyan)' : 'var(--text-muted)',
+                  background: isActive('/friends') ? 'rgba(56, 189, 248, 0.08)' : 'transparent',
                   transition: 'all 0.2s'
                 }}
               >
@@ -299,7 +299,7 @@ export default function Navbar() {
             />
             <span style={{ textTransform: 'capitalize' }}>{status}</span>
             <span style={{ opacity: 0.4 }}>|</span>
-            <span style={{ color: '#00f2fe', fontWeight: 600 }}>{onlineCount} Online</span>
+            <span style={{ color: 'var(--neon-cyan)', fontWeight: 600 }}>{onlineCount} Online</span>
           </div>
 
           {/* Theme Toggle Button (Light / Dark) */}
@@ -336,7 +336,7 @@ export default function Navbar() {
                     border: '1px solid var(--border-subtle)',
                     borderRadius: 8,
                     padding: 8,
-                    color: showNotifs ? '#00f2fe' : 'var(--text-main)',
+                    color: showNotifs ? 'var(--neon-cyan)' : 'var(--text-main)',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
@@ -360,7 +360,7 @@ export default function Navbar() {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        boxShadow: '0 0 8px rgba(248, 37, 114, 0.6)'
+                        boxShadow: '0 2px 6px rgba(244, 63, 94, 0.35)'
                       }}
                     >
                       {unreadCount}
@@ -400,7 +400,7 @@ export default function Navbar() {
                           style={{
                             background: 'none',
                             border: 'none',
-                            color: '#00f2fe',
+                            color: 'var(--neon-cyan)',
                             fontSize: '0.75rem',
                             cursor: 'pointer'
                           }}
@@ -422,7 +422,7 @@ export default function Navbar() {
                             style={{
                               padding: '12px 16px',
                               borderBottom: '1px solid rgba(255, 255, 255, 0.04)',
-                              background: n.read ? 'transparent' : 'rgba(0, 242, 254, 0.04)'
+                              background: n.read ? 'transparent' : 'rgba(56, 189, 248, 0.06)'
                             }}
                           >
                             <div style={{ fontWeight: 600, fontSize: '0.82rem', color: 'var(--text-main)', marginBottom: 2 }}>

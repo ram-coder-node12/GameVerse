@@ -1,36 +1,42 @@
 /* client/src/index.css */
 :root {
-  --bg-primary: #090a10;
-  --bg-secondary: #10121d;
-  --bg-card: rgba(19, 22, 36, 0.82);
-  --bg-card-hover: rgba(28, 33, 54, 0.9);
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-active: rgba(0, 242, 254, 0.4);
+  /* Midnight Obsidian Palette (Linear / Vercel Aesthetic) */
+  --bg-primary: #090a0f;
+  --bg-secondary: #0f1118;
+  --bg-card: rgba(15, 18, 26, 0.75);
+  --bg-card-hover: rgba(22, 26, 38, 0.85);
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-active: rgba(56, 189, 248, 0.4);
   
-  --text-main: #f3f4f6;
-  --text-muted: #9ca3af;
-  --text-dim: #6b7280;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
 
-  --neon-cyan: #00f2fe;
-  --neon-blue: #4facfe;
-  --neon-purple: #8a2be2;
-  --neon-pink: #f82572;
-  --neon-gold: #f59e0b;
-  --neon-green: #10b981;
-  --neon-red: #ef4444;
+  /* Modern Refined Accents (Vercel / Linear inspired, no blinding neon) */
+  --neon-cyan: #38bdf8;       /* Clean Sky Blue */
+  --neon-blue: #6366f1;       /* Linear Electric Indigo */
+  --neon-purple: #8b5cf6;     /* Modern Violet */
+  --neon-pink: #f43f5e;       /* Clean Rose */
+  --neon-gold: #f59e0b;       /* Refined Amber */
+  --neon-green: #10b981;      /* Clean Emerald */
+  --neon-red: #ef4444;        /* Crimson Ruby */
 
-  --font-heading: 'Outfit', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --player-x: #38bdf8;
+  --player-o: #f43f5e;
+
+  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
   --radius-full: 9999px;
 
-  --shadow-glow-cyan: 0 0 25px rgba(0, 242, 254, 0.35);
-  --shadow-glow-purple: 0 0 25px rgba(138, 43, 226, 0.35);
-  --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  /* Sleek Ambient Shadows instead of blinding neon halos */
+  --shadow-glow-cyan: 0 4px 18px -2px rgba(56, 189, 248, 0.22);
+  --shadow-glow-purple: 0 4px 18px -2px rgba(99, 102, 241, 0.25);
+  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
 /* Light Theme System — Clean, high contrast, modern glassmorphic */
@@ -39,8 +45,8 @@
   --bg-secondary: #ffffff;
   --bg-card: rgba(255, 255, 255, 0.9);
   --bg-card-hover: #ffffff;
-  --border-subtle: rgba(15, 23, 42, 0.1);
-  --border-active: rgba(2, 132, 199, 0.5);
+  --border-subtle: rgba(15, 23, 42, 0.08);
+  --border-active: rgba(2, 132, 199, 0.4);
   
   --text-main: #0f172a;
   --text-muted: #475569;
@@ -54,9 +60,12 @@
   --neon-green: #059669;
   --neon-red: #dc2626;
 
-  --shadow-glow-cyan: 0 4px 20px rgba(2, 132, 199, 0.2);
-  --shadow-glow-purple: 0 4px 20px rgba(124, 58, 237, 0.2);
-  --shadow-card: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+  --player-x: #0284c7;
+  --player-o: #e11d48;
+
+  --shadow-glow-cyan: 0 4px 16px rgba(2, 132, 199, 0.15);
+  --shadow-glow-purple: 0 4px 16px rgba(124, 58, 237, 0.15);
+  --shadow-card: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(15, 23, 42, 0.06);
 }
 
 [data-theme="light"] body {
@@ -183,9 +192,9 @@
 body {
   background-color: var(--bg-primary);
   background-image: 
-    radial-gradient(circle at 15% 15%, rgba(0, 242, 254, 0.06) 0%, transparent 40%),
-    radial-gradient(circle at 85% 85%, rgba(138, 43, 226, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 50% 50%, rgba(16, 18, 29, 0.8) 0%, #090a10 100%);
+    radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 100%, rgba(56, 189, 248, 0.05) 0%, transparent 40%),
+    radial-gradient(ellipse at 15% 90%, rgba(139, 92, 246, 0.04) 0%, transparent 40%);
   background-attachment: fixed;
   color: var(--text-main);
   font-family: var(--font-body);
@@ -203,11 +212,11 @@ body {
   background: var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb {
-  background: #23283e;
+  background: #1e2235;
   border-radius: var(--radius-full);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #374163;
+  background: #2e3550;
 }
 
 /* Typography Utility */
@@ -237,7 +246,7 @@ a {
   padding: 24px 20px;
 }
 
-/* Glassmorphic Card */
+/* Glassmorphic Card — Midnight Obsidian */
 .glass-card {
   background: var(--bg-card);
   backdrop-filter: blur(16px);
@@ -250,10 +259,12 @@ a {
 }
 
 .glass-card:hover {
-  border-color: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.14);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
-/* Neon Glow Accents */
+/* Refined Subtle Glow Accents */
 .glow-cyan {
   box-shadow: var(--shadow-glow-cyan);
 }
@@ -263,24 +274,24 @@ a {
 }
 
 .text-gradient-cyan {
-  background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+  background: linear-gradient(135deg, #ffffff 30%, #38bdf8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-gradient-purple {
-  background: linear-gradient(135deg, #b388ff 0%, #ff80bf 100%);
+  background: linear-gradient(135deg, #ffffff 30%, #a5b4fc 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-gradient-gold {
-  background: linear-gradient(135deg, #fce38a 0%, #f38181 100%);
+  background: linear-gradient(135deg, #ffffff 30%, #fbbf24 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Button Component Styles */
+/* Button Component Styles — Linear Style with Inset Highlights */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -293,7 +304,7 @@ a {
   border-radius: var(--radius-sm);
   border: none;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   user-select: none;
   white-space: nowrap;
 }
@@ -306,43 +317,48 @@ a {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-  color: #050b14;
-  font-weight: 700;
-  box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+  background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
+  color: #ffffff;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 2px 8px rgba(99, 102, 241, 0.28);
 }
 .btn-primary:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 242, 254, 0.45);
+  transform: translateY(-1px);
+  background: linear-gradient(180deg, #6d70f7 0%, #5850ec 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 4px 16px rgba(99, 102, 241, 0.38);
 }
 
 .btn-purple {
-  background: linear-gradient(135deg, #8a2be2 0%, #d83aff 100%);
-  color: #fff;
-  box-shadow: 0 4px 15px rgba(138, 43, 226, 0.35);
+  background: linear-gradient(180deg, #8b5cf6 0%, #7c3aed 100%);
+  color: #ffffff;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 2px 8px rgba(139, 92, 246, 0.28);
 }
 .btn-purple:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(138, 43, 226, 0.5);
+  transform: translateY(-1px);
+  background: linear-gradient(180deg, #956bf7 0%, #8545f0 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 4px 16px rgba(139, 92, 246, 0.38);
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--text-main);
   border: 1px solid var(--border-subtle);
 }
 .btn-secondary:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.16);
 }
 
 .btn-danger {
-  background: rgba(239, 68, 68, 0.18);
+  background: rgba(239, 68, 68, 0.15);
   color: #fca5a5;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  border: 1px solid rgba(239, 68, 68, 0.25);
 }
 .btn-danger:hover:not(:disabled) {
-  background: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.25);
   color: #fff;
 }
 
@@ -375,10 +391,10 @@ a {
 .form-input {
   width: 100%;
   padding: 12px 16px;
-  background: rgba(14, 17, 28, 0.9);
+  background: rgba(15, 18, 26, 0.85);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
-  color: #fff;
+  color: var(--text-main);
   font-family: var(--font-body);
   font-size: 0.95rem;
   transition: all 0.2s ease;
@@ -387,10 +403,10 @@ a {
 .form-input:focus {
   outline: none;
   border-color: var(--neon-cyan);
-  box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.15);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
 }
 
-/* Badge / Pill */
+/* Badge / Pill — Understated Obsidian Tags */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -404,24 +420,24 @@ a {
 }
 
 .badge-cyan {
-  background: rgba(0, 242, 254, 0.12);
-  color: #00f2fe;
-  border: 1px solid rgba(0, 242, 254, 0.3);
+  background: rgba(56, 189, 248, 0.1);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.22);
 }
 .badge-gold {
-  background: rgba(245, 158, 11, 0.15);
-  color: #f59e0b;
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  background: rgba(245, 158, 11, 0.1);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.22);
 }
 .badge-green {
-  background: rgba(16, 185, 129, 0.15);
-  color: #10b981;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.1);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.22);
 }
 .badge-purple {
-  background: rgba(138, 43, 226, 0.15);
-  color: #c084fc;
-  border: 1px solid rgba(138, 43, 226, 0.3);
+  background: rgba(99, 102, 241, 0.12);
+  color: #a5b4fc;
+  border: 1px solid rgba(99, 102, 241, 0.25);
 }
 
 /* Pulse Radar Keyframes for Matchmaking */
@@ -479,9 +495,9 @@ a {
   animation: dropPiece 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
-/* Turn Glow */
+/* Turn Indicator Highlight */
 .active-turn-glow {
-  box-shadow: 0 0 20px rgba(0, 242, 254, 0.5), inset 0 0 15px rgba(0, 242, 254, 0.2);
+  box-shadow: 0 0 0 2px var(--neon-cyan), 0 4px 16px rgba(56, 189, 248, 0.25);
   border-color: var(--neon-cyan) !important;
 }
 
@@ -492,8 +508,9 @@ a {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -502,13 +519,13 @@ a {
 }
 
 .modal-content {
-  background: #141726;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #0f1118;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-lg);
   max-width: 480px;
   width: 100%;
   padding: 32px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05);
   position: relative;
   text-align: center;
 }

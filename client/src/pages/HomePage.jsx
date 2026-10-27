@@ -38,13 +38,13 @@ export default function HomePage() {
             gap: 8,
             padding: '6px 14px',
             borderRadius: 'var(--radius-full)',
-            background: 'rgba(0, 242, 254, 0.08)',
-            border: '1px solid rgba(0, 242, 254, 0.25)',
+            background: 'rgba(56, 189, 248, 0.08)',
+            border: '1px solid rgba(56, 189, 248, 0.2)',
             marginBottom: 20
           }}
         >
-          <Zap size={15} color="#00f2fe" />
-          <span style={{ fontSize: '0.82rem', fontWeight: 600, color: '#00f2fe' }}>
+          <Zap size={15} color="var(--neon-cyan)" />
+          <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--neon-cyan)' }}>
             Real-Time Server-Authoritative Browser Gaming
           </span>
         </div>
@@ -123,13 +123,13 @@ export default function HomePage() {
                     width: 48,
                     height: 48,
                     borderRadius: 12,
-                    background: 'rgba(0, 242, 254, 0.12)',
+                    background: 'rgba(56, 189, 248, 0.1)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'
                   }}
                 >
-                  <Grid3X3 size={26} color="#00f2fe" />
+                  <Grid3X3 size={26} color="var(--neon-cyan)" />
                 </div>
                 <span className="badge badge-cyan">2 Players • Fast</span>
               </div>
@@ -265,7 +265,7 @@ export default function HomePage() {
       <section style={{ marginBottom: 40 }}>
         <div className="grid-3">
           <div className="glass-card">
-            <div style={{ color: '#00f2fe', marginBottom: 12 }}>
+            <div style={{ color: 'var(--neon-cyan)', marginBottom: 12 }}>
               <ShieldCheck size={28} />
             </div>
             <h4 style={{ color: 'var(--text-main)', fontSize: '1.15rem', marginBottom: 8 }}>
