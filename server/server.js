@@ -40,9 +40,9 @@ async function startServer() {
   try {
     await connectDB();
 
-    server.listen(PORT, () => {
+    server.listen(PORT, '0.0.0.0', () => {
       logger.info(`===============================================`);
-      logger.info(`🎮 GameVerse Server listening on port ${PORT}`);
+      logger.info(`🎮 GameVerse Server listening on port ${PORT} (0.0.0.0)`);
       logger.info(`🌐 Environment: ${process.env.NODE_ENV || 'development'}`);
       logger.info(`🔌 Socket.IO initialized on same HTTP port`);
       logger.info(`===============================================`);

@@ -35,10 +35,7 @@ async function connectDB() {
     return mongoose.connection;
   } catch (error) {
     logger.error('Failed to connect to MongoDB:', error);
-    if (process.env.NODE_ENV === 'production') {
-      process.exit(1);
-    }
-    throw error;
+    logger.warn('Server will continue running. Please configure MONGODB_URI in Render environment variables for MongoDB Atlas persistence.');
   }
 }
 
