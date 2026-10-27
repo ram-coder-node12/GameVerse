@@ -9,6 +9,7 @@
     "install:all": "npm install && npm run install:server && npm run install:client",
     "server": "npm --prefix server run dev",
     "client": "npm --prefix client run dev",
+    "seed": "npm --prefix server run seed",
     "dev": "node -e \"console.log('Use separate terminals or concurrent scripts to run server and client: npm run server, npm run client')\"",
     "test:server": "npm --prefix server test",
     "test": "npm run test:server",
