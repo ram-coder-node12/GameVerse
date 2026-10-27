@@ -19,7 +19,8 @@ import {
   CheckCircle2,
   Edit3,
   Check,
-  X
+  X,
+  Zap
 } from 'lucide-react';
 
 export default function DashboardPage() {
