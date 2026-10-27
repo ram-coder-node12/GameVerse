@@ -38,14 +38,23 @@ export default function HomePage() {
             gap: 8,
             padding: '6px 14px',
             borderRadius: 'var(--radius-full)',
-            background: 'rgba(56, 189, 248, 0.08)',
-            border: '1px solid rgba(56, 189, 248, 0.2)',
+            background: 'var(--bg-secondary)',
+            border: '1px solid var(--border-subtle)',
+            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.06)',
             marginBottom: 20
           }}
         >
-          <Zap size={15} color="var(--neon-cyan)" />
-          <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--neon-cyan)' }}>
-            Real-Time Server-Authoritative Browser Gaming
+          <span
+            style={{
+              width: 8,
+              height: 8,
+              borderRadius: '50%',
+              background: '#10b981',
+              boxShadow: '0 0 6px #10b981'
+            }}
+          />
+          <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-muted)' }}>
+            Official Competitive Multiplayer Arena
           </span>
         </div>
 
@@ -54,11 +63,11 @@ export default function HomePage() {
             fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
             fontWeight: 900,
             lineHeight: 1.15,
-            marginBottom: 16
+            marginBottom: 16,
+            color: 'var(--text-main)'
           }}
         >
-          Master the Arena in{' '}
-          <span className="text-gradient-cyan">GameVerse</span>
+          Master the Arena in <span style={{ color: 'var(--brand-primary)' }}>GameVerse</span>
         </h1>
 
         <p
@@ -106,7 +115,7 @@ export default function HomePage() {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              border: '1px solid rgba(0, 242, 254, 0.2)'
+              border: '1px solid var(--border-subtle)'
             }}
           >
             <div>
@@ -188,7 +197,7 @@ export default function HomePage() {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              border: '1px solid rgba(138, 43, 226, 0.3)'
+              border: '1px solid var(--border-subtle)'
             }}
           >
             <div>

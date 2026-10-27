@@ -129,10 +129,8 @@ export default function DashboardPage() {
           justifyContent: 'space-between',
           flexWrap: 'wrap',
           gap: 20,
-          padding: '28px 32px',
-          marginBottom: 28,
-          background: 'linear-gradient(135deg, rgba(20, 24, 40, 0.9) 0%, rgba(12, 14, 25, 0.9) 100%)',
-          border: '1px solid rgba(0, 242, 254, 0.15)'
+          padding: '24px 28px',
+          marginBottom: 28
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
@@ -144,9 +142,9 @@ export default function DashboardPage() {
                 width: 76,
                 height: 76,
                 borderRadius: '50%',
-                background: '#1a2035',
-                border: '3px solid var(--neon-cyan)',
-                boxShadow: '0 0 20px rgba(0, 242, 254, 0.3)'
+                background: 'var(--bg-secondary)',
+                border: '3px solid var(--brand-primary)',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'
               }}
             />
             <button
@@ -158,9 +156,9 @@ export default function DashboardPage() {
                 position: 'absolute',
                 bottom: 0,
                 right: -4,
-                background: '#1f293d',
+                background: 'var(--bg-card)',
                 border: '1px solid var(--border-subtle)',
-                color: 'var(--neon-cyan)',
+                color: 'var(--brand-primary)',
                 borderRadius: '50%',
                 width: 26,
                 height: 26,
@@ -168,7 +166,7 @@ export default function DashboardPage() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 2px 6px rgba(0,0,0,0.5)'
+                boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
               }}
             >
               <RotateCcw size={13} />

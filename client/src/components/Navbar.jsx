@@ -88,16 +88,7 @@ export default function Navbar() {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <header
-      style={{
-        background: 'rgba(13, 16, 27, 0.85)',
-        backdropFilter: 'blur(16px)',
-        borderBottom: '1px solid var(--border-subtle)',
-        position: 'sticky',
-        top: 0,
-        zIndex: 50
-      }}
-    >
+    <header className="app-header">
       <div
         style={{
           maxWidth: 1280,
@@ -113,32 +104,47 @@ export default function Navbar() {
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div
             style={{
-              width: 40,
-              height: 40,
-              borderRadius: 10,
-              background: 'linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-blue) 100%)',
+              width: 38,
+              height: 38,
+              borderRadius: 9,
+              background: 'linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: 'var(--shadow-glow-cyan)',
+              boxShadow: '0 2px 8px rgba(37, 99, 235, 0.25)',
               flexShrink: 0
             }}
           >
-            <Gamepad2 size={24} color="#ffffff" />
+            <Gamepad2 size={22} color="#ffffff" />
           </div>
-          <span
-            style={{
-              fontFamily: 'var(--font-heading)',
-              fontWeight: 800,
-              fontSize: '1.45rem',
-              letterSpacing: '-0.02em',
-              color: 'var(--text-main)',
-              display: 'inline-flex',
-              alignItems: 'center'
-            }}
-          >
-            Game<span style={{ color: 'var(--neon-cyan)' }}>Verse</span>
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <span
+              style={{
+                fontFamily: 'var(--font-heading)',
+                fontWeight: 800,
+                fontSize: '1.4rem',
+                letterSpacing: '-0.025em',
+                color: 'var(--text-main)',
+                lineHeight: 1
+              }}
+            >
+              Game<span style={{ color: 'var(--brand-primary)' }}>Verse</span>
+            </span>
+            <span
+              className="logo-badge"
+              style={{
+                fontSize: '0.62rem',
+                fontWeight: 700,
+                letterSpacing: '0.06em',
+                textTransform: 'uppercase',
+                padding: '2px 6px',
+                borderRadius: 4,
+                lineHeight: 1
+              }}
+            >
+              ARENA
+            </span>
+          </div>
         </Link>
 
         {/* Center Navigation Links */}
@@ -315,19 +321,20 @@ export default function Navbar() {
             title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             aria-label="Toggle Theme"
             style={{
-              background: 'rgba(255, 255, 255, 0.05)',
+              background: 'var(--bg-secondary)',
               border: '1px solid var(--border-subtle)',
               borderRadius: 8,
-              padding: 8,
-              color: theme === 'dark' ? '#f59e0b' : '#0284c7',
+              padding: '7px 9px',
+              color: theme === 'dark' ? '#fbbf24' : '#2563eb',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
               transition: 'all 0.2s ease'
             }}
           >
-            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
           </button>
 
           {user ? (
