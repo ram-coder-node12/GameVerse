@@ -722,6 +722,54 @@ a {
   color: #e11d48;
 }
 
+/* Big Hero Interactive Simulator Grid */
+.hero-duel-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: 210px;
+  height: 210px;
+  background: var(--border-subtle);
+  padding: 8px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.hero-duel-cell {
+  background: var(--bg-card);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 2.2rem;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.hero-duel-cell:hover:not(.occupied) {
+  background: rgba(124, 58, 237, 0.08);
+  border: 1px solid var(--render-purple);
+  transform: scale(1.03);
+}
+.hero-duel-cell.cell-x {
+  color: #0284c7;
+}
+.hero-duel-cell.cell-o {
+  color: #e11d48;
+}
+
+@media (max-width: 520px) {
+  .hero-duel-board {
+    width: 170px;
+    height: 170px;
+  }
+  .hero-duel-cell {
+    font-size: 1.8rem;
+  }
+}
+
 /* Connect Four Mini Gravity Drop Animation */
 @keyframes chipDropBounce {
   0% { transform: translateY(-30px); opacity: 0; }

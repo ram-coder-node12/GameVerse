@@ -344,245 +344,178 @@ export default function HomePage() {
             </svg>
           </div>
 
-          {/* Active Blueprint PRODUCTION Container */}
+          {/* Active Blueprint PRODUCTION Container — Enlarged Engine Simulator */}
           <div
             style={{
               background: 'var(--bg-card)',
-              border: '1px solid var(--border-subtle)',
+              border: isWireActive ? '1px solid var(--render-purple)' : '1px solid var(--border-subtle)',
               borderRadius: '6px',
-              padding: '20px',
-              boxShadow: '0 8px 30px rgba(0, 0, 0, 0.08)'
+              padding: '24px',
+              boxShadow: '0 8px 30px rgba(0, 0, 0, 0.08)',
+              transition: 'border-color 0.2s ease'
             }}
           >
-            {/* Header: PRODUCTION • ENGINE MESH */}
+            {/* Header: engine-simulator and controls */}
             <div
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                paddingBottom: '12px',
-                marginBottom: '16px',
+                paddingBottom: '16px',
+                marginBottom: '20px',
                 borderBottom: '1px solid var(--border-subtle)'
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+                <Grid3X3 size={18} color="var(--neon-cyan)" />
                 <span
                   style={{
                     fontFamily: 'var(--font-mono)',
-                    fontSize: '0.72rem',
+                    fontSize: '0.98rem',
                     fontWeight: 700,
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    color: 'var(--text-dim)'
+                    color: 'var(--text-main)',
+                    letterSpacing: '-0.01em'
                   }}
                 >
-                  PRODUCTION CLUSTER • REAL-TIME MESH
+                  engine-simulator
+                </span>
+                <span
+                  style={{
+                    fontSize: '0.7rem',
+                    background: 'rgba(16, 185, 129, 0.1)',
+                    color: '#10b981',
+                    border: '1px solid rgba(16, 185, 129, 0.25)',
+                    borderRadius: 4,
+                    padding: '2px 8px',
+                    fontWeight: 600,
+                    fontFamily: 'var(--font-mono)'
+                  }}
+                >
+                  ● AUTHORITATIVE
                 </span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.72rem', color: '#10b981', fontFamily: 'var(--font-mono)' }}>
-                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#10b981', boxShadow: '0 0 6px #10b981' }} />
-                <span>ONLINE ({onlineCount || 1} ACTIVE)</span>
-              </div>
+
+              <button
+                onClick={handleResetMiniDuel}
+                title="Reset Simulation Grid"
+                className="btn btn-secondary btn-sm"
+                style={{ padding: '6px 12px', fontSize: '0.78rem' }}
+              >
+                <RotateCcw size={13} />
+                <span>Reset</span>
+              </button>
             </div>
 
-            {/* 4 Interactive Telemetry Cards in 2x2 Grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '14px' }}>
-              {/* Card 1: Live Interactive Mini-Duel Simulator */}
-              <div className="telemetry-card" style={{ borderColor: isWireActive ? 'var(--render-purple)' : 'var(--border-subtle)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                    <Grid3X3 size={13} color="var(--neon-cyan)" />
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-main)' }}>
-                      engine-simulator
-                    </span>
-                  </div>
-                  <button
-                    onClick={handleResetMiniDuel}
-                    title="Reset Mini Duel"
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      cursor: 'pointer',
-                      padding: 2,
-                      color: 'var(--text-dim)'
-                    }}
+            {/* Enlarged Interactive Playable Duel Engine */}
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: 28,
+                flexWrap: 'wrap',
+                marginBottom: 20
+              }}
+            >
+              {/* Left: Big 3x3 Playable Duel Grid */}
+              <div className="hero-duel-board">
+                {miniBoard.map((cell, idx) => (
+                  <div
+                    key={idx}
+                    onClick={() => handleMiniCellClick(idx)}
+                    className={`hero-duel-cell ${cell ? (cell === 'X' ? 'cell-x occupied' : 'cell-o occupied') : ''}`}
                   >
-                    <RotateCcw size={11} />
-                  </button>
-                </div>
-
-                {/* Interactive Playable Mini 3x3 Grid */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '4px 0 8px' }}>
-                  <div className="mini-duel-board">
-                    {miniBoard.map((cell, idx) => (
-                      <div
-                        key={idx}
-                        onClick={() => handleMiniCellClick(idx)}
-                        className={`mini-duel-cell ${cell ? (cell === 'X' ? 'cell-x occupied' : 'cell-o occupied') : ''}`}
-                      >
-                        {cell}
-                      </div>
-                    ))}
+                    {cell}
                   </div>
-
-                  <div style={{ flex: 1, paddingLeft: 12, display: 'flex', flexDirection: 'column', gap: 4 }}>
-                    <span style={{ fontSize: '0.65rem', fontFamily: 'var(--font-mono)', color: 'var(--neon-cyan)', fontWeight: 600 }}>
-                      {botThinking ? '● Engine Validating...' : '⚡ Click any cell'}
-                    </span>
-                    <span style={{ fontSize: '0.62rem', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)', lineHeight: 1.2 }}>
-                      {lastActionLog}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Telemetry Metrics */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4px', fontSize: '0.65rem', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)' }}>
-                  <div>MOVES: <span style={{ color: 'var(--text-main)' }}>{simulatedMoves}</span></div>
-                  <div>CHEAT: <span style={{ color: '#10b981' }}>0%</span></div>
-                  <div>TICKS: <span style={{ color: 'var(--text-main)' }}>60Hz</span></div>
-                  <div>AUTH: <span style={{ color: 'var(--text-main)' }}>Strict</span></div>
-                </div>
+                ))}
               </div>
 
-              {/* Card 2: app-connectfour-grid */}
-              <div className="telemetry-card">
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                    <CircleDot size={13} color="var(--render-purple)" />
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-main)' }}>
-                      gravity-connect4
-                    </span>
-                  </div>
-                  <span style={{ fontSize: '0.68rem', color: '#10b981', display: 'flex', alignItems: 'center', gap: 4, fontFamily: 'var(--font-mono)' }}>
-                    <CheckCircle2 size={11} /> 7×6 Grid
+              {/* Right: Live Engine Telemetry & Validation Feed */}
+              <div style={{ flex: 1, minWidth: 220, display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <Zap size={14} color="#f59e0b" />
+                  <span style={{ fontSize: '0.85rem', fontFamily: 'var(--font-mono)', color: 'var(--neon-cyan)', fontWeight: 600 }}>
+                    {botThinking ? '● Engine Validating Move...' : 'Click any cell to test validation'}
                   </span>
                 </div>
 
-                {/* Live Sparkline Chart */}
-                <div style={{ margin: '4px 0 8px' }}>
-                  <svg className="sparkline-svg" viewBox="0 0 160 38" preserveAspectRatio="none">
+                {/* Live Action Terminal Box */}
+                <div
+                  style={{
+                    background: 'var(--bg-secondary)',
+                    border: '1px solid var(--border-subtle)',
+                    borderRadius: 4,
+                    padding: '14px 16px',
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: '0.82rem',
+                    lineHeight: 1.55,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 6
+                  }}
+                >
+                  <div style={{ color: botThinking ? 'var(--render-purple)' : 'var(--text-main)', fontWeight: 600 }}>
+                    {botThinking ? '● Processing state hash...' : '✓ ' + lastActionLog}
+                  </div>
+                  <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>
+                    Replication: <span style={{ color: '#10b981', fontWeight: 600 }}>{simulatedLatency}ms</span> • Anti-cheat: <span style={{ color: '#10b981', fontWeight: 600 }}>0 anomalies</span>
+                  </div>
+                </div>
+
+                {/* Telemetry Sparkline Wave */}
+                <div>
+                  <svg className="sparkline-svg" viewBox="0 0 200 32" preserveAspectRatio="none" style={{ height: 32 }}>
                     <defs>
-                      <linearGradient id="grad-spark2" x1="0" y1="0" x2="0" y2="1">
+                      <linearGradient id="grad-engine-wave" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="0%" stopColor="var(--render-purple)" stopOpacity="0.25" />
                         <stop offset="100%" stopColor="var(--render-purple)" stopOpacity="0" />
                       </linearGradient>
                     </defs>
                     <path
-                      d="M0,20 Q30,30 65,12 T115,24 T145,8 T160,18 L160,38 L0,38 Z"
-                      fill="url(#grad-spark2)"
+                      d="M0,22 Q30,10 60,20 T120,8 T160,18 T200,12 L200,32 L0,32 Z"
+                      fill="url(#grad-engine-wave)"
                     />
                     <path
-                      d="M0,20 Q30,30 65,12 T115,24 T145,8 T160,18"
+                      d="M0,22 Q30,10 60,20 T120,8 T160,18 T200,12"
                       fill="none"
                       stroke="var(--render-purple)"
-                      strokeWidth="1.75"
+                      strokeWidth="2"
                       strokeLinecap="round"
                       className="telemetry-spark"
                     />
                   </svg>
-                </div>
-
-                {/* Telemetry Metrics */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', fontSize: '0.65rem', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)' }}>
-                  <div>MEMORY: <span style={{ color: 'var(--text-main)' }}>28MB</span></div>
-                  <div>COLUMNS: <span style={{ color: 'var(--text-main)' }}>7 Drops</span></div>
-                  <div>GRAVITY: <span style={{ color: 'var(--text-main)' }}>Server</span></div>
-                  <div>HASH: <span style={{ color: 'var(--text-main)' }}>SHA-256</span></div>
                 </div>
               </div>
+            </div>
 
-              {/* Card 3: app-rating-elo */}
-              <div className="telemetry-card">
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                    <Trophy size={13} color="#f59e0b" />
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-main)' }}>
-                      elo-rating-service
-                    </span>
-                  </div>
-                  <span style={{ fontSize: '0.68rem', color: '#10b981', display: 'flex', alignItems: 'center', gap: 4, fontFamily: 'var(--font-mono)' }}>
-                    <CheckCircle2 size={11} /> K=32
-                  </span>
-                </div>
-
-                {/* Live Sparkline Chart */}
-                <div style={{ margin: '4px 0 8px' }}>
-                  <svg className="sparkline-svg" viewBox="0 0 160 38" preserveAspectRatio="none">
-                    <defs>
-                      <linearGradient id="grad-spark3" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.25" />
-                        <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
-                    <path
-                      d="M0,15 Q35,5 70,25 T120,10 T145,18 T160,8 L160,38 L0,38 Z"
-                      fill="url(#grad-spark3)"
-                    />
-                    <path
-                      d="M0,15 Q35,5 70,25 T120,10 T145,18 T160,8"
-                      fill="none"
-                      stroke="#f59e0b"
-                      strokeWidth="1.75"
-                      strokeLinecap="round"
-                      className="telemetry-spark"
-                    />
-                  </svg>
-                </div>
-
-                {/* Telemetry Metrics */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', fontSize: '0.65rem', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)' }}>
-                  <div>CALC: <span style={{ color: 'var(--text-main)' }}>K=32</span></div>
-                  <div>WIN ELO: <span style={{ color: '#10b981' }}>+25 PTS</span></div>
-                  <div>LOSS ELO: <span style={{ color: '#ef4444' }}>-20 PTS</span></div>
-                  <div>STREAK: <span style={{ color: 'var(--text-main)' }}>1.5x</span></div>
-                </div>
+            {/* Bottom Row: Detailed Telemetry Metrics */}
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(4, 1fr)',
+                gap: 12,
+                paddingTop: 16,
+                borderTop: '1px solid var(--border-subtle)',
+                fontSize: '0.76rem',
+                fontFamily: 'var(--font-mono)',
+                color: 'var(--text-dim)'
+              }}
+            >
+              <div>
+                <span>MOVES: </span>
+                <strong style={{ color: 'var(--text-main)' }}>{simulatedMoves}</strong>
               </div>
-
-              {/* Card 4: app-socket-cluster */}
-              <div className="telemetry-card">
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                    <Zap size={13} color="var(--render-orange)" />
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-main)' }}>
-                      websocket-mesh
-                    </span>
-                  </div>
-                  <span style={{ fontSize: '0.68rem', color: '#10b981', display: 'flex', alignItems: 'center', gap: 4, fontFamily: 'var(--font-mono)' }}>
-                    <Activity size={11} /> {simulatedLatency}ms
-                  </span>
-                </div>
-
-                {/* Live Sparkline Chart */}
-                <div style={{ margin: '4px 0 8px' }}>
-                  <svg className="sparkline-svg" viewBox="0 0 160 38" preserveAspectRatio="none">
-                    <defs>
-                      <linearGradient id="grad-spark4" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="var(--render-orange)" stopOpacity="0.25" />
-                        <stop offset="100%" stopColor="var(--render-orange)" stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
-                    <path
-                      d="M0,24 Q40,12 80,22 T120,6 T148,16 T160,12 L160,38 L0,38 Z"
-                      fill="url(#grad-spark4)"
-                    />
-                    <path
-                      d="M0,24 Q40,12 80,22 T120,6 T148,16 T160,12"
-                      fill="none"
-                      stroke="var(--render-orange)"
-                      strokeWidth="1.75"
-                      strokeLinecap="round"
-                      className="telemetry-spark"
-                    />
-                  </svg>
-                </div>
-
-                {/* Telemetry Metrics */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', fontSize: '0.65rem', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)' }}>
-                  <div>UPTIME: <span style={{ color: 'var(--text-main)' }}>99.99%</span></div>
-                  <div>POLL: <span style={{ color: 'var(--text-main)' }}>0 (Push)</span></div>
-                  <div>PING: <span style={{ color: '#10b981' }}>{simulatedLatency}ms</span></div>
-                  <div>RECONNECT: <span style={{ color: 'var(--text-main)' }}>30s</span></div>
-                </div>
+              <div>
+                <span>CHEAT: </span>
+                <strong style={{ color: '#10b981' }}>0%</strong>
+              </div>
+              <div>
+                <span>TICKS: </span>
+                <strong style={{ color: 'var(--text-main)' }}>60Hz</strong>
+              </div>
+              <div>
+                <span>AUTH: </span>
+                <strong style={{ color: 'var(--text-main)' }}>Strict</strong>
               </div>
             </div>
           </div>
