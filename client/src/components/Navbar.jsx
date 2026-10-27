@@ -112,7 +112,8 @@ export default function Navbar() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: 'var(--shadow-glow-cyan)'
+              boxShadow: 'var(--shadow-glow-cyan)',
+              flexShrink: 0
             }}
           >
             <Gamepad2 size={24} color="#ffffff" />
@@ -123,15 +124,12 @@ export default function Navbar() {
               fontWeight: 800,
               fontSize: '1.45rem',
               letterSpacing: '-0.02em',
-              background:
-                theme === 'light'
-                  ? 'linear-gradient(135deg, #0f172a 30%, #0284c7 100%)'
-                  : 'linear-gradient(135deg, #ffffff 40%, var(--neon-cyan) 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
+              color: 'var(--text-main)',
+              display: 'inline-flex',
+              alignItems: 'center'
             }}
           >
-            GameVerse
+            Game<span style={{ color: 'var(--neon-cyan)' }}>Verse</span>
           </span>
         </Link>
 
