@@ -54,16 +54,54 @@ async function searchUsers(req, res, next) {
   }
 }
 
-// @desc    Update current player's avatar
+// @desc    Update current player's profile (avatar, username)
 // @route   PATCH /api/users/profile
 // @access  Private
 async function updateProfile(req, res, next) {
   try {
-    const { avatar } = req.body;
+    const { avatar, username } = req.body;
     const user = await User.findById(req.user._id);
 
     if (!user) {
       return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    if (username !== undefined) {
+      const trimmedUsername = typeof username === 'string' ? username.trim() : '';
+
+      // Validate length
+      if (trimmedUsername.length < 3 || trimmedUsername.length > 20) {
+        return res.status(400).json({
+          success: false,
+          message: 'Username must be between 3 and 20 characters.'
+        });
+      }
+
+      // Validate format (alphanumeric, underscores, hyphens)
+      const usernameRegex = /^[a-zA-Z0-9_-]+$/;
+      if (!usernameRegex.test(trimmedUsername)) {
+        return res.status(400).json({
+          success: false,
+          message: 'Username can only contain letters, numbers, underscores, and hyphens.'
+        });
+      }
+
+      // Check if username is already taken by someone else (case-insensitive)
+      if (trimmedUsername.toLowerCase() !== user.username.toLowerCase()) {
+        const existingUser = await User.findOne({
+          username: { $regex: new RegExp(`^${trimmedUsername}$`, 'i') },
+          _id: { $ne: user._id }
+        });
+
+        if (existingUser) {
+          return res.status(400).json({
+            success: false,
+            message: 'Username is already taken by another player.'
+          });
+        }
+      }
+
+      user.username = trimmedUsername;
     }
 
     if (avatar) {

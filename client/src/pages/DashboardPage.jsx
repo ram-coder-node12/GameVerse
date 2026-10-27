@@ -16,7 +16,10 @@ import {
   Users,
   Grid3X3,
   CircleDot,
-  CheckCircle2
+  CheckCircle2,
+  Edit3,
+  Check,
+  X
 } from 'lucide-react';
 
 export default function DashboardPage() {
@@ -27,6 +30,13 @@ export default function DashboardPage() {
   const [recentGames, setRecentGames] = useState([]);
   const [loadingGames, setLoadingGames] = useState(true);
   const [updatingAvatar, setUpdatingAvatar] = useState(false);
+
+  // Edit Username States
+  const [isEditingUsername, setIsEditingUsername] = useState(false);
+  const [newUsername, setNewUsername] = useState('');
+  const [updatingUsername, setUpdatingUsername] = useState(false);
+  const [usernameError, setUsernameError] = useState('');
+  const [usernameSuccess, setUsernameSuccess] = useState('');
 
   useEffect(() => {
     const fetchRecent = async () => {
@@ -59,6 +69,50 @@ export default function DashboardPage() {
       console.warn('Failed to update avatar:', err);
     } finally {
       setUpdatingAvatar(false);
+    }
+  };
+
+  const startEditingUsername = () => {
+    setNewUsername(user.username);
+    setUsernameError('');
+    setUsernameSuccess('');
+    setIsEditingUsername(true);
+  };
+
+  const handleSaveUsername = async (e) => {
+    if (e) e.preventDefault();
+    const trimmed = newUsername.trim();
+    if (!trimmed) {
+      setUsernameError('Username cannot be empty.');
+      return;
+    }
+    if (trimmed === user.username) {
+      setIsEditingUsername(false);
+      return;
+    }
+    if (trimmed.length < 3 || trimmed.length > 20) {
+      setUsernameError('Username must be 3 to 20 characters.');
+      return;
+    }
+    if (!/^[a-zA-Z0-9_-]+$/.test(trimmed)) {
+      setUsernameError('Letters, numbers, underscores, and hyphens only.');
+      return;
+    }
+
+    try {
+      setUpdatingUsername(true);
+      setUsernameError('');
+      const res = await api.patch('/users/profile', { username: trimmed });
+      if (res.data.success && res.data.user) {
+        updateUser(res.data.user);
+        setUsernameSuccess('Username updated successfully!');
+        setIsEditingUsername(false);
+        setTimeout(() => setUsernameSuccess(''), 3500);
+      }
+    } catch (err) {
+      setUsernameError(err.response?.data?.message || err.message || 'Failed to update username.');
+    } finally {
+      setUpdatingUsername(false);
     }
   };
 
@@ -122,15 +176,110 @@ export default function DashboardPage() {
           </div>
 
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
-              <h1 style={{ fontSize: '1.8rem', color: 'var(--text-main)', letterSpacing: '-0.02em' }}>
-                {user.username}
-              </h1>
-              <span className={`badge ${user.role === 'ADMIN' ? 'badge-purple' : 'badge-cyan'}`}>
-                {user.role}
-              </span>
-            </div>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem' }}>
+            {isEditingUsername ? (
+              <form onSubmit={handleSaveUsername} style={{ marginBottom: 6 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                  <input
+                    type="text"
+                    value={newUsername}
+                    onChange={(e) => {
+                      setNewUsername(e.target.value);
+                      setUsernameError('');
+                    }}
+                    autoFocus
+                    maxLength={20}
+                    placeholder="Enter new username"
+                    disabled={updatingUsername}
+                    style={{
+                      padding: '6px 12px',
+                      background: 'var(--bg-secondary)',
+                      border: usernameError ? '1px solid var(--neon-red)' : '1px solid var(--border-active)',
+                      borderRadius: 'var(--radius-sm)',
+                      color: 'var(--text-main)',
+                      fontSize: '1.2rem',
+                      fontWeight: 700,
+                      fontFamily: 'var(--font-heading)',
+                      outline: 'none',
+                      minWidth: 180,
+                      maxWidth: 240
+                    }}
+                  />
+                  <button
+                    type="submit"
+                    disabled={updatingUsername}
+                    className="btn btn-primary btn-sm"
+                    style={{ padding: '6px 12px', height: 34 }}
+                    title="Save Username"
+                  >
+                    <Check size={16} />
+                    <span>{updatingUsername ? 'Saving...' : 'Save'}</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsEditingUsername(false);
+                      setUsernameError('');
+                    }}
+                    disabled={updatingUsername}
+                    className="btn btn-secondary btn-sm"
+                    style={{ padding: '6px 12px', height: 34 }}
+                    title="Cancel"
+                  >
+                    <X size={16} />
+                    <span>Cancel</span>
+                  </button>
+                </div>
+                {usernameError && (
+                  <div style={{ color: 'var(--neon-red)', fontSize: '0.8rem', marginTop: 4, fontWeight: 500 }}>
+                    {usernameError}
+                  </div>
+                )}
+              </form>
+            ) : (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
+                <h1 style={{ fontSize: '1.8rem', color: 'var(--text-main)', letterSpacing: '-0.02em', margin: 0 }}>
+                  {user.username}
+                </h1>
+                <button
+                  onClick={startEditingUsername}
+                  title="Edit Username"
+                  aria-label="Edit Username"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.06)',
+                    border: '1px solid var(--border-subtle)',
+                    borderRadius: 6,
+                    padding: '4px 8px',
+                    color: 'var(--text-muted)',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 4,
+                    fontSize: '0.75rem',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = 'var(--neon-cyan)';
+                    e.currentTarget.style.borderColor = 'var(--neon-cyan)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = 'var(--text-muted)';
+                    e.currentTarget.style.borderColor = 'var(--border-subtle)';
+                  }}
+                >
+                  <Edit3 size={13} />
+                  <span>Edit</span>
+                </button>
+                <span className={`badge ${user.role === 'ADMIN' ? 'badge-purple' : 'badge-cyan'}`}>
+                  {user.role}
+                </span>
+                {usernameSuccess && (
+                  <span style={{ fontSize: '0.8rem', color: 'var(--neon-green)', fontWeight: 600 }}>
+                    ✓ {usernameSuccess}
+                  </span>
+                )}
+              </div>
+            )}
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', margin: 0 }}>
               Member since {new Date(user.createdAt).toLocaleDateString()} • {user.email}
             </p>
           </div>

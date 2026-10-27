@@ -114,6 +114,46 @@ describe('Authentication API Integration Tests', () => {
     expect(res.body.success).toBe(false);
   });
 
+  test('PATCH /api/users/profile - Successfully updates player username', async () => {
+    const regRes = await request(app).post('/api/auth/register').send(validUser);
+    const token = regRes.body.token;
+
+    const patchRes = await request(app)
+      .patch('/api/users/profile')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ username: 'RenamedViper' });
+
+    expect(patchRes.statusCode).toBe(200);
+    expect(patchRes.body.success).toBe(true);
+    expect(patchRes.body.user.username).toBe('RenamedViper');
+
+    // Confirm in DB
+    const meRes = await request(app)
+      .get('/api/auth/me')
+      .set('Authorization', `Bearer ${token}`);
+    expect(meRes.body.user.username).toBe('RenamedViper');
+  });
+
+  test('PATCH /api/users/profile - Rejects duplicate username', async () => {
+    // Register user 1
+    await request(app).post('/api/auth/register').send(validUser);
+
+    // Register user 2
+    const user2 = { username: 'OtherPlayer', email: 'other@test.local', password: 'password123' };
+    const reg2 = await request(app).post('/api/auth/register').send(user2);
+    const token2 = reg2.body.token;
+
+    // Try to rename user 2 to TestPlayer
+    const patchRes = await request(app)
+      .patch('/api/users/profile')
+      .set('Authorization', `Bearer ${token2}`)
+      .send({ username: 'TestPlayer' });
+
+    expect(patchRes.statusCode).toBe(400);
+    expect(patchRes.body.success).toBe(false);
+    expect(patchRes.body.message).toMatch(/already taken/i);
+  });
+
   test('GET /health - Returns 200 and healthy server status', async () => {
     const res = await request(app).get('/health');
     expect(res.statusCode).toBe(200);
