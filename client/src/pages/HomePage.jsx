@@ -11,16 +11,13 @@ import {
   Trophy,
   Grid3X3,
   CircleDot,
-  Server,
   Activity,
-  CheckCircle2,
-  Terminal,
-  Radio,
   Play,
   RotateCcw,
   Sparkles,
   ArrowRight,
-  X
+  Flame,
+  Users
 } from 'lucide-react';
 
 export default function HomePage() {
@@ -28,11 +25,10 @@ export default function HomePage() {
   const { joinQueue, inQueue, onlineCount } = useSocket();
   const navigate = useNavigate();
 
-  // Rotating keywords (Gamer & developer tuned, exactly one closing bracket)
-  const words = ['Tic-Tac-Toe', 'Connect Four', 'Ranked Duels', 'Turn Strategy'];
+  // Rotating game modes
+  const words = ['Tic-Tac-Toe', 'Connect Four', 'Ranked Duels', 'Tactical Arenas'];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [fadeState, setFadeState] = useState('fade-in');
-  const [showSkipPrompt, setShowSkipPrompt] = useState(true);
 
   // Interactive Match Simulator State
   const [miniBoard, setMiniBoard] = useState([
@@ -40,12 +36,11 @@ export default function HomePage() {
     null, 'O', null,
     null, null, null
   ]);
-  const [miniTurn, setMiniTurn] = useState('X');
-  const [isWireActive, setIsWireActive] = useState(false);
   const [simulatedLatency, setSimulatedLatency] = useState(12);
   const [simulatedMoves, setSimulatedMoves] = useState(2);
-  const [lastActionLog, setLastActionLog] = useState('TURN #2 VERIFIED: (1,1) O • 0 CHEAT DETECTED');
+  const [lastActionLog, setLastActionLog] = useState('TURN #2: (1,1) O • VALIDATED ON SERVER');
   const [botThinking, setBotThinking] = useState(false);
+  const [isPulseActive, setIsPulseActive] = useState(false);
 
   // Word rotation cycle
   useEffect(() => {
@@ -59,34 +54,34 @@ export default function HomePage() {
     return () => clearInterval(interval);
   }, [words.length]);
 
-  // Handle human move on interactive mini-board
+  // Handle player click on interactive mini-board
   const handleMiniCellClick = (index) => {
     if (miniBoard[index] || botThinking) return;
 
-    // 1. Place Human Move 'X'
+    // 1. Human Move 'X'
     const newBoard = [...miniBoard];
     newBoard[index] = 'X';
     setMiniBoard(newBoard);
-    setIsWireActive(true);
+    setIsPulseActive(true);
     setSimulatedMoves((prev) => prev + 1);
     const row = Math.floor(index / 3);
     const col = index % 3;
-    setSimulatedLatency(Math.floor(Math.random() * 5) + 9); // 9-13ms
-    setLastActionLog(`MOVE VERIFIED: (${row},${col}) X • SERVER VALIDATED`);
+    setSimulatedLatency(Math.floor(Math.random() * 5) + 9);
+    setLastActionLog(`MOVE PLACED: (${row},${col}) X • SERVER-VERIFIED`);
 
-    setTimeout(() => setIsWireActive(false), 850);
+    setTimeout(() => setIsPulseActive(false), 800);
 
-    // 2. Check if board is full or win
+    // 2. Check remaining empty cells
     const emptyIndices = newBoard
       .map((val, idx) => (val === null ? idx : null))
       .filter((val) => val !== null);
 
     if (emptyIndices.length === 0) {
-      setLastActionLog('MINI-MATCH DRAW • ELO ADJUSTED (+5 PTS)');
+      setLastActionLog('MATCH CONCLUDED: DRAW • +5 RATING POINTS');
       return;
     }
 
-    // 3. Automated Server Opponent Response
+    // 3. Automated Opponent Response
     setBotThinking(true);
     setTimeout(() => {
       const botPick = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
@@ -96,18 +91,18 @@ export default function HomePage() {
       const bRow = Math.floor(botPick / 3);
       const bCol = botPick % 3;
       setSimulatedLatency(Math.floor(Math.random() * 4) + 10);
-      setLastActionLog(`MOVE BROADCAST: (${bRow},${bCol}) O • 2 CLIENTS SYNCED`);
+      setLastActionLog(`OPPONENT MOVED: (${bRow},${bCol}) O • SYNCED`);
       setBotThinking(false);
-    }, 700);
+    }, 650);
   };
 
   const handleResetMiniDuel = (e) => {
     e.stopPropagation();
     setMiniBoard([null, null, null, null, null, null, null, null, null]);
     setSimulatedMoves(0);
-    setLastActionLog('ENGINE RESET: STANDBY FOR NEXT MOVE');
-    setIsWireActive(true);
-    setTimeout(() => setIsWireActive(false), 600);
+    setLastActionLog('ARENA RESET: READY FOR FIRST MOVE');
+    setIsPulseActive(true);
+    setTimeout(() => setIsPulseActive(false), 500);
   };
 
   const handlePlayOnline = (gameType) => {
@@ -121,52 +116,51 @@ export default function HomePage() {
   return (
     <div>
       {/* ============================================================
-          Render.com Signature Hero Section (Split 2-Column)
+          Hero Section: 2-Column Split
          ============================================================ */}
       <section className="render-hero-container">
-        {/* Left Column: Architectural Title & CTAs */}
+        {/* Left Column: Gaming Headline & CTAs */}
         <div>
-          {/* Top developer pill */}
+          {/* Gaming Status Badge */}
           <div
             style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: 8,
-              padding: '5px 12px',
+              padding: '6px 14px',
               borderRadius: '4px',
               background: 'var(--bg-secondary)',
               border: '1px solid var(--border-subtle)',
               marginBottom: 24,
-              fontFamily: 'var(--font-mono)',
               fontSize: '0.82rem',
+              fontWeight: 600,
               color: 'var(--text-muted)'
             }}
           >
             <span
               style={{
-                width: 7,
-                height: 7,
+                width: 8,
+                height: 8,
                 borderRadius: '50%',
                 background: '#10b981',
-                boxShadow: '0 0 6px #10b981'
+                boxShadow: '0 0 8px #10b981'
               }}
             />
-            <span>$ gameverse duel --authoritative</span>
+            <span>Competitive Multiplayer Gaming Arena</span>
           </div>
 
-          {/* Render-style Typography Headline */}
+          {/* Core Gaming Headline */}
           <h1
             style={{
-              fontSize: 'clamp(2.6rem, 5.2vw, 4.4rem)',
+              fontSize: 'clamp(2.6rem, 5vw, 4.2rem)',
               fontWeight: 800,
-              lineHeight: 1.06,
+              lineHeight: 1.08,
               letterSpacing: '-0.035em',
               marginBottom: 24,
               color: 'var(--text-main)'
             }}
           >
-            Your fastest path to<br />
-            victory in<br />
+            The Ultimate Arena for<br />
             <span
               style={{
                 color: 'var(--render-purple)',
@@ -191,10 +185,10 @@ export default function HomePage() {
               marginBottom: 36
             }}
           >
-            Server-authoritative competitive multiplayer engine. Real-time WebSocket state synchronization, zero client-side cheating, and dynamic ELO matchmaking.
+            Play instant real-time multiplayer games directly in your browser. Challenge rated players worldwide, climb the global ELO leaderboard, and compete with zero cheat latency.
           </p>
 
-          {/* Render High-Contrast Action Buttons */}
+          {/* High-Contrast Action Buttons */}
           <div
             className="mobile-full-btn-group"
             style={{ display: 'flex', gap: 14, alignItems: 'center', marginBottom: 36 }}
@@ -225,137 +219,47 @@ export default function HomePage() {
             </button>
           </div>
 
-          {/* Infrastructure Bullet Metrics */}
+          {/* Core Gaming Pillars */}
           <div
             style={{
               display: 'flex',
               flexWrap: 'wrap',
-              gap: 18,
-              fontSize: '0.8rem',
+              gap: 20,
+              fontSize: '0.82rem',
               color: 'var(--text-dim)',
               fontFamily: 'var(--font-mono)'
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               <span style={{ color: '#10b981' }}>●</span>
-              <span>100% Server Authoritative</span>
+              <span>Instant Matchmaking</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               <span style={{ color: 'var(--render-purple)' }}>●</span>
-              <span>Socket.IO Push WebSockets</span>
+              <span>Anti-Cheat Protected</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               <span style={{ color: '#f59e0b' }}>●</span>
-              <span>Sub-15ms Latency</span>
+              <span>Global ELO Ratings</span>
             </div>
           </div>
         </div>
 
-        {/* Right Column: Render Blueprint Interactive Telemetry Diagram */}
-        <div style={{ position: 'relative' }}>
-          {/* Render Floating Shortcut Prompt */}
-          {showSkipPrompt && (
-            <div
-              style={{
-                position: 'absolute',
-                top: -65,
-                right: 0,
-                background: 'var(--bg-card)',
-                border: '1px solid var(--border-subtle)',
-                borderTop: '3px solid var(--render-purple)',
-                borderRadius: '4px',
-                padding: '12px 14px',
-                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.08)',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 6,
-                zIndex: 10,
-                width: 220
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-main)', fontWeight: 600 }}>
-                <span>Quick Match Ready?</span>
-                <button
-                  onClick={() => setShowSkipPrompt(false)}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-dim)', padding: 0 }}
-                  aria-label="Close prompt"
-                >
-                  <X size={13} />
-                </button>
-              </div>
-              <button
-                onClick={() => handlePlayOnline('TIC_TAC_TOE')}
-                className="btn btn-primary"
-                style={{ padding: '6px 10px', fontSize: '0.74rem', borderRadius: 3, justifyContent: 'space-between', width: '100%' }}
-              >
-                <span>Jump into Arena</span>
-                <span>&gt;</span>
-              </button>
-            </div>
-          )}
-
-          {/* Interactive Terminal Badge with Quick Trigger */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-start',
-              gap: 12,
-              paddingLeft: '24px',
-              marginBottom: '-8px'
-            }}
-          >
-            <div className="terminal-pill">
-              <Terminal size={14} color="#a1a1aa" />
-              <span>$ duel simulate --interactive</span>
-            </div>
-            <span
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '0.72rem',
-                color: 'var(--render-purple)',
-                fontWeight: 600
-              }}
-            >
-              (Click grid to test)
-            </span>
-          </div>
-
-          {/* Animated Connecting Circuit Wire Line */}
-          <div className="render-wire-box">
-            <svg
-              width="100%"
-              height="56"
-              viewBox="0 0 340 56"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              style={{ overflow: 'visible' }}
-            >
-              <path
-                d="M 68 0 V 28 H 170 V 56"
-                stroke={isWireActive ? '#38bdf8' : 'var(--render-purple)'}
-                strokeWidth={isWireActive ? '3' : '2'}
-                fill="none"
-                className={isWireActive ? 'wire-laser-active' : 'render-wire-animated'}
-                style={{ transition: 'stroke 0.2s ease, stroke-width 0.2s ease' }}
-              />
-              <circle cx="68" cy="2" r="3" fill="var(--render-purple)" />
-              <circle cx="170" cy="54" r={isWireActive ? 5 : 3} fill={isWireActive ? '#38bdf8' : 'var(--render-purple)'} />
-            </svg>
-          </div>
-
-          {/* Active Blueprint PRODUCTION Container — Enlarged Engine Simulator */}
+        {/* Right Column: Interactive Duel Arena Console (Enlarged Centerpiece) */}
+        <div>
           <div
             style={{
               background: 'var(--bg-card)',
-              border: isWireActive ? '1px solid var(--render-purple)' : '1px solid var(--border-subtle)',
+              border: isPulseActive ? '1px solid var(--render-purple)' : '1px solid var(--border-subtle)',
               borderRadius: '6px',
               padding: '24px',
-              boxShadow: '0 8px 30px rgba(0, 0, 0, 0.08)',
-              transition: 'border-color 0.2s ease'
+              boxShadow: isPulseActive
+                ? '0 12px 34px -10px rgba(124, 58, 237, 0.25)'
+                : '0 8px 30px rgba(0, 0, 0, 0.08)',
+              transition: 'all 0.25s ease'
             }}
           >
-            {/* Header: engine-simulator and controls */}
+            {/* Console Header */}
             <div
               style={{
                 display: 'flex',
@@ -373,11 +277,10 @@ export default function HomePage() {
                     fontFamily: 'var(--font-mono)',
                     fontSize: '0.98rem',
                     fontWeight: 700,
-                    color: 'var(--text-main)',
-                    letterSpacing: '-0.01em'
+                    color: 'var(--text-main)'
                   }}
                 >
-                  engine-simulator
+                  interactive-arena-demo
                 </span>
                 <span
                   style={{
@@ -391,13 +294,13 @@ export default function HomePage() {
                     fontFamily: 'var(--font-mono)'
                   }}
                 >
-                  ● AUTHORITATIVE
+                  ● LIVE DEMO
                 </span>
               </div>
 
               <button
                 onClick={handleResetMiniDuel}
-                title="Reset Simulation Grid"
+                title="Reset Board"
                 className="btn btn-secondary btn-sm"
                 style={{ padding: '6px 12px', fontSize: '0.78rem' }}
               >
@@ -406,7 +309,7 @@ export default function HomePage() {
               </button>
             </div>
 
-            {/* Enlarged Interactive Playable Duel Engine */}
+            {/* Enlarged Interactive Playable Duel Area */}
             <div
               style={{
                 display: 'flex',
@@ -430,16 +333,16 @@ export default function HomePage() {
                 ))}
               </div>
 
-              {/* Right: Live Engine Telemetry & Validation Feed */}
+              {/* Right: Live Game Engine Feed */}
               <div style={{ flex: 1, minWidth: 220, display: 'flex', flexDirection: 'column', gap: 12 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                   <Zap size={14} color="#f59e0b" />
                   <span style={{ fontSize: '0.85rem', fontFamily: 'var(--font-mono)', color: 'var(--neon-cyan)', fontWeight: 600 }}>
-                    {botThinking ? '● Engine Validating Move...' : 'Click any cell to test validation'}
+                    {botThinking ? '● Opponent thinking...' : '⚡ Click any square to play'}
                   </span>
                 </div>
 
-                {/* Live Action Terminal Box */}
+                {/* Live Match Engine Log Box */}
                 <div
                   style={{
                     background: 'var(--bg-secondary)',
@@ -455,14 +358,14 @@ export default function HomePage() {
                   }}
                 >
                   <div style={{ color: botThinking ? 'var(--render-purple)' : 'var(--text-main)', fontWeight: 600 }}>
-                    {botThinking ? '● Processing state hash...' : '✓ ' + lastActionLog}
+                    {botThinking ? '● Validating board move...' : '✓ ' + lastActionLog}
                   </div>
                   <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>
-                    Replication: <span style={{ color: '#10b981', fontWeight: 600 }}>{simulatedLatency}ms</span> • Anti-cheat: <span style={{ color: '#10b981', fontWeight: 600 }}>0 anomalies</span>
+                    Match latency: <span style={{ color: '#10b981', fontWeight: 600 }}>{simulatedLatency}ms</span> • Anti-cheat: <span style={{ color: '#10b981', fontWeight: 600 }}>Verified</span>
                   </div>
                 </div>
 
-                {/* Telemetry Sparkline Wave */}
+                {/* Match Sparkline Wave */}
                 <div>
                   <svg className="sparkline-svg" viewBox="0 0 200 32" preserveAspectRatio="none" style={{ height: 32 }}>
                     <defs>
@@ -488,7 +391,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Bottom Row: Detailed Telemetry Metrics */}
+            {/* Bottom Row: Game Stats */}
             <div
               style={{
                 display: 'grid',
@@ -506,16 +409,16 @@ export default function HomePage() {
                 <strong style={{ color: 'var(--text-main)' }}>{simulatedMoves}</strong>
               </div>
               <div>
-                <span>CHEAT: </span>
-                <strong style={{ color: '#10b981' }}>0%</strong>
+                <span>ANTI-CHEAT: </span>
+                <strong style={{ color: '#10b981' }}>100%</strong>
               </div>
               <div>
-                <span>TICKS: </span>
-                <strong style={{ color: 'var(--text-main)' }}>60Hz</strong>
+                <span>WIN ELO: </span>
+                <strong style={{ color: '#10b981' }}>+25 PTS</strong>
               </div>
               <div>
-                <span>AUTH: </span>
-                <strong style={{ color: 'var(--text-main)' }}>Strict</strong>
+                <span>STATUS: </span>
+                <strong style={{ color: 'var(--text-main)' }}>Active</strong>
               </div>
             </div>
           </div>
@@ -523,7 +426,7 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================
-          Live Matchmaking Engine Event Ticker (Developer Stream)
+          Live Match Feed Ticker
          ============================================================ */}
       <div className="match-ticker-track">
         <div className="match-ticker-badge">
@@ -542,7 +445,7 @@ export default function HomePage() {
       </div>
 
       {/* ============================================================
-          Featured Game Selection Arenas (Interactive Previews)
+          Featured Game Selection Arenas
          ============================================================ */}
       <section style={{ marginBottom: 64 }}>
         <div style={{ marginBottom: 28, display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', flexWrap: 'wrap', gap: 10 }}>
@@ -551,7 +454,7 @@ export default function HomePage() {
               Featured Arenas
             </h2>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.96rem' }}>
-              Select an authoritative arena to automatically match against rated players.
+              Select a game arena to instantly enter the real-time matchmaking queue.
             </p>
           </div>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--text-dim)' }}>
@@ -727,15 +630,15 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================
-          Engineering Architecture Pillars
+          Why Competitors Choose GameVerse (Gaming-Native Value Props)
          ============================================================ */}
       <section style={{ marginBottom: 48 }}>
         <div style={{ marginBottom: 24 }}>
           <h3 style={{ fontSize: '1.4rem', color: 'var(--text-main)', letterSpacing: '-0.02em', marginBottom: 4 }}>
-            Game Platform Architecture
+            Why Competitors Choose GameVerse
           </h3>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-            Built with modern distributed system paradigms for fair competition.
+            Engineered from the ground up for fair, cheat-free, real-time multiplayer gaming.
           </p>
         </div>
 
@@ -745,10 +648,10 @@ export default function HomePage() {
               <ShieldCheck size={26} />
             </div>
             <h4 style={{ color: 'var(--text-main)', fontSize: '1.1rem', marginBottom: 6 }}>
-              Server-Authoritative Core
+              Anti-Cheat & Fair Play
             </h4>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: 1.55 }}>
-              Clients never decide moves, turns, or match results. Every placement is verified against board state models in real-time.
+              Server-authoritative rules engine strictly validates every move. No client-side tampering, no turn hijacking, 100% fair competition.
             </p>
           </div>
 
@@ -757,10 +660,10 @@ export default function HomePage() {
               <Zap size={26} />
             </div>
             <h4 style={{ color: 'var(--text-main)', fontSize: '1.1rem', marginBottom: 6 }}>
-              Push-Based WebSockets
+              Instant WebSocket Matches
             </h4>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: 1.55 }}>
-              Zero HTTP polling. Bi-directional Socket.IO channels synchronize turns instantly, with a 30s disconnect resilience buffer.
+              Zero polling lag. Real-time Socket.IO channels synchronize opponent turns instantly with automated matchmaking and 30s reconnect resilience.
             </p>
           </div>
 
@@ -769,10 +672,10 @@ export default function HomePage() {
               <Trophy size={26} />
             </div>
             <h4 style={{ color: 'var(--text-main)', fontSize: '1.1rem', marginBottom: 6 }}>
-              Dynamic ELO Ratings
+              Competitive ELO Ratings
             </h4>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: 1.55 }}>
-              Persistent skill ratings starting at 1000 with win-streak multipliers, match history tracking, and global leaderboards.
+              Start at 1000 rating points and climb the global ladder. Earn win-streak multipliers, track match histories, and challenge friends.
             </p>
           </div>
         </div>

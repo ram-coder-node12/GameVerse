@@ -51,18 +51,18 @@ export default function RegisterPage() {
         <div style={{ textAlign: 'center', marginBottom: 24 }}>
           <div
             style={{
-              width: 52,
-              height: 52,
-              borderRadius: 14,
-              margin: '0 auto 12px',
-              background: 'linear-gradient(135deg, var(--neon-purple) 0%, var(--neon-blue) 100%)',
+              width: 44,
+              height: 44,
+              borderRadius: 6,
+              margin: '0 auto 14px',
+              background: 'var(--text-main)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: 'var(--shadow-glow-purple)'
+              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
             }}
           >
-            <Gamepad2 size={28} color="#fff" />
+            <Gamepad2 size={24} color="var(--bg-primary)" />
           </div>
           <h2 style={{ fontSize: '1.6rem', color: 'var(--text-main)', marginBottom: 4 }}>
             Create Player Profile
